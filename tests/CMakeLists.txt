@@ -9,30 +9,21 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/config/cmake")
 set(GOOGLE_TEST_INDIVIDUAL OFF)
 include(AddGoogletest)
 
-set(CONTAINERS_TESTS
-    StackBufferTests
-	CircularBufferTests
-	AirLockTests
-	MappedVectorTests
-	MappedVectorTestsStable
-	DualMappedVectorTests
-	DualMappedVectorTestsStable
-	MappedPointerVectorTests
-	DualMappedPointerVectorTests
-	BlockingQueueTests
-	SimpleQueueTests
-	PriorityBlockingQueueTests
-	StableBlockDequeTests
-	StableBlockVectorTests
+set(UTILITIES_TESTS
+    StringOpsTests
+	testStringOps
+	StringConversionTests
+	String_viewOpsTests
+	String_viewConversionTests
     )
 
 # Only affects current directory, so safe
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-foreach(T ${CONTAINERS_TESTS})
+foreach(T ${UTILITIES_TESTS})
 
     add_executable(${T} ${T}.cpp )
-    target_link_libraries(${T} PUBLIC containers)
+    target_link_libraries(${T} PUBLIC utilities)
     add_gtest(${T})
 	set_target_properties(${T} PROPERTIES FOLDER tests)
    
