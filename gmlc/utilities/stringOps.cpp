@@ -29,227 +29,241 @@
 #include <fstream>
 #include <iomanip>
 
+namespace gmlc
+{
+namespace utilities
+{
 #ifndef TRIM
-#define TRIM(X) boost::algorithm::trim (X)
+#define TRIM(X) boost::algorithm::trim(X)
 #endif
 
-std::string convertToLowerCase (const std::string &input)
+std::string convertToLowerCase(const std::string &input)
 {
     std::string out;
-    out.reserve (input.size ());
-    std::transform (input.begin (), input.end (), std::back_inserter (out), ::tolower);
+    out.reserve(input.size());
+    std::transform(input.begin(), input.end(), std::back_inserter(out),
+                   ::tolower);
     return out;
 }
 
-std::string convertToUpperCase (const std::string &input)
+std::string convertToUpperCase(const std::string &input)
 {
-    std::string out (input);
-    std::transform (input.begin (), input.end (), out.begin (), ::toupper);
+    std::string out(input);
+    std::transform(input.begin(), input.end(), out.begin(), ::toupper);
     return out;
 }
 
-void makeLowerCase (std::string &input)
+void makeLowerCase(std::string &input)
 {
-    std::transform (input.begin (), input.end (), input.begin (), ::tolower);
+    std::transform(input.begin(), input.end(), input.begin(), ::tolower);
 }
 
-void makeUpperCase (std::string &input)
+void makeUpperCase(std::string &input)
 {
-    std::transform (input.begin (), input.end (), input.begin (), ::toupper);
+    std::transform(input.begin(), input.end(), input.begin(), ::toupper);
 }
 
 namespace stringOps
 {
-stringVector splitline (const std::string &line, const std::string &delimiters, delimiter_compression compression)
+stringVector splitline(const std::string &line,
+                       const std::string &delimiters,
+                       delimiter_compression compression)
 {
     stringVector strVec;
-    auto comp = (compression == delimiter_compression::on) ? boost::token_compress_on : boost::token_compress_off;
-    boost::algorithm::split (strVec, line, boost::is_any_of (delimiters), comp);
+    auto comp = (compression == delimiter_compression::on) ?
+                  boost::token_compress_on :
+                  boost::token_compress_off;
+    boost::algorithm::split(strVec, line, boost::is_any_of(delimiters), comp);
     return strVec;
 }
 
-stringVector splitline (const std::string &line, char del)
+stringVector splitline(const std::string &line, char del)
 {
     stringVector strVec;
-    boost::algorithm::split (strVec, line, boost::is_from_range (del, del));
+    boost::algorithm::split(strVec, line, boost::is_from_range(del, del));
     return strVec;
 }
 
-void splitline (const std::string &line,
-                stringVector &strVec,
-                const std::string &delimiters,
-                delimiter_compression compression)
+void splitline(const std::string &line,
+               stringVector &strVec,
+               const std::string &delimiters,
+               delimiter_compression compression)
 {
-    auto comp = (compression == delimiter_compression::on) ? boost::token_compress_on : boost::token_compress_off;
-    boost::algorithm::split (strVec, line, boost::is_any_of (delimiters), comp);
+    auto comp = (compression == delimiter_compression::on) ?
+                  boost::token_compress_on :
+                  boost::token_compress_off;
+    boost::algorithm::split(strVec, line, boost::is_any_of(delimiters), comp);
 }
 
-void splitline (const std::string &line, stringVector &strVec, char del)
+void splitline(const std::string &line, stringVector &strVec, char del)
 {
-    boost::algorithm::split (strVec, line, boost::is_from_range (del, del));
+    boost::algorithm::split(strVec, line, boost::is_from_range(del, del));
 }
 
-static const auto pmap = utilities::pairMapper ();
+static const auto pmap = pairMapper();
 
-stringVector splitlineQuotes (const std::string &line,
+stringVector splitlineQuotes(const std::string &line,
+                             const std::string &delimiters,
+                             const std::string &quoteChars,
+                             delimiter_compression compression)
+{
+    bool compress = (compression == delimiter_compression::on);
+    return generalized_section_splitting(line, delimiters, quoteChars, pmap,
+                                         compress);
+}
+
+stringVector splitlineBracket(const std::string &line,
                               const std::string &delimiters,
-                              const std::string &quoteChars,
+                              const std::string &bracketChars,
                               delimiter_compression compression)
 {
     bool compress = (compression == delimiter_compression::on);
-    return generalized_section_splitting (line, delimiters, quoteChars, pmap, compress);
+    return generalized_section_splitting(line, delimiters, bracketChars, pmap,
+                                         compress);
 }
 
-stringVector splitlineBracket (const std::string &line,
-                               const std::string &delimiters,
-                               const std::string &bracketChars,
-                               delimiter_compression compression)
+void trimString(std::string &input, const std::string &whitespace)
 {
-    bool compress = (compression == delimiter_compression::on);
-    return generalized_section_splitting (line, delimiters, bracketChars, pmap, compress);
+    input.erase(input.find_last_not_of(whitespace) + 1);
+    input.erase(0, input.find_first_not_of(whitespace));
 }
 
-void trimString (std::string &input, const std::string &whitespace)
+std::string trim(const std::string &input, const std::string &whitespace)
 {
-    input.erase (input.find_last_not_of (whitespace) + 1);
-    input.erase (0, input.find_first_not_of (whitespace));
-}
-
-std::string trim (const std::string &input, const std::string &whitespace)
-{
-    const auto strStart = input.find_first_not_of (whitespace);
+    const auto strStart = input.find_first_not_of(whitespace);
     if (strStart == std::string::npos)
     {
-        return std::string ();  // no content
+        return std::string();  // no content
     }
 
-    const auto strEnd = input.find_last_not_of (whitespace);
+    const auto strEnd = input.find_last_not_of(whitespace);
 
-    return input.substr (strStart, strEnd - strStart + 1);
+    return input.substr(strStart, strEnd - strStart + 1);
 }
 
-void trim (stringVector &input, const std::string &whitespace)
+void trim(stringVector &input, const std::string &whitespace)
 {
     for (auto &str : input)
     {
-        trimString (str, whitespace);
+        trimString(str, whitespace);
     }
 }
 
-static const std::string digits ("0123456789");
-int trailingStringInt (const std::string &input, std::string &output, int defNum)
+static const std::string digits("0123456789");
+int trailingStringInt(const std::string &input, std::string &output, int defNum)
 {
-    if ((input.empty ()) || (isdigit (input.back ()) == 0))
+    if ((input.empty()) || (isdigit(input.back()) == 0))
     {
         output = input;
         return defNum;
     }
     int num = defNum;
-    auto pos1 = input.find_last_not_of (digits);
+    auto pos1 = input.find_last_not_of(digits);
     if (pos1 == std::string::npos)  // in case the whole thing is a number
     {
-        output.clear ();
-        num = std::stol (input);
+        output.clear();
+        num = std::stol(input);
     }
     else
     {
-        if (pos1 == input.length () - 2)
+        if (pos1 == input.length() - 2)
         {
-            num = input.back () - '0';
+            num = input.back() - '0';
         }
         else
         {
-            num = std::stol (input.substr (pos1 + 1));
+            num = std::stol(input.substr(pos1 + 1));
         }
 
         if ((input[pos1] == '_') || (input[pos1] == '#'))
         {
-            output = input.substr (0, pos1);
+            output = input.substr(0, pos1);
         }
         else
         {
-            output = input.substr (0, pos1 + 1);
+            output = input.substr(0, pos1 + 1);
         }
     }
 
     return num;
 }
 
-int trailingStringInt (const std::string &input, int defNum)
+int trailingStringInt(const std::string &input, int defNum)
 {
-    if (isdigit (input.back ()) == 0)
+    if (isdigit(input.back()) == 0)
     {
         return defNum;
     }
 
-    auto pos1 = input.find_last_not_of (digits);
+    auto pos1 = input.find_last_not_of(digits);
     if (pos1 == std::string::npos)  // in case the whole thing is a number
     {
-        return std::stol (input);
+        return std::stol(input);
     }
 
-    if (pos1 == input.length () - 2)
+    if (pos1 == input.length() - 2)
     {
-        return input.back () - '0';
+        return input.back() - '0';
     }
 
-    return std::stol (input.substr (pos1 + 1));
+    return std::stol(input.substr(pos1 + 1));
 }
 
-static const std::string quoteChars (R"raw("'`)raw");
+static const std::string quoteChars(R"raw("'`)raw");
 
-std::string removeQuotes (const std::string &str)
+std::string removeQuotes(const std::string &str)
 {
-    auto newString = trim (str);
-    if (!newString.empty ())
+    auto newString = trim(str);
+    if (!newString.empty())
     {
-        if ((newString.front () == '\"') || (newString.front () == '\'') || (newString.front () == '`'))
+        if ((newString.front() == '\"') || (newString.front() == '\'') ||
+            (newString.front() == '`'))
         {
-            if (newString.back () == newString.front ())
+            if (newString.back() == newString.front())
             {
-                newString.pop_back ();
-                newString.erase (0, 1);
+                newString.pop_back();
+                newString.erase(0, 1);
             }
         }
     }
     return newString;
 }
 
-std::string removeBrackets (const std::string &str)
+std::string removeBrackets(const std::string &str)
 {
-    std::string newString = trim (str);
-    if (!newString.empty ())
+    std::string newString = trim(str);
+    if (!newString.empty())
     {
-        if ((newString.front () == '[') || (newString.front () == '(') || (newString.front () == '{') ||
-            (newString.front () == '<'))
+        if ((newString.front() == '[') || (newString.front() == '(') ||
+            (newString.front() == '{') || (newString.front() == '<'))
         {
-            if (newString.back () == pmap[newString.front ()])
+            if (newString.back() == pmap[newString.front()])
             {
-                newString.pop_back ();
-                newString.erase (0, 1);
+                newString.pop_back();
+                newString.erase(0, 1);
             }
         }
     }
     return newString;
 }
 
-std::string getTailString (const std::string &input, char sep)
+std::string getTailString(const std::string &input, char sep)
 {
-    auto tc = input.find_last_of (sep);
-    std::string ret = (tc == std::string::npos) ? input : input.substr (tc + 1);
+    auto tc = input.find_last_of(sep);
+    std::string ret = (tc == std::string::npos) ? input : input.substr(tc + 1);
     return ret;
 }
 
-std::string getTailString (const std::string &input, const std::string &sep)
+std::string getTailString(const std::string &input, const std::string &sep)
 {
-    auto tc = input.find_last_of (sep);
-    std::string ret = (tc == std::string::npos) ? input : input.substr (tc + 1);
+    auto tc = input.find_last_of(sep);
+    std::string ret = (tc == std::string::npos) ? input : input.substr(tc + 1);
     return ret;
 }
 
-int findCloseStringMatch (const stringVector &testStrings,
-                          const stringVector &iStrings,
-                          string_match_type_t matchType)
+int findCloseStringMatch(const stringVector &testStrings,
+                         const stringVector &iStrings,
+                         string_match_type_t matchType)
 {
     std::string lct;  // lower case test string
     std::string lcis;  // lower case input string
@@ -257,12 +271,12 @@ int findCloseStringMatch (const stringVector &testStrings,
     // make all the input strings lower case
     for (auto &st : lciStrings)
     {
-        makeLowerCase (st);
+        makeLowerCase(st);
     }
     for (auto &ts : testStrings)
     {
-        lct = convertToLowerCase (ts);
-        for (int kk = 0; kk < static_cast<int> (lciStrings.size ()); ++kk)
+        lct = convertToLowerCase(ts);
+        for (int kk = 0; kk < static_cast<int>(lciStrings.size()); ++kk)
         {
             lcis = lciStrings[kk];
             switch (matchType)
@@ -274,62 +288,68 @@ int findCloseStringMatch (const stringVector &testStrings,
                 }
                 break;
             case string_match_begin:
-                if (lct.compare (0, lct.length (), lcis) == 0)
+                if (lct.compare(0, lct.length(), lcis) == 0)
                 {
                     return kk;
                 }
                 break;
             case string_match_end:
-                if (lct.length () > lcis.length ())
+                if (lct.length() > lcis.length())
                 {
                     continue;
                 }
-                if (lcis.compare (lcis.length () - lct.length (), lct.length (), lct) == 0)
+                if (lcis.compare(lcis.length() - lct.length(), lct.length(),
+                                 lct) == 0)
                 {
                     return kk;
                 }
                 break;
             case string_match_close:
-                if (lct.length () == 1)  // special case
-                {  // we are checking if the single character is isolated from other other alphanumeric characters
-                    auto bf = lcis.find (lct);
+                if (lct.length() == 1)  // special case
+                {  // we are checking if the single character is isolated from
+                   // other other alphanumeric characters
+                    auto bf = lcis.find(lct);
                     while (bf != std::string::npos)
                     {
                         if (bf == 0)
                         {
-                            if ((isspace (lcis[bf + 1]) != 0) || (ispunct (lcis[bf + 1]) != 0))
+                            if ((isspace(lcis[bf + 1]) != 0) ||
+                                (ispunct(lcis[bf + 1]) != 0))
                             {
                                 return kk;
                             }
                         }
-                        else if (bf == lcis.length () - 1)
+                        else if (bf == lcis.length() - 1)
                         {
-                            if ((isspace (lcis[bf - 1]) != 0) || (ispunct (lcis[bf - 1]) != 0))
+                            if ((isspace(lcis[bf - 1]) != 0) ||
+                                (ispunct(lcis[bf - 1]) != 0))
                             {
                                 return kk;
                             }
                         }
                         else
                         {
-                            if ((isspace (lcis[bf - 1]) != 0) || (ispunct (lcis[bf - 1]) != 0))
+                            if ((isspace(lcis[bf - 1]) != 0) ||
+                                (ispunct(lcis[bf - 1]) != 0))
                             {
-                                if ((isspace (lcis[bf + 1]) != 0) || (ispunct (lcis[bf + 1]) != 0))
+                                if ((isspace(lcis[bf + 1]) != 0) ||
+                                    (ispunct(lcis[bf + 1]) != 0))
                                 {
                                     return kk;
                                 }
                             }
                         }
-                        bf = lcis.find (lct, bf + 1);
+                        bf = lcis.find(lct, bf + 1);
                     }
                 }
                 else
                 {
-                    auto bf = lcis.find (lct);
+                    auto bf = lcis.find(lct);
                     if (bf != std::string::npos)
                     {
                         return kk;
                     }
-                    auto nstr = removeChar (lct, '_');
+                    auto nstr = removeChar(lct, '_');
                     if (lcis == nstr)
                     {
                         return kk;
@@ -342,13 +362,15 @@ int findCloseStringMatch (const stringVector &testStrings,
     return -1;
 }
 
-std::string removeChars (const std::string &source, const std::string &remchars)
+std::string removeChars(const std::string &source, const std::string &remchars)
 {
     std::string result;
-    result.reserve (source.length ());
-    std::remove_copy_if (source.begin (), source.end (), std::back_inserter (result), [remchars](char in) {
-        return (std::find (remchars.begin (), remchars.end (), in) != remchars.end ());
-    });
+    result.reserve(source.length());
+    std::remove_copy_if(source.begin(), source.end(),
+                        std::back_inserter(result), [remchars](char in) {
+                            return (std::find(remchars.begin(), remchars.end(),
+                                              in) != remchars.end());
+                        });
     return result;
     /*
     for (auto sc : source)
@@ -371,18 +393,21 @@ std::string removeChars (const std::string &source, const std::string &remchars)
     */
 }
 
-std::string removeChar (const std::string &source, char remchar)
+std::string removeChar(const std::string &source, char remchar)
 {
     std::string result;
-    result.reserve (source.length ());
-    std::remove_copy (source.begin (), source.end (), std::back_inserter (result), remchar);
+    result.reserve(source.length());
+    std::remove_copy(source.begin(), source.end(), std::back_inserter(result),
+                     remchar);
     return result;
 }
 
-std::string characterReplace (const std::string &source, char key, const std::string &repStr)
+std::string characterReplace(const std::string &source,
+                             char key,
+                             const std::string &repStr)
 {
     std::string result;
-    result.reserve (source.length ());
+    result.reserve(source.length());
     for (auto sc : source)
     {
         if (sc == key)
@@ -391,45 +416,47 @@ std::string characterReplace (const std::string &source, char key, const std::st
         }
         else
         {
-            result.push_back (sc);
+            result.push_back(sc);
         }
     }
     return result;
 }
 
-std::string xmlCharacterCodeReplace (std::string str)
+std::string xmlCharacterCodeReplace(std::string str)
 {
-    std::string out = std::move (str);
-    auto tt = out.find ("&gt;");
+    std::string out = std::move(str);
+    auto tt = out.find("&gt;");
     while (tt != std::string::npos)
     {
-        out.replace (tt, 4, ">");
-        tt = out.find ("&gt;");
+        out.replace(tt, 4, ">");
+        tt = out.find("&gt;");
     }
-    tt = out.find ("&lt;");
+    tt = out.find("&lt;");
     while (tt != std::string::npos)
     {
-        out.replace (tt, 4, "<");
-        tt = out.find ("&lt;");
+        out.replace(tt, 4, "<");
+        tt = out.find("&lt;");
     }
-    tt = out.find ("&amp;");
+    tt = out.find("&amp;");
     while (tt != std::string::npos)
     {
-        out.replace (tt, 5, "&");
-        tt = out.find ("&amp;");
+        out.replace(tt, 5, "&");
+        tt = out.find("&amp;");
     }
-    tt = out.find ("&quot;");
+    tt = out.find("&quot;");
     while (tt != std::string::npos)
     {
-        out.replace (tt, 6, "\"");
-        tt = out.find ("&quot;");
+        out.replace(tt, 6, "\"");
+        tt = out.find("&quot;");
     }
-    tt = out.find ("&apos;");
+    tt = out.find("&apos;");
     while (tt != std::string::npos)
     {
-        out.replace (tt, 6, "'");
-        tt = out.find ("&apos;");
+        out.replace(tt, 6, "'");
+        tt = out.find("&apos;");
     }
     return out;
 }
 }  // namespace stringOps
+}  // namespace utilities
+}  // namespace gmlc

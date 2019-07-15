@@ -11,7 +11,7 @@ if (MSYS)
 	set(gtest_disable_pthreads ON CACHE BOOL "" FORCE)
 endif()
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1 CACHE BOOL "")
-add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "${PROJECT_BINARY_DIR}/extern/googletest" EXCLUDE_FROM_ALL)
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/gtest" "${PROJECT_BINARY_DIR}/extern/gtest" EXCLUDE_FROM_ALL)
 
 
 if(GOOGLE_TEST_INDIVIDUAL)

@@ -1,50 +1,60 @@
 /*
-* LLNS Copyright Start
-* Copyright (c) 2014-2018, Lawrence Livermore National Security
-* This work was performed under the auspices of the U.S. Department
-* of Energy by Lawrence Livermore National Laboratory in part under
-* Contract W-7405-Eng-48 and in part under Contract DE-AC52-07NA27344.
-* Produced at the Lawrence Livermore National Laboratory.
-* All rights reserved.
-* For details, see the LICENSE file.
-* LLNS Copyright End
-*/
+ * LLNS Copyright Start
+ * Copyright (c) 2014-2018, Lawrence Livermore National Security
+ * This work was performed under the auspices of the U.S. Department
+ * of Energy by Lawrence Livermore National Laboratory in part under
+ * Contract W-7405-Eng-48 and in part under Contract DE-AC52-07NA27344.
+ * Produced at the Lawrence Livermore National Laboratory.
+ * All rights reserved.
+ * For details, see the LICENSE file.
+ * LLNS Copyright End
+ */
 #pragma once
 
-#include "griddyn/compiler-config.h"
 #include <vector>
 
-#ifdef HAVE_STRING_VIEW
+/*
+Copyright © 2017-2019,
+Battelle Memorial Institute; Lawrence Livermore National Security, LLC; Alliance
+for Sustainable Energy, LLC.  See the top-level NOTICE for additional details.
+All rights reserved. SPDX-License-Identifier: BSD-3-Clause
+*/
+
+#pragma once
+#ifdef USE_STD_STRING_VIEW
 #include <string_view>
-namespace utilities
+template <class T>
+namespace gmlc
 {
-	using string_view = std::string_view;
+    namespace utilities
+    {
+    using string_view = std::string_view;
+    }
 }
-#else
-#ifdef HAVE_EXP_STRING_VIEW
-#include <experimental/string_view>
-namespace utilities
-{
-	using string_view = std::experimental::string_view;
-}
-#else
-#include <boost/version.hpp>
-#if BOOST_VERSION / 100 % 1000 >= 61
+#elif defined(USE_BOOST_STRING_VIEW)
 #include <boost/utility/string_view.hpp>
+namespace gmlc
+{
 namespace utilities
 {
-	using string_view=boost::string_view;
+using string_view = boost::string_view;
 }
+}  // namespace gmlc
 #else
-#include <boost/utility/string_ref.hpp>
+#include "extra/string_view.hpp"
+namespace gmlc
+{
 namespace utilities
 {
-    using string_view = boost::string_ref;
+using string_view = stx::string_view;
 }
-#endif  //boost old version
+}  // namespace gmlc
 #endif
-#endif
+
+namespace gmlc
+{
 namespace utilities
 {
-	using string_viewVector = std::vector<string_view>;
+using string_viewVector = std::vector<string_view>;
 }
+}  // namespace gmlc

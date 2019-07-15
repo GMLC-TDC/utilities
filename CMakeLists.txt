@@ -63,21 +63,9 @@ if(${CXX_STANDARD_FLAG})
 endif(${CXX_STANDARD_FLAG})
 
 
-# -------------------------------------------------------------
-# add threading support
-# -------------------------------------------------------------
-if(MSYS)
-	set(THREADS_PREFER_PTHREAD_FLAG ON)
-endif()
-find_package(Threads QUIET)
-
-if (TARGET Threads::Threads)
-  target_link_libraries(utilities_base INTERFACE Threads::Threads)
-endif()
-
 option(GMLC_UTILITIES_INCLUDE_BOOST "Enable some boost library headers to be used" ON)
 # Add boost to test boost::optional if available
-find_package(Boost 1.58)
+find_package(Boost 1.61)
 if(Boost_FOUND)
     target_link_libraries(utilities_base INTERFACE Boost::boost)
 
