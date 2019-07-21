@@ -31,10 +31,10 @@ endforeach()
 if(CMAKE_BUILD_TYPE STREQUAL Coverage)
     include(CodeCoverage)
     setup_target_for_coverage(
-        NAME CONTAINERS_coverage
+        NAME UTILITIES_coverage
         EXECUTABLE ctest
         DEPENDENCIES
-          ${CONTAINERS_TESTS}
+          ${UTILITIES_TESTS}
           )
 endif()
 
