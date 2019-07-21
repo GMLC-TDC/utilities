@@ -73,7 +73,7 @@ if(Boost_FOUND)
 if (TARGET Boost::boost)
     target_link_libraries(utilities_base INTERFACE Boost::boost)
 else()
-	message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}");
+	message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
    target_include_directories(utilities_base SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
 endif()
     target_compile_definitions(utilities_base INTERFACE USE_BOOST_OPTIONAL)
