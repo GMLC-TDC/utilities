@@ -25,6 +25,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(CMAKE_CXX_STANDARD ${UTILITIES_CXX_STD})
     set(CMAKE_CXX_EXTENSIONS OFF)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
+	set(UTILITIES_MASTER_PROJECT ON)
+else()
+   set(UTILITIES_MASTER_PROJECT OFF)
 endif()
 
 if (NOT CMAKE_CXX_STANDARD)
@@ -78,7 +81,11 @@ target_include_directories(utilities_base INTERFACE ThirdParty)
 
 add_subdirectory(gmlc)
 
+if (UTILITIES_MASTER_PROJECT)
 option(GMLC_UTILITIES_TEST "Enable tests for the containers library" ON)
+else()
+set(GMLC_UTILITIES_TEST OFF)
+endif()
 
 if (GMLC_UTILITIES_TEST)
 	enable_testing()
