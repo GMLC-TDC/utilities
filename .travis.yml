@@ -20,6 +20,10 @@ matrix:
   - compiler: clang
     env:
     - CCACHE_CPP2=yes
+    addons:
+      apt:
+        packages:
+        - libboost-dev
     script:
     - .ci/make_and_test.sh
 
