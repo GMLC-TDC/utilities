@@ -30,13 +30,15 @@ endif()
 
   add_library(gmlc_utilities ${UTILITIES_LIBRARY_TYPE} ${utilities_source_files} ${utilities_header_files})
   target_include_directories(gmlc_utilities PUBLIC $<BUILD_INTERFACE:${GMLC_UTILITIES_SOURCE_DIR}>)
-  target_link_libraries(gmlc_utilities utilities_base)
+
+  
 
 add_library(gmlc::utilities ALIAS gmlc_utilities)
 
 set (UTILTIIES_LIBRARY_EXPORT utilitiesConfig)
 
 if (NOT UTILITIES_LIBRARY_TYPE STREQUAL "OBJECT")
+target_link_libraries(gmlc_utilities utilities_base)
 install(TARGETS gmlc_utilities
   EXPORT ${UTILITIES_LIBRARY_EXPORT}
   RUNTIME DESTINATION bin
@@ -44,4 +46,14 @@ install(TARGETS gmlc_utilities
   LIBRARY DESTINATION lib
 )
 install (FILES ${utilities_header_files} DESTINATION include)
+else()
+target_include_directories(
+  gmlc_utilities
+  PRIVATE $<TARGET_PROPERTY:utilities_base,INTERFACE_INCLUDE_DIRECTORIES>
+)
+
+target_compile_definitions(
+  gmlc_utilities PRIVATE
+  $<TARGET_PROPERTY:utilities_base,INTERFACE_COMPILE_DEFINITIONS>
+)
 endif()
