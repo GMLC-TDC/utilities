@@ -47,6 +47,10 @@ matrix:
   - compiler: clang
     env:
     - CHECK_STYLE=yes
+    addons:
+      apt:
+        packages:
+        - libboost-dev
     script:
     - cd "${TRAVIS_BUILD_DIR}"
     - bash scripts/check_style.sh
