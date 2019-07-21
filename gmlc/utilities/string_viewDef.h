@@ -23,14 +23,13 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 #pragma once
 #ifdef USE_STD_STRING_VIEW
 #include <string_view>
-template <class T>
 namespace gmlc
 {
-    namespace utilities
-    {
-    using string_view = std::string_view;
-    }
+namespace utilities
+{
+using string_view = std::string_view;
 }
+}  // namespace gmlc
 #elif defined(USE_BOOST_STRING_VIEW)
 #include <boost/utility/string_view.hpp>
 namespace gmlc

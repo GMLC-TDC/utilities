@@ -18,6 +18,8 @@
 
    modified by Philip Top LLNL 2017:  added CharMapper objects instead of find
    and C++ based overloads
+   Modified by Philip Top LLNL 2019: to be in a namespace and further comments
+   and test cases
 */
 
 #include "base64.h"

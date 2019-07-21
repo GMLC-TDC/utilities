@@ -25,6 +25,7 @@ namespace utilities
 {
 namespace string_viewOps
 {
+/** a set of white space characters*/
 const string_view whiteSpaceCharacters(" \t\n\r\0\v\f");
 
 /** @brief trim whitespace characters from a string at the beginning and end of

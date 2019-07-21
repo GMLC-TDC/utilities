@@ -4,6 +4,7 @@ set(utilities_source_files
   string_viewOps.cpp
   stringOps.cpp
   stringConversion.cpp
+  vectorOps.cpp
 )
 
 set(utilities_header_files
@@ -16,6 +17,9 @@ set(utilities_header_files
   stringConversion.h
   stringOps.h
   timeRepresentation.hpp
+  vectorOps.hpp
+  TimeSeries.hpp
+  TimeSeriesMulti.hpp
 )
 
 if (NOT DEFINED UTILITIES_LIBRARY_TYPE)
