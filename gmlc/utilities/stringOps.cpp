@@ -15,12 +15,12 @@
 #ifdef __GNUC__
 #pragma GCC diagnostic push
 //#pragma GCC diagnostic warning "-w"
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/trim.hpp>
+#include "boost/algorithm/string/split.hpp"
+#include "boost/algorithm/string/trim.hpp"
 #pragma GCC diagnostic pop
 #else
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/trim.hpp>
+#include "boost/algorithm/string/split.hpp"
+#include "boost/algorithm/string/trim.hpp"
 #endif
 
 #include <algorithm>

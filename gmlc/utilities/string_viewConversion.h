@@ -17,9 +17,9 @@
 #pragma warning(push)
 #pragma warning(disable : 4127 4459)
 #endif
-#include <boost/version.hpp>
+#include "boost/version.hpp"
 #if BOOST_VERSION / 100 % 1000 >= 60
-#include <boost/spirit/home/x3.hpp>
+#include "boost/spirit/home/x3.hpp"
 #else
 #define NO_SPIRIT 1
 #endif
