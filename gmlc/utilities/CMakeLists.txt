@@ -60,7 +60,6 @@ target_include_directories(
   PRIVATE $<TARGET_PROPERTY:utilities_base,INTERFACE_SYSTEM_INCLUDE_DIRECTORIES>
 )
 
-target_include_directories(gmlc_util)
 target_compile_definitions(
   gmlc_utilities PRIVATE
   $<TARGET_PROPERTY:utilities_base,INTERFACE_COMPILE_DEFINITIONS>
