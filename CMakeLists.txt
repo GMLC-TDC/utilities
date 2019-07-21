@@ -70,8 +70,11 @@ option(GMLC_UTILITIES_INCLUDE_BOOST "Enable some boost library headers to be use
 # Add boost to test boost::optional if available
 find_package(Boost 1.61)
 if(Boost_FOUND)
+if (TARGET Boost::boost)
     target_link_libraries(utilities_base INTERFACE Boost::boost)
-
+else()
+   target_include_directories(utilities_base SYSTEM INTERFACE ${BOOST_INCLUDE_DIR})
+endif()
     target_compile_definitions(utilities_base INTERFACE USE_BOOST_OPTIONAL)
 	target_compile_definitions(utilities_base INTERFACE ENABLE_BOOST_TYPES)
 

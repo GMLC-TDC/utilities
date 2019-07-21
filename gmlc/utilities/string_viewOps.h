@@ -138,12 +138,12 @@ string_viewVector splitlineBracket(
 
 /** @brief merge two stringViews together
 @details this will only work if these are from a single original string
-the check is the gap between the start of one string and another is less than 5
+the check is the gap between the start of one string and another is less than 24
 characters
 @param[in] string1 the first string
 @param[in] string2 the second string
 @return a new string view of the combined string
-
+@throws and out_of_range exception if the string cannot be merged
 */
 string_view merge(string_view string1, string_view string2);
 

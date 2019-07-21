@@ -31,7 +31,10 @@ endif()
   add_library(gmlc_utilities ${UTILITIES_LIBRARY_TYPE} ${utilities_source_files} ${utilities_header_files})
   target_include_directories(gmlc_utilities PUBLIC $<BUILD_INTERFACE:${GMLC_UTILITIES_SOURCE_DIR}>)
 
-  
+  target_include_directories(
+  gmlc_utilities SYSTEM
+  PRIVATE $<BUILD_INTERFACE:${BOOST_INCLUDE_DIR}>
+)
 
 add_library(gmlc::utilities ALIAS gmlc_utilities)
 
@@ -52,6 +55,12 @@ target_include_directories(
   PRIVATE $<TARGET_PROPERTY:utilities_base,INTERFACE_INCLUDE_DIRECTORIES>
 )
 
+target_include_directories(
+  gmlc_utilities SYSTEM
+  PRIVATE $<TARGET_PROPERTY:utilities_base,INTERFACE_SYSTEM_INCLUDE_DIRECTORIES>
+)
+
+target_include_directories(gmlc_util)
 target_compile_definitions(
   gmlc_utilities PRIVATE
   $<TARGET_PROPERTY:utilities_base,INTERFACE_COMPILE_DEFINITIONS>

@@ -103,8 +103,8 @@ string_view removeBrackets(string_view str)
 
 string_view merge(string_view string1, string_view string2)
 {
-    int diff =
-      (string2.data() - string1.data()) + static_cast<int>(string1.length());
+    ptrdiff_t diff = (string2.data() - string1.data()) +
+                     static_cast<ptrdiff_t>(string1.length());
     if ((diff >= 0) && (diff < 24))  // maximum of 24 bytes between the strings
     {
         return string_view(string1.data(),
