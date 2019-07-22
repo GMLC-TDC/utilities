@@ -157,8 +157,7 @@ TEST(stringops, splitline_test2)
     std::string test2 = "alpha, bravo,;, charlie,";
     testres = splitline(test1, ";, ", delimiter_compression::on);
 
-    ASSERT_TRUE(testres.size() == 4);
-    EXPECT_TRUE(testres[3].empty());
+    EXPECT_TRUE(testres.size() == 3);
 }
 
 /** simple split line test*/
