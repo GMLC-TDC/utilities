@@ -12,16 +12,6 @@
 
 #include "stringOps.h"
 #include "generic_string_ops.hpp"
-#ifdef __GNUC__
-#pragma GCC diagnostic push
-//#pragma GCC diagnostic warning "-w"
-#include "boost/algorithm/string/split.hpp"
-#include "boost/algorithm/string/trim.hpp"
-#pragma GCC diagnostic pop
-#else
-#include "boost/algorithm/string/split.hpp"
-#include "boost/algorithm/string/trim.hpp"
-#endif
 
 #include <algorithm>
 #include <cctype>
@@ -34,7 +24,7 @@ namespace gmlc
 namespace utilities
 {
 #ifndef TRIM
-#define TRIM(X) boost::algorithm::trim(X)
+#define TRIM(X) gmlc::utilities::stringOps::trimString(X)
 #endif
 
 std::string convertToLowerCase(const std::string &input)
@@ -69,19 +59,13 @@ stringVector splitline(const std::string &line,
                        const std::string &delimiters,
                        delimiter_compression compression)
 {
-    stringVector strVec;
-    auto comp = (compression == delimiter_compression::on) ?
-                  boost::token_compress_on :
-                  boost::token_compress_off;
-    boost::algorithm::split(strVec, line, boost::is_any_of(delimiters), comp);
-    return strVec;
+    return generalized_string_split(line, delimiters,
+                                    (compression == delimiter_compression::on));
 }
 
 stringVector splitline(const std::string &line, char del)
 {
-    stringVector strVec;
-    boost::algorithm::split(strVec, line, boost::is_from_range(del, del));
-    return strVec;
+    return generalized_string_split(line, std::string{1, del}, false);
 }
 
 void splitline(const std::string &line,
@@ -89,15 +73,14 @@ void splitline(const std::string &line,
                const std::string &delimiters,
                delimiter_compression compression)
 {
-    auto comp = (compression == delimiter_compression::on) ?
-                  boost::token_compress_on :
-                  boost::token_compress_off;
-    boost::algorithm::split(strVec, line, boost::is_any_of(delimiters), comp);
+    strVec =
+      generalized_string_split(line, delimiters,
+                               (compression == delimiter_compression::on));
 }
 
 void splitline(const std::string &line, stringVector &strVec, char del)
 {
-    boost::algorithm::split(strVec, line, boost::is_from_range(del, del));
+    strVec = generalized_string_split(line, std::string{1, del}, false);
 }
 
 static const auto pmap = pairMapper();
