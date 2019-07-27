@@ -7,13 +7,13 @@
 cmake_minimum_required(VERSION 3.4)
 cmake_policy(VERSION 3.4)
 
-project (GMLC_UTILITIES VERSION 0.1)
+project (GMLC_UTILITIES VERSION 0.1.1)
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 #-----------------------------------------------------------------------------
 set (GMLC_UTILITIES_VERSION_BUILD )
-set (GMLC_UTILITIES_DATE "07-11-19")
+set (GMLC_UTILITIES_DATE "07-27-19")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 

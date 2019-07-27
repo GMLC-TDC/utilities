@@ -23,10 +23,6 @@ namespace gmlc
 {
 namespace utilities
 {
-#ifndef TRIM
-#define TRIM(X) gmlc::utilities::stringOps::trimString(X)
-#endif
-
 std::string convertToLowerCase(const std::string &input)
 {
     std::string out;
@@ -355,25 +351,6 @@ std::string removeChars(const std::string &source, const std::string &remchars)
                                               in) != remchars.end());
                         });
     return result;
-    /*
-    for (auto sc : source)
-    {
-        bool foundany = false;
-        for (auto tc : remchars)
-        {
-            if (sc == tc)
-            {
-                foundany = true;
-                break;
-            }
-        }
-        if (!foundany)
-        {
-            result.push_back (sc);
-        }
-    }
-    return result;
-    */
 }
 
 std::string removeChar(const std::string &source, char remchar)
