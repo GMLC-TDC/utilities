@@ -50,6 +50,17 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
   )
 endif()
 
+option(GMLC_UTILITIES_WITH_CMAKE_PACKAGE "Generate and install cmake package files" ${HELICS_ROOT_PROJ})
+mark_as_advanced(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
+
+
+# Install instructions for this target
+if(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
+    set(UTILITIES_LIBRARY_EXPORT_COMMAND EXPORT utilitiesConfig)
+else(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
+    set(UTILITIES_LIBRARY_EXPORT_COMMAND)
+endif(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
+
 add_library(utilities_base INTERFACE)
 
 include(compiler_flags)
@@ -83,6 +94,7 @@ endif()
 
 target_include_directories(utilities_base INTERFACE ThirdParty)
 
+install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
 add_subdirectory(gmlc)
 
 if (UTILITIES_MASTER_PROJECT)

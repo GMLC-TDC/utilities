@@ -38,8 +38,6 @@ endif()
 
 add_library(gmlc::utilities ALIAS gmlc_utilities)
 
-set (UTILTIIES_LIBRARY_EXPORT_COMMAND EXPORT utilitiesConfig)
-
 if (NOT UTILITIES_LIBRARY_TYPE STREQUAL "OBJECT")
 target_link_libraries(gmlc_utilities utilities_base)
 install(TARGETS gmlc_utilities
