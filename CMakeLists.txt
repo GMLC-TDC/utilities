@@ -50,7 +50,7 @@ if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
   )
 endif()
 
-option(GMLC_UTILITIES_WITH_CMAKE_PACKAGE "Generate and install cmake package files" ${HELICS_ROOT_PROJ})
+option(GMLC_UTILITIES_WITH_CMAKE_PACKAGE "Generate and install cmake package files" ${UTILITIES_MASTER_PROJECT})
 mark_as_advanced(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
 
 
