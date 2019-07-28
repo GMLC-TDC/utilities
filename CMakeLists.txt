@@ -92,8 +92,6 @@ endif()
 
 endif()
 
-target_include_directories(utilities_base INTERFACE ThirdParty)
-
 install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
 add_subdirectory(gmlc)
 
