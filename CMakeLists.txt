@@ -18,6 +18,7 @@ set (GMLC_UTILITIES_DATE "07-27-19")
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+message(STATUS "setting as master project")
     # User settable
     set(UTILITIES_CXX_STD "14"  CACHE STRING "The CMake standard to require")
 
@@ -26,7 +27,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(CMAKE_CXX_EXTENSIONS OFF)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 	set(UTILITIES_MASTER_PROJECT ON)
+	include(CTest)
 else()
+message(STATUS "setting as subproject")
    set(UTILITIES_MASTER_PROJECT OFF)
 endif()
 
@@ -39,6 +42,7 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/config/cmake/")
 include(extraMacros)
 include(CMakeDependentOption)
+
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -89,7 +93,7 @@ if(Boost_FOUND)
 endif()
 
 install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
-add_subdirectory(gmlc)
+
 
 
 if (UTILITIES_MASTER_PROJECT)
@@ -101,6 +105,8 @@ set(GMLC_UTILITIES_TEST OFF)
 option(GMLC_UTILITIES_OBJECT_LIB "Enable construction of the utilities object library" OFF)
 option(GMLC_UTILITIES_STATIC_LIB "enable Construction of the utilities static library" ON)
 endif()
+
+add_subdirectory(gmlc)
 
 if (GMLC_UTILITIES_TEST)
 	enable_testing()
