@@ -81,12 +81,8 @@ option(GMLC_UTILITIES_INCLUDE_BOOST "Enable some boost library headers to be use
 # Add boost to test boost::optional if available
 find_package(Boost 1.61)
 if(Boost_FOUND)
-if (TARGET Boost::boost)
-    target_link_libraries(utilities_base INTERFACE Boost::boost)
-else()
 	message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
    target_include_directories(utilities_base SYSTEM INTERFACE $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
-endif()
     target_compile_definitions(utilities_base INTERFACE USE_BOOST_OPTIONAL)
 	target_compile_definitions(utilities_base INTERFACE ENABLE_BOOST_TYPES)
 
@@ -95,15 +91,22 @@ endif()
 install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
 add_subdirectory(gmlc)
 
+
 if (UTILITIES_MASTER_PROJECT)
 option(GMLC_UTILITIES_TEST "Enable tests for the containers library" ON)
+set(GMLC_UTILITIES_OBJECT_LIB OFF)
+set(GMLC_UTILITIES_STATIC_LIB ON)
 else()
 set(GMLC_UTILITIES_TEST OFF)
+option(GMLC_UTILITIES_OBJECT_LIB "Enable construction of the utilities object library" OFF)
+option(GMLC_UTILITIES_STATIC_LIB "enable Construction of the utilities static library" ON)
 endif()
 
 if (GMLC_UTILITIES_TEST)
 	enable_testing()
-	add_subdirectory(tests)
+	if (BUILD_TESTING)
+	   add_subdirectory(tests)
+	endif()
 endif()
 
 
