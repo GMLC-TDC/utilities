@@ -304,3 +304,21 @@ TEST(stringops, splitLineBracket_tests)
     EXPECT_TRUE(testres3[0] == "$45,34,45$");
     EXPECT_TRUE(testres3[1] == "$23.45,34,23.3$");
 }
+
+TEST(stringops, randomString)
+{
+    auto str1 = randomString(50000);
+    std::sort(str1.begin(), str1.end());
+    auto ept = std::unique(str1.begin(), str1.end());
+    EXPECT_EQ(ept - str1.begin(), 62u);
+
+    std::vector<std::string> rstring;
+    for (int ii = 0; ii < 20; ++ii)
+    {
+        rstring.push_back(randomString(10));
+    }
+
+    std::sort(rstring.begin(), rstring.end());
+    auto eptS = std::unique(rstring.begin(), rstring.end());
+    EXPECT_EQ(eptS - rstring.begin(), 20);
+}

@@ -304,5 +304,10 @@ appropriate character
 */
 std::string xmlCharacterCodeReplace(std::string str);
 }  // namespace stringOps
+/** brief generate a random string of a specific length
+@details the randomly generated string will contain characters from a-zA-Z0-9
+@return a randomly generated string*/
+std::string randomString(std::string::size_type length);
+
 }  // namespace utilities
 }  // namespace gmlc
