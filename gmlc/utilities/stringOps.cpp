@@ -426,12 +426,16 @@ std::string randomString(std::string::size_type length)
       "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 #ifndef __apple_build_version__
-    thread_local static std::mt19937 rg{std::random_device{}()};
+    thread_local static std::mt19937 rg{
+      std::random_device{}() +
+      static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) & 0xFFFFFFFFU)};
     thread_local static std::uniform_int_distribution<std::string::size_type>
       pick(0, 61);
 #else
 #if __clang_major__ >= 8
-    thread_local static std::mt19937 rg{std::random_device{}()};
+    thread_local static std::mt19937 rg{
+      std::random_device{}() +
+      static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) & 0xFFFFFFFFU)};
     thread_local static std::uniform_int_distribution<std::string::size_type>
       pick(0, 61);
 #else
@@ -442,9 +446,9 @@ std::string randomString(std::string::size_type length)
     if (genPtr == nullptr)
     {
         genPtr = new std::mt19937(
-          std::random_device{}() +
-          static_cast<unsigned int>(
-            std::hash<std::thread::id>{}(std::this_thread::get_id())));
+          std::random_device{}() + std::random_device{}() +
+          static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) &
+                                0xFFFFFFFFU));
     }
     auto &rg = *genPtr;
     static __thread std::uniform_int_distribution<std::string::size_type>
