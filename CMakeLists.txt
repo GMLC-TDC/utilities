@@ -82,14 +82,21 @@ endif(${CXX_STANDARD_FLAG})
 
 
 option(GMLC_UTILITIES_INCLUDE_BOOST "Enable some boost library headers to be used" ON)
+option(GMLC_UTILITIES_USE_BOOST_SPIRIT "Enable the use of the boost::spirit parser for converting strings" ON)
+mark_as_advanced(GMLC_UTILITIES_USE_BOOST_SPIRIT)
+
 # Add boost to test boost::optional if available
+if (GMLC_UTILITIES_INCLUDE_BOOST)
 find_package(Boost 1.61)
 if(Boost_FOUND)
 	message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
    target_include_directories(utilities_base SYSTEM INTERFACE $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
-    target_compile_definitions(utilities_base INTERFACE USE_BOOST_OPTIONAL)
-	target_compile_definitions(utilities_base INTERFACE ENABLE_BOOST_TYPES)
 
+	if (GMLC_UTILITIES_USE_BOOST_SPIRIT)
+    target_compile_definitions(utilities_base INTERFACE -DUSE_BOOST_SPIRIT=1)
+	endif()
+
+endif()
 endif()
 
 install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
