@@ -9,10 +9,11 @@
  * For details, see the LICENSE file.
  * LLNS Copyright End
  */
+#pragma once
 
 // don't need the time series object but if you include this I want timeSeries
 // to be included as well along with all the other objects
-#include "timeSeries.hpp"
+#include "TimeSeries.hpp"
 namespace gmlc
 {
 namespace utilities

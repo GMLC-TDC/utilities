@@ -7,13 +7,13 @@
 cmake_minimum_required(VERSION 3.4)
 cmake_policy(VERSION 3.4)
 
-project (GMLC_UTILITIES VERSION 0.1.1)
+project (GMLC_UTILITIES VERSION 0.1.2)
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 #-----------------------------------------------------------------------------
 set (GMLC_UTILITIES_VERSION_BUILD )
-set (GMLC_UTILITIES_DATE "07-27-19")
+set (GMLC_UTILITIES_DATE "08-15-19")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
@@ -93,8 +93,6 @@ if(Boost_FOUND)
 endif()
 
 install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
-
-
 
 if (UTILITIES_MASTER_PROJECT)
 option(GMLC_UTILITIES_TEST "Enable tests for the containers library" ON)
