@@ -20,6 +20,7 @@ set(utilities_header_files
   vectorOps.hpp
   TimeSeries.hpp
   TimeSeriesMulti.hpp
+  demangle.hpp
 )
 
 

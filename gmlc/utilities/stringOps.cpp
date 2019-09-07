@@ -18,6 +18,7 @@
 #include <cmath>
 #include <fstream>
 #include <iomanip>
+#include <random>
 
 namespace gmlc
 {
@@ -418,5 +419,59 @@ std::string xmlCharacterCodeReplace(std::string str)
     return out;
 }
 }  // namespace stringOps
+
+std::string randomString(std::string::size_type length)
+{
+    static constexpr auto chars =
+      "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+#ifndef __apple_build_version__
+    thread_local static std::mt19937 rg{
+      std::random_device{}() +
+      static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) & 0xFFFFFFFFU)};
+    thread_local static std::uniform_int_distribution<std::string::size_type>
+      pick(0, 61);
+#else
+#if __clang_major__ >= 8
+    thread_local static std::mt19937 rg{
+      std::random_device{}() +
+      static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) & 0xFFFFFFFFU)};
+    thread_local static std::uniform_int_distribution<std::string::size_type>
+      pick(0, 61);
+#else
+    // this will leak on thread termination,  older apple clang does not have
+    // proper thread_local variables so there really isn't any option
+
+    static __thread std::mt19937 *genPtr = nullptr;
+    if (genPtr == nullptr)
+    {
+        genPtr = new std::mt19937(
+          std::random_device{}() + std::random_device{}() +
+          static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) &
+                                0xFFFFFFFFU));
+    }
+    auto &rg = *genPtr;
+    static __thread std::uniform_int_distribution<std::string::size_type>
+      *pickPtr = nullptr;
+    if (pickPtr == nullptr)
+    {
+        pickPtr =
+          new std::uniform_int_distribution<std::string::size_type>(0, 61);
+    }
+    auto &pick = *pickPtr;
+
+#endif
+#endif
+
+    std::string s;
+
+    s.reserve(length);
+
+    while (length--)
+        s.push_back(chars[pick(rg)]);
+
+    return s;
+}
+
 }  // namespace utilities
 }  // namespace gmlc
