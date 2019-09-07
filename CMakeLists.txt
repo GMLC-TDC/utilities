@@ -120,29 +120,29 @@ endif()
 # -------------------------------------------------------------
 # message(STATUS ${CMAKE_CXX_FLAGS})
 
-option(GENERATE_DOXYGEN_DOC "Generate Doxygen doc target" OFF)
+option(GMLC_UTILITIES_GENERATE_DOXYGEN_DOC "Generate Doxygen doc target" OFF)
 
-if(GENERATE_DOXYGEN_DOC)
+if(GMLC_UTILITIES_GENERATE_DOXYGEN_DOC)
 	find_package(Doxygen)
 	if(DOXYGEN_FOUND)
 
     show_variable(
-      DOXYGEN_OUTPUT_DIR
+      GMLC_UTILITIES_DOXYGEN_OUTPUT_DIR
       PATH
       "location to put Doxygen docs"
       "${PROJECT_BINARY_DIR}/docs"
     )
     configure_file(
-      ${CMAKE_CURRENT_SOURCE_DIR}/config/Doxyfile.in
+      ${PROJECT_SOURCE_DIR}/config/Doxyfile.in
       ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY
     )
     add_custom_target(
-      doc ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+      doc ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
 			WORKING_DIRECTORY ${DOXYGET_OUTPUT_DIR}
       COMMENT "Generating API documentation with Doxygen"
       VERBATIM
 		)
 	endif(DOXYGEN_FOUND)
-endif(GENERATE_DOXYGEN_DOC)
+endif(GMLC_UTILITIES_GENERATE_DOXYGEN_DOC)
 
 
