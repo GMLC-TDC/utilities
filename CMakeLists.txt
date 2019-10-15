@@ -1,36 +1,31 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Copyright (c) 2017-2019, Battelle Memorial Institute; Lawrence Livermore
+# National Security, LLC; Alliance for Sustainable Energy, LLC.
+# See the top-level NOTICE for additional details.
+# All rights reserved.
 #
-# Copyright © 2017-2019, Battelle Memorial Institute; Lawrence Livermore National
-# Security, LLC; Alliance for Sustainable Energy, LLC All rights reserved. See LICENSE
-# file and DISCLAIMER for more details.
-#
+# SPDX-License-Identifier: BSD-3-Clause
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 cmake_minimum_required(VERSION 3.4)
 cmake_policy(VERSION 3.4)
 
-project (GMLC_UTILITIES VERSION 0.1.2)
+project (GMLC_UTILITIES VERSION 0.2.0)
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 #-----------------------------------------------------------------------------
 set (GMLC_UTILITIES_VERSION_BUILD )
-set (GMLC_UTILITIES_DATE "08-15-19")
+set (GMLC_UTILITIES_DATE "10-15-19")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-message(STATUS "setting as master project")
-    # User settable
-    set(UTILITIES_CXX_STD "14"  CACHE STRING "The CMake standard to require")
 
   #  set(CUR_PROJ ON)
-    set(CMAKE_CXX_STANDARD ${UTILITIES_CXX_STD})
     set(CMAKE_CXX_EXTENSIONS OFF)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
-	set(UTILITIES_MASTER_PROJECT ON)
 	include(CTest)
-else()
-message(STATUS "setting as subproject")
-   set(UTILITIES_MASTER_PROJECT OFF)
 endif()
 
 if (NOT CMAKE_CXX_STANDARD)
@@ -47,7 +42,7 @@ include(CMakeDependentOption)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Prohibit in-source build
-if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(
     FATAL_ERROR
       "In-source build is not supported. Please, use an empty directory for building the project."
@@ -101,7 +96,7 @@ endif()
 
 install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
 
-if (UTILITIES_MASTER_PROJECT)
+if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 option(GMLC_UTILITIES_TEST "Enable tests for the containers library" ON)
 set(GMLC_UTILITIES_OBJECT_LIB OFF)
 set(GMLC_UTILITIES_STATIC_LIB ON)

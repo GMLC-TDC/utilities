@@ -62,7 +62,7 @@ void appendInteger(std::string &input, X val)
       (std::is_signed<X>::value) ? ((val < X(0)) ? (X(0) - val) : val) : val;
     if (x < 10)
     {
-        input.push_back(x + '0');
+        input.push_back(static_cast<char>(x + '0'));
         return;
     }
     int digits =
