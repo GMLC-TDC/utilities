@@ -158,6 +158,11 @@ TEST(stringops, splitline_test2)
     testres = splitline(test1, ";, ", delimiter_compression::on);
 
     EXPECT_TRUE(testres.size() == 3);
+
+    // test the vector fill overload
+    std::vector<std::string> resVector;
+    splitline(test1, resVector, ";, ", delimiter_compression::on);
+    EXPECT_EQ(resVector, testres);
 }
 
 /** simple split line test*/
@@ -170,6 +175,24 @@ TEST(stringops, splitline_test3)
     EXPECT_TRUE(testres[0] == "alpha");
     EXPECT_TRUE(testres[1] == "bravo");
     EXPECT_TRUE(testres[2] == "charlie");
+}
+
+/** simple split line test*/
+TEST(stringops, splitline_char)
+{
+    std::string test1 = " alpha-bravo-charlie";
+    auto testres = splitline(test1, '-');
+    trim(testres);
+    ASSERT_TRUE(testres.size() == 3);
+    EXPECT_TRUE(testres[0] == "alpha");
+    EXPECT_TRUE(testres[1] == "bravo");
+    EXPECT_TRUE(testres[2] == "charlie");
+
+    // test the vector overload
+    std::vector<std::string> resVector;
+    splitline(test1, resVector, '-');
+    trim(resVector);
+    EXPECT_EQ(testres, resVector);
 }
 
 /**remove quotes test test*/
@@ -321,4 +344,73 @@ TEST(stringops, randomString)
     std::sort(rstring.begin(), rstring.end());
     auto eptS = std::unique(rstring.begin(), rstring.end());
     EXPECT_EQ(eptS - rstring.begin(), 20);
+}
+
+TEST(stringops, trailingInt)
+{
+    std::string name;
+
+    auto val = trailingStringInt("bob47", name);
+    EXPECT_EQ(val, 47);
+    EXPECT_EQ(name, "bob");
+
+    val = trailingStringInt("bob", name);
+    EXPECT_EQ(val, -1);
+    EXPECT_EQ(name, "bob");
+    val = trailingStringInt("bob", name, -45);
+    EXPECT_EQ(val, -45);
+    EXPECT_EQ(name, "bob");
+
+    val = trailingStringInt(std::string{}, name);
+    EXPECT_EQ(val, -1);
+    EXPECT_TRUE(name.empty());
+
+    val = trailingStringInt("457", name);
+    EXPECT_EQ(val, 457);
+    EXPECT_TRUE(name.empty());
+
+    val = trailingStringInt("pos5", name);
+    EXPECT_EQ(val, 5);
+    EXPECT_EQ(name, "pos");
+
+    val = trailingStringInt("pos_45", name);
+    EXPECT_EQ(val, 45);
+    EXPECT_EQ(name, "pos");
+
+    val = trailingStringInt("pos#45", name);
+    EXPECT_EQ(val, 45);
+    EXPECT_EQ(name, "pos");
+
+    val = trailingStringInt("1234567890123456789", name);
+    EXPECT_EQ(val, 123456789);
+    EXPECT_EQ(name, "1234567890");
+}
+
+TEST(stringops, trailingIntNoRet)
+{
+    auto val = trailingStringInt("bob47");
+    EXPECT_EQ(val, 47);
+
+    val = trailingStringInt("bob");
+    EXPECT_EQ(val, -1);
+    val = trailingStringInt("bob", -45);
+    EXPECT_EQ(val, -45);
+
+    val = trailingStringInt(std::string{});
+    EXPECT_EQ(val, -1);
+
+    val = trailingStringInt("457");
+    EXPECT_EQ(val, 457);
+
+    val = trailingStringInt("pos5");
+    EXPECT_EQ(val, 5);
+
+    val = trailingStringInt("pos_45");
+    EXPECT_EQ(val, 45);
+
+    val = trailingStringInt("pos#45");
+    EXPECT_EQ(val, 45);
+
+    val = trailingStringInt("1234567890123456789");
+    EXPECT_EQ(val, 123456789);
 }

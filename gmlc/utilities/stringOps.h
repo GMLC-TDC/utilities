@@ -222,19 +222,25 @@ stringVector splitlineBracket(
 
 /** @brief extract a trailing number from a string return the number and the
 string without the number
+@details will convert up to the last 9 digits so there is no overload there is
+no throw technically could if the string allocation were to fail but that is a
+strange case
 @param input the string to extract the information from
 @param[out] output the leading string with the numbers removed
 @param defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
 int trailingStringInt(const std::string &input,
                       std::string &output,
-                      int defNum = -1);
+                      int defNum = -1) noexcept;
 
 /** @brief extract a trailing number from a string
+@details will convert up to the last 9 digits so there is no overload there is
+no throw technically could if the string allocation were to fail but that is a
+strange case
 @param input the string to extract the information from
 @param defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
-int trailingStringInt(const std::string &input, int defNum = -1);
+int trailingStringInt(const std::string &input, int defNum = -1) noexcept;
 
 /**@brief enumeration for string close matches
  */

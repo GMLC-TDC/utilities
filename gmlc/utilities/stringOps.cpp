@@ -130,7 +130,9 @@ void trim(stringVector &input, const std::string &whitespace)
 }
 
 static const std::string digits("0123456789");
-int trailingStringInt(const std::string &input, std::string &output, int defNum)
+int trailingStringInt(const std::string &input,
+                      std::string &output,
+                      int defNum) noexcept
 {
     if ((input.empty()) || (isdigit(input.back()) == 0))
     {
@@ -141,36 +143,45 @@ int trailingStringInt(const std::string &input, std::string &output, int defNum)
     auto pos1 = input.find_last_not_of(digits);
     if (pos1 == std::string::npos)  // in case the whole thing is a number
     {
-        output.clear();
-        num = std::stol(input);
+        if (input.length() <= 10)
+        {
+            output.clear();
+            num = std::stol(input);
+            return num;
+        }
+        pos1 = input.length() - 10;
+    }
+
+    size_t length = input.length();
+    if (pos1 == length - 2)
+    {
+        num = input.back() - '0';
+    }
+    else if ((length <= 10) || (pos1 >= length - 10))
+    {
+        num = std::stol(input.substr(pos1 + 1));
     }
     else
     {
-        if (pos1 == input.length() - 2)
-        {
-            num = input.back() - '0';
-        }
-        else
-        {
-            num = std::stol(input.substr(pos1 + 1));
-        }
+        num = std::stol(input.substr(length - 9));
+        pos1 = length - 10;
+    }
 
-        if ((input[pos1] == '_') || (input[pos1] == '#'))
-        {
-            output = input.substr(0, pos1);
-        }
-        else
-        {
-            output = input.substr(0, pos1 + 1);
-        }
+    if ((input[pos1] == '_') || (input[pos1] == '#'))
+    {
+        output = input.substr(0, pos1);
+    }
+    else
+    {
+        output = input.substr(0, pos1 + 1);
     }
 
     return num;
 }
 
-int trailingStringInt(const std::string &input, int defNum)
+int trailingStringInt(const std::string &input, int defNum) noexcept
 {
-    if (isdigit(input.back()) == 0)
+    if ((input.empty()) || (isdigit(input.back()) == 0))
     {
         return defNum;
     }
@@ -178,15 +189,26 @@ int trailingStringInt(const std::string &input, int defNum)
     auto pos1 = input.find_last_not_of(digits);
     if (pos1 == std::string::npos)  // in case the whole thing is a number
     {
-        return std::stol(input);
+        if (input.length() <= 10)
+        {
+            return std::stol(input);
+        }
+        pos1 = input.length() - 10;
     }
 
-    if (pos1 == input.length() - 2)
+    size_t length = input.length();
+    if (pos1 == length - 2)
     {
         return input.back() - '0';
     }
-
-    return std::stol(input.substr(pos1 + 1));
+    else if ((length <= 10) || (pos1 >= length - 10))
+    {
+        return std::stol(input.substr(pos1 + 1));
+    }
+    else
+    {
+        return std::stol(input.substr(length - 9));
+    }
 }
 
 static const std::string quoteChars(R"raw("'`)raw");
