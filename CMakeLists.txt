@@ -1,43 +1,46 @@
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~
 # Copyright (c) 2017-2019, Battelle Memorial Institute; Lawrence Livermore
 # National Security, LLC; Alliance for Sustainable Energy, LLC.
 # See the top-level NOTICE for additional details.
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~
 
 cmake_minimum_required(VERSION 3.4)
 cmake_policy(VERSION 3.4)
 
-project (GMLC_UTILITIES VERSION 0.2.0)
+project(GMLC_UTILITIES VERSION 0.2.1)
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
-#-----------------------------------------------------------------------------
-set (GMLC_UTILITIES_VERSION_BUILD )
-set (GMLC_UTILITIES_DATE "10-15-19")
+# -----------------------------------------------------------------------------
+set(GMLC_UTILITIES_VERSION_BUILD)
+set(GMLC_UTILITIES_DATE "10-22-19")
 
-set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
+
+
+set(GMLC_UTILITIES_VERSION_STRING
+    "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
-  #  set(CUR_PROJ ON)
-    set(CMAKE_CXX_EXTENSIONS OFF)
-    set(CMAKE_CXX_STANDARD_REQUIRED ON)
-	include(CTest)
+  set(CMAKE_CXX_EXTENSIONS OFF)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  
 endif()
 
-if (NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 14)
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
 endif()
 # -----------------------------------------------------------------------------
 # set the module path and include some common macros
 # -----------------------------------------------------------------------------
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/config/cmake/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+                      "${PROJECT_SOURCE_DIR}/config/cmake/")
 include(extraMacros)
 include(CMakeDependentOption)
-
+include(CTest)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -46,105 +49,94 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(
     FATAL_ERROR
       "In-source build is not supported. Please, use an empty directory for building the project."
-  )
+    )
 endif()
 
-option(GMLC_UTILITIES_WITH_CMAKE_PACKAGE "Generate and install cmake package files" ${UTILITIES_MASTER_PROJECT})
+option(GMLC_UTILITIES_WITH_CMAKE_PACKAGE
+       "Generate and install cmake package files" ${UTILITIES_MASTER_PROJECT})
 mark_as_advanced(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
-
 
 # Install instructions for this target
 if(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
-    set(UTILITIES_LIBRARY_EXPORT_COMMAND EXPORT utilitiesConfig)
+  set(UTILITIES_LIBRARY_EXPORT_COMMAND EXPORT utilitiesConfig)
 else(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
-    set(UTILITIES_LIBRARY_EXPORT_COMMAND)
+  set(UTILITIES_LIBRARY_EXPORT_COMMAND)
 endif(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
 
 add_library(utilities_base INTERFACE)
 
 include(compiler_flags)
 message(STATUS "setting version build options to \"${CXX_STANDARD_FLAG}\"")
-if(${CXX_STANDARD_FLAG})
+if(CXX_STANDARD_FLAG)
   if(MSVC)
-		target_compile_options(utilities_base INTERFACE ${CXX_STANDARD_FLAG})
-	else()
+    target_compile_options(utilities_base INTERFACE ${CXX_STANDARD_FLAG})
+  else()
     target_compile_options(
       utilities_base
-      INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${CXX_STANDARD_FLAG}}>
-    )
+      INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${CXX_STANDARD_FLAG}}>)
   endif(MSVC)
-endif(${CXX_STANDARD_FLAG})
+endif(CXX_STANDARD_FLAG)
 
-
-option(GMLC_UTILITIES_INCLUDE_BOOST "Enable some boost library headers to be used" ON)
-option(GMLC_UTILITIES_USE_BOOST_SPIRIT "Enable the use of the boost::spirit parser for converting strings" ON)
+option(GMLC_UTILTIES_INSTALL "Enable GMLC utilities to be installed" ON)
+option(GMLC_UTILITIES_INCLUDE_BOOST
+       "Enable some boost library headers to be used" ON)
+option(GMLC_UTILITIES_USE_BOOST_SPIRIT
+       "Enable the use of the boost::spirit parser for converting strings" ON)
 mark_as_advanced(GMLC_UTILITIES_USE_BOOST_SPIRIT)
 
 # Add boost to test boost::optional if available
-if (GMLC_UTILITIES_INCLUDE_BOOST)
-find_package(Boost 1.61)
-if(Boost_FOUND)
-	message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
-   target_include_directories(utilities_base SYSTEM INTERFACE $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
+if(GMLC_UTILITIES_INCLUDE_BOOST)
+  find_package(Boost 1.61)
+  if(Boost_FOUND)
+    message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
+    target_include_directories(
+      utilities_base SYSTEM
+      INTERFACE $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>)
 
-	if (GMLC_UTILITIES_USE_BOOST_SPIRIT)
-    target_compile_definitions(utilities_base INTERFACE -DUSE_BOOST_SPIRIT=1)
-	endif()
+    if(GMLC_UTILITIES_USE_BOOST_SPIRIT)
+      target_compile_definitions(utilities_base INTERFACE -DUSE_BOOST_SPIRIT=1)
+    endif()
 
+  endif()
 endif()
+
+if(GMLC_UTILITIES_INSTALL)
+  install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
 endif()
 
-install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})
+cmake_dependent_option(GMLC_UTILITIES_TEST "Enable tests for the containers library" ON "CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME" OFF)
 
-if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-option(GMLC_UTILITIES_TEST "Enable tests for the containers library" ON)
-set(GMLC_UTILITIES_OBJECT_LIB OFF)
-set(GMLC_UTILITIES_STATIC_LIB ON)
-else()
-set(GMLC_UTILITIES_TEST OFF)
-option(GMLC_UTILITIES_OBJECT_LIB "Enable construction of the utilities object library" OFF)
-option(GMLC_UTILITIES_STATIC_LIB "enable Construction of the utilities static library" ON)
-endif()
+cmake_dependent_option(GMLC_UTILITIES_OBJECT_LIB "Enable construction of the utilities object library" OFF "NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME" OFF)
+
+cmake_dependent_option(GMLC_UTILITIES_STATIC_LIB "Enable construction of the utilities static library" ON "NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME" ON)
+
 
 add_subdirectory(gmlc)
 
-if (GMLC_UTILITIES_TEST)
-	enable_testing()
-	if (BUILD_TESTING)
-	   add_subdirectory(tests)
-	endif()
+if(GMLC_UTILITIES_TEST AND BUILD_TESTING)
+    add_subdirectory(tests)
 endif()
-
-
 
 # -------------------------------------------------------------
 # Get some configuration for C++17 as that becomes available
 # -------------------------------------------------------------
 # message(STATUS ${CMAKE_CXX_FLAGS})
 
-option(GMLC_UTILITIES_GENERATE_DOXYGEN_DOC "Generate Doxygen doc target" OFF)
+cmake_dependent_option(GMLC_UTILITIES_GENERATE_DOXYGEN_DOC "Generate Doxygen doc target" OFF "CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME" OFF)
 
 if(GMLC_UTILITIES_GENERATE_DOXYGEN_DOC)
-	find_package(Doxygen)
-	if(DOXYGEN_FOUND)
+  find_package(Doxygen)
+  if(DOXYGEN_FOUND)
 
-    show_variable(
-      GMLC_UTILITIES_DOXYGEN_OUTPUT_DIR
-      PATH
-      "location to put Doxygen docs"
-      "${PROJECT_BINARY_DIR}/docs"
-    )
-    configure_file(
-      ${PROJECT_SOURCE_DIR}/config/Doxyfile.in
-      ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY
-    )
-    add_custom_target(
-      doc ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
-			WORKING_DIRECTORY ${DOXYGET_OUTPUT_DIR}
-      COMMENT "Generating API documentation with Doxygen"
-      VERBATIM
-		)
-	endif(DOXYGEN_FOUND)
+    show_variable(GMLC_UTILITIES_DOXYGEN_OUTPUT_DIR
+                  PATH
+                  "location to put Doxygen docs"
+                  "${PROJECT_BINARY_DIR}/docs")
+    configure_file(${PROJECT_SOURCE_DIR}/config/Doxyfile.in
+                   ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+    add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Doxyfile
+                      WORKING_DIRECTORY ${DOXYGET_OUTPUT_DIR}
+                      COMMENT "Generating API documentation with Doxygen"
+                      VERBATIM)
+  endif(DOXYGEN_FOUND)
 endif(GMLC_UTILITIES_GENERATE_DOXYGEN_DOC)
-
-
