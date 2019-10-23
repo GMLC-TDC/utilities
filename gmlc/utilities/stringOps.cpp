@@ -256,20 +256,22 @@ std::string getTailString(const std::string &input, char sep) noexcept
     return ret;
 }
 
-std::string getTailString(const std::string &input, const std::string &sep) noexcept
+std::string getTailString(const std::string &input,
+                          const std::string &sep) noexcept
 {
     auto tc = input.rfind(sep);
-    std::string ret = (tc == std::string::npos) ? input : input.substr(tc + sep.size());
+    std::string ret =
+      (tc == std::string::npos) ? input : input.substr(tc + sep.size());
     return ret;
 }
 
-std::string getTailString_any(const std::string &input, const std::string &sep) noexcept
+std::string getTailString_any(const std::string &input,
+                              const std::string &sep) noexcept
 {
     auto tc = input.find_last_of(sep);
     std::string ret = (tc == std::string::npos) ? input : input.substr(tc + 1);
     return ret;
 }
-
 
 int findCloseStringMatch(const stringVector &testStrings,
                          const stringVector &iStrings,
