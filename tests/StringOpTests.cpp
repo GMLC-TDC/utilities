@@ -284,6 +284,11 @@ TEST(stringops, removeQuotes_test)
     testres = removeQuotes(test4);
 
     EXPECT_TRUE(testres == " remove quotes ");
+
+    std::string test5 = "   ` remove quotes `  ";
+    testres = removeQuotes(test5);
+
+    EXPECT_TRUE(testres == " remove quotes ");
 }
 
 /**remove quotes test test*/
@@ -545,4 +550,70 @@ TEST(stringops, trailingIntNoRet)
     EXPECT_EQ(val, 123456789);
     val = trailingStringInt("abab1234567890123456789");
     EXPECT_EQ(val, 123456789);
+}
+
+TEST(stringops, removeChar)
+{
+    auto res = removeChar("happyDay", 'a');
+    EXPECT_EQ(res, "hppyDy");
+
+    res = removeChar("    ", ' ');
+    EXPECT_TRUE(res.empty());
+
+    res = removeChar(std::string{}, ' ');
+    EXPECT_TRUE(res.empty());
+
+    res = removeChar("_inter_e_stin_g", '_');
+    EXPECT_EQ(res, "interesting");
+}
+
+TEST(stringops, removeChars)
+{
+    auto res = removeChars("happyDay", "a");
+    EXPECT_EQ(res, "hppyDy");
+
+    res = removeChars("happyDay", "pa");
+    EXPECT_EQ(res, "hyDy");
+    res = removeChars("happyDay", "pay");
+    EXPECT_EQ(res, "hD");
+
+    res = removeChars("    ", " ");
+    EXPECT_TRUE(res.empty());
+
+    res = removeChars(std::string{}, " ");
+    EXPECT_TRUE(res.empty());
+
+    res = removeChars("_inter_e_stin_g", "_");
+    EXPECT_EQ(res, "interesting");
+}
+
+TEST(stringops, characterReplace)
+{
+    auto res = characterReplace("happyDay#", '#', "_Today");
+    EXPECT_EQ(res, "happyDay_Today");
+
+    res = characterReplace("#happyDay", '#', "TodayIsA");
+    EXPECT_EQ(res, "TodayIsAhappyDay");
+
+    res = characterReplace("_happy_Day_", '_', "");
+    EXPECT_EQ(res, "happyDay");
+
+    res = characterReplace("_happy_Day_", '_', "");
+    EXPECT_EQ(res, "happyDay");
+}
+
+TEST(stringops, findClosestMatch)
+{
+    stringVector iString{"stringabcd", "Abcd2", "Abracabcdabra"};
+
+    int res = findCloseStringMatch({"abcd"}, iString, string_match_type::begin);
+    EXPECT_EQ(res, 1);
+    res = findCloseStringMatch({"abcd"}, iString, string_match_type::exact);
+    EXPECT_EQ(res, -1);
+    res = findCloseStringMatch({"abcd"}, iString, string_match_type::end);
+    EXPECT_EQ(res, 0);
+    res = findCloseStringMatch({"cabc"}, iString, string_match_type::close);
+    EXPECT_EQ(res, 2);
+    res = findCloseStringMatch({"abcd"}, iString, string_match_type::close);
+    EXPECT_EQ(res, 0);
 }

@@ -300,7 +300,7 @@ int findCloseStringMatch(const stringVector &testStrings,
                 }
                 break;
             case string_match_type::begin:
-                if (lct.compare(0, lct.length(), lcis) == 0)
+                if (lcis.compare(0, lct.length(), lct) == 0)
                 {
                     return kk;
                 }
