@@ -617,3 +617,37 @@ TEST(stringops, findClosestMatch)
     res = findCloseStringMatch({"abcd"}, iString, string_match_type::close);
     EXPECT_EQ(res, 0);
 }
+
+TEST(stringops, findClosestMatch2)
+{
+    stringVector iString{"stringabcd", "Abcd2_i", "Abracabcdabra"};
+
+    int res = findCloseStringMatch({"abcd", "ABcd2_i"}, iString,
+                                   string_match_type::exact);
+    EXPECT_EQ(res, 1);
+    res = findCloseStringMatch({"invalidity", "abcd"}, iString,
+                               string_match_type::exact);
+    EXPECT_EQ(res, -1);
+    res = findCloseStringMatch({"invalidity", "abcd"}, iString,
+                               string_match_type::end);
+    EXPECT_EQ(res, 0);
+    res = findCloseStringMatch({"A"}, iString, string_match_type::close);
+    EXPECT_EQ(res, -1);
+    res = findCloseStringMatch({"i"}, iString, string_match_type::close);
+    EXPECT_EQ(res, 1);
+}
+
+TEST(stringops, xmlcharacterCodes)
+{
+    EXPECT_EQ(xmlCharacterCodeReplace("&lt;code&gt;"), "<code>");
+    EXPECT_EQ(xmlCharacterCodeReplace("&lt;&lt;code&gt;&gt;"), "<<code>>");
+    EXPECT_EQ(xmlCharacterCodeReplace("&quot;code&quot;"), "\"code\"");
+    EXPECT_EQ(xmlCharacterCodeReplace("&inv;code&quot;"), "&inv;code\"");
+    EXPECT_EQ(xmlCharacterCodeReplace("&apos;code&apos;"), "\'code\'");
+    EXPECT_EQ(xmlCharacterCodeReplace("&amp;code&amp;"), "&code&");
+    EXPECT_EQ(xmlCharacterCodeReplace("&amp;amp;"), "&amp;");
+    EXPECT_EQ(xmlCharacterCodeReplace("&amp;lt;"), "&lt;");
+    EXPECT_EQ(xmlCharacterCodeReplace("&amp;gt;"), "&gt;");
+    EXPECT_EQ(xmlCharacterCodeReplace("&amp;quot;"), "&quot;");
+    EXPECT_EQ(xmlCharacterCodeReplace("&amp;apos;"), "&apos;");
+}

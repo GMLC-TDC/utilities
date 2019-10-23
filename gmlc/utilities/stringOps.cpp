@@ -422,31 +422,32 @@ std::string xmlCharacterCodeReplace(std::string str)
     while (tt != std::string::npos)
     {
         out.replace(tt, 4, ">");
-        tt = out.find("&gt;");
+        tt = out.find("&gt;", tt + 1);
     }
     tt = out.find("&lt;");
     while (tt != std::string::npos)
     {
         out.replace(tt, 4, "<");
-        tt = out.find("&lt;");
-    }
-    tt = out.find("&amp;");
-    while (tt != std::string::npos)
-    {
-        out.replace(tt, 5, "&");
-        tt = out.find("&amp;");
+        tt = out.find("&lt;", tt + 1);
     }
     tt = out.find("&quot;");
     while (tt != std::string::npos)
     {
         out.replace(tt, 6, "\"");
-        tt = out.find("&quot;");
+        tt = out.find("&quot;", tt + 1);
     }
     tt = out.find("&apos;");
     while (tt != std::string::npos)
     {
         out.replace(tt, 6, "'");
-        tt = out.find("&apos;");
+        tt = out.find("&apos;", tt + 1);
+    }
+    //&amp; is last so it can't trigger other sequences
+    tt = out.find("&amp;");
+    while (tt != std::string::npos)
+    {
+        out.replace(tt, 5, "&");
+        tt = out.find("&amp;", tt + 1);
     }
     return out;
 }
