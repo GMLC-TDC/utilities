@@ -249,23 +249,31 @@ std::string removeBrackets(const std::string &str)
     return newString;
 }
 
-std::string getTailString(const std::string &input, char sep)
+std::string getTailString(const std::string &input, char sep) noexcept
 {
     auto tc = input.find_last_of(sep);
     std::string ret = (tc == std::string::npos) ? input : input.substr(tc + 1);
     return ret;
 }
 
-std::string getTailString(const std::string &input, const std::string &sep)
+std::string getTailString(const std::string &input, const std::string &sep) noexcept
+{
+    auto tc = input.rfind(sep);
+    std::string ret = (tc == std::string::npos) ? input : input.substr(tc + sep.size());
+    return ret;
+}
+
+std::string getTailString_any(const std::string &input, const std::string &sep) noexcept
 {
     auto tc = input.find_last_of(sep);
     std::string ret = (tc == std::string::npos) ? input : input.substr(tc + 1);
     return ret;
 }
+
 
 int findCloseStringMatch(const stringVector &testStrings,
                          const stringVector &iStrings,
-                         string_match_type_t matchType)
+                         string_match_type matchType)
 {
     std::string lct;  // lower case test string
     std::string lcis;  // lower case input string
@@ -283,19 +291,19 @@ int findCloseStringMatch(const stringVector &testStrings,
             lcis = lciStrings[kk];
             switch (matchType)
             {
-            case string_match_exact:
+            case string_match_type::exact:
                 if (lcis == lct)
                 {
                     return kk;
                 }
                 break;
-            case string_match_begin:
+            case string_match_type::begin:
                 if (lct.compare(0, lct.length(), lcis) == 0)
                 {
                     return kk;
                 }
                 break;
-            case string_match_end:
+            case string_match_type::end:
                 if (lct.length() > lcis.length())
                 {
                     continue;
@@ -306,7 +314,7 @@ int findCloseStringMatch(const stringVector &testStrings,
                     return kk;
                 }
                 break;
-            case string_match_close:
+            case string_match_type::close:
                 if (lct.length() == 1)  // special case
                 {  // we are checking if the single character is isolated from
                    // other other alphanumeric characters

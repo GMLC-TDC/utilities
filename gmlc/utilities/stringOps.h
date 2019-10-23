@@ -127,14 +127,22 @@ void trim(stringVector &input,
 @return  the tail string or the string that comes after the last sep character
 if not found returns the entire string
 */
-std::string getTailString(const std::string &input, char sep);
+std::string getTailString(const std::string &input, char sep) noexcept;
 /** @brief get a string that comes after the last of a specified separator
 @param input  the string to separate
-@param sep the separation character
-@return  the tail string or the string that comes after the last sep character
+@param sep the separation string (single character or sequence of characters
+@return  the tail string or the string that comes after the last of the separation strings
 if not found returns the entire string
 */
-std::string getTailString(const std::string &input, const std::string &sep);
+std::string getTailString(const std::string &input, const std::string &sep) noexcept;
+
+/** @brief get a string that comes after the last of any specified separator
+@param input  the string to separate
+@param sep the set of separation characters
+@return  the tail string or the string that comes after the last of the
+separation strings if not found returns the entire string
+*/
+std::string getTailString_any(const std::string &input, const std::string &sep) noexcept;
 
 const std::string default_delim_chars(",;");
 const std::string default_quote_chars(R"raw('"`)raw");
@@ -244,12 +252,12 @@ int trailingStringInt(const std::string &input, int defNum = -1) noexcept;
 
 /**@brief enumeration for string close matches
  */
-enum string_match_type_t
+enum class string_match_type
 {
-    string_match_close,
-    string_match_begin,
-    string_match_end,
-    string_match_exact
+    close, //!< the middle of one string matches another, ignoring '_'
+    begin, //!< the beginning of one string matches another
+    end,   //!< the ends of one string matches another
+    exact  //!< an exact match
 };
 
 /** @brief find a close match in a vector of strings to a test string
@@ -262,7 +270,7 @@ the matchType parameter and returns the index into the testStrings vector
 */
 int findCloseStringMatch(const stringVector &testStrings,
                          const stringVector &iStrings,
-                         string_match_type_t matchType = string_match_close);
+  string_match_type matchType = string_match_type::close);
 
 /** @brief remove a set of characters from a string
 @param source  the original string

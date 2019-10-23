@@ -5,7 +5,20 @@
 [![](https://img.shields.io/badge/License-BSD-blue.svg)](https://github.com/GMLC-TDC/utilities/blob/master/LICENSE)
 
 # Utilities
-Collection of utilities used inside [HELICS](https://github.com/GMLC-TDC/HELICS) and supporting repos.  These utilities are used for data storage for different purposes inside the code.  In some cases they were mage more general than needed to support other types or be useful elsewhere.
+Collection of utilities used inside [HELICS](https://github.com/GMLC-TDC/HELICS) and supporting repos.  These utilities are used for data storage for different purposes inside the code.  In some cases they were made more general than needed to support other types or be useful elsewhere.
 
 ## General utilities
 
+### StringOps
+
+A collection of common operations on StringOps
+
+### StringView_ops
+
+similar to stringOps but on string_view objects
+
+## Release
+The Utilities library is distributed under the terms of the BSD-3 clause license. All new
+contributions must be made under this license. [LICENSE](LICENSE)
+
+SPDX-License-Identifier: BSD-3-Clause

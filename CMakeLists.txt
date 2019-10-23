@@ -73,7 +73,7 @@ if(CXX_STANDARD_FLAG)
   else()
     target_compile_options(
       utilities_base
-      INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${CXX_STANDARD_FLAG}}>)
+      INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${CXX_STANDARD_FLAG}>)
   endif(MSVC)
 endif(CXX_STANDARD_FLAG)
 
