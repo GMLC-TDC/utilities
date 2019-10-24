@@ -366,6 +366,11 @@ int findCloseStringMatch(const stringVector &testStrings,
                     {
                         return kk;
                     }
+                    auto nstr2 = removeChar(lcis, '_');
+                    if ((lct == nstr2) || (nstr == nstr2))
+                    {
+                        return kk;
+                    }
                 }
                 break;
             }

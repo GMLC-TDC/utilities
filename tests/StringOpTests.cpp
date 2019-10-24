@@ -620,7 +620,8 @@ TEST(stringops, findClosestMatch)
 
 TEST(stringops, findClosestMatch2)
 {
-    stringVector iString{"stringabcd", "Abcd2_i", "Abracabcdabra"};
+    stringVector iString{"stringabcd", "Abcd2_i", "Abracabcdabra", "n idea",
+                         "having 8;idea"};
 
     int res = findCloseStringMatch({"abcd", "ABcd2_i"}, iString,
                                    string_match_type::exact);
@@ -635,6 +636,15 @@ TEST(stringops, findClosestMatch2)
     EXPECT_EQ(res, -1);
     res = findCloseStringMatch({"i"}, iString, string_match_type::close);
     EXPECT_EQ(res, 1);
+    res = findCloseStringMatch({"n"}, iString, string_match_type::close);
+    EXPECT_EQ(res, 3);
+    res = findCloseStringMatch({"8"}, iString, string_match_type::close);
+    EXPECT_EQ(res, 4);
+    res = findCloseStringMatch({"abcd2i"}, iString, string_match_type::close);
+    EXPECT_EQ(res, 1);
+    res =
+      findCloseStringMatch({"string_abcd"}, iString, string_match_type::close);
+    EXPECT_EQ(res, 0);
 }
 
 TEST(stringops, xmlcharacterCodes)
