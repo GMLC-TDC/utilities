@@ -219,7 +219,7 @@ TEST(stringViewOps, removeQuotes_test)
 
     EXPECT_TRUE(testres == " remove quotas ");
 
-	string_view test5 = "   ` remove quotes `  ";
+    string_view test5 = "   ` remove quotes `  ";
     testres = removeQuotes(test5);
 
     EXPECT_TRUE(testres == " remove quotes ");
@@ -272,7 +272,7 @@ TEST(stringViewOps, removeBrackets_test)
 
     EXPECT_TRUE(testres.empty());
 
-	std::string tstring(100, ' ');
+    std::string tstring(100, ' ');
     testres = removeBrackets(tstring);
 
     EXPECT_TRUE(testres.empty());
@@ -344,12 +344,11 @@ TEST(stringViewOps, splitLineBracket_tests)
     EXPECT_TRUE(testres3[1] == "$23.45,34,23.3$");
 }
 
-
 TEST(stringViewOps, trailingInt)
 {
     string_view name;
 
-	string_view input = "bob47";
+    string_view input = "bob47";
     auto val = trailingStringInt(input, name);
     EXPECT_EQ(val, 47);
     EXPECT_EQ(name, "bob");
@@ -427,28 +426,27 @@ TEST(stringViewOps, mergeTest)
     alongString.append("sep");
     alongString.append("test2");
 
-	string_view whole(alongString);
+    string_view whole(alongString);
     string_view part1 = whole.substr(0, 5);
 
-	string_view part2 = whole.substr(8);
+    string_view part2 = whole.substr(8);
 
-	string_view res=merge(part1, part2);
+    string_view res = merge(part1, part2);
     EXPECT_EQ(res, whole);
 
-	string_view empty;
+    string_view empty;
 
-	auto p3 = merge(part1, empty);
+    auto p3 = merge(part1, empty);
     EXPECT_EQ(p3, part1);
 
-	p3 = merge(empty, part1);
+    p3 = merge(empty, part1);
     EXPECT_EQ(p3, part1);
 
-	auto p4 = merge(empty, empty);
+    auto p4 = merge(empty, empty);
     EXPECT_TRUE(p4.empty());
 
-	std::string lstr(100, 'a');
-	string_view aba(lstr.c_str(),3);
-    string_view bab(lstr.c_str()+80,3);
+    std::string lstr(100, 'a');
+    string_view aba(lstr.c_str(), 3);
+    string_view bab(lstr.c_str() + 80, 3);
     EXPECT_THROW(auto p5 = merge(aba, bab), std::out_of_range);
-
 }
