@@ -51,14 +51,23 @@ void trim(string_viewVector &input, string_view trimCharacters)
     }
 }
 
-string_view getTailString(string_view input, char separationCharacter)
+string_view getTailString(string_view input, char separationCharacter) noexcept
 {
     auto tc = input.find_last_of(separationCharacter);
     string_view ret = (tc == string_view::npos) ? input : input.substr(tc + 1);
     return ret;
 }
 
-string_view getTailString(string_view input, string_view separationCharacters)
+string_view getTailString(string_view input, string_view sep) noexcept
+{
+    auto tc = input.rfind(sep);
+    string_view ret =
+      (tc == string_view::npos) ? input : input.substr(tc + sep.size());
+    return ret;
+}
+
+string_view getTailString_any(string_view input,
+                              string_view separationCharacters) noexcept
 {
     auto tc = input.find_last_of(separationCharacters);
     string_view ret = (tc == string_view::npos) ? input : input.substr(tc + 1);
@@ -103,7 +112,7 @@ string_view removeBrackets(string_view str)
 
 string_view merge(string_view string1, string_view string2)
 {
-    ptrdiff_t diff = (string2.data() - string1.data()) +
+    ptrdiff_t diff = (string2.data() - string1.data()) -
                      static_cast<ptrdiff_t>(string1.length());
     if ((diff >= 0) && (diff < 24))  // maximum of 24 bytes between the strings
     {
@@ -154,7 +163,7 @@ int toIntSimple(string_view input)
     int ret = 0;
     for (auto c : input)
     {
-        if (isdigit(c) != 0)
+        if (c>='0'&& c<='9')
         {
             ret = 10 * ret + (c - '0');
         }
@@ -165,7 +174,7 @@ int toIntSimple(string_view input)
 static const string_view digits("0123456789");
 int trailingStringInt(string_view input, string_view &output, int defNum)
 {
-    if (isdigit(input.back()) == 0)
+    if (input.empty()||(input.back() < '0' || input.back() > '9'))
     {
         output = input;
         return defNum;
@@ -174,28 +183,36 @@ int trailingStringInt(string_view input, string_view &output, int defNum)
     auto pos1 = input.find_last_not_of(digits);
     if (pos1 == string_view::npos)  // in case the whole thing is a number
     {
-        output = string_view{};
-        num = toIntSimple(input);
+        if (input.length() <= 10)
+        {
+            output = string_view{};
+            num = toIntSimple(input);
+            return num;
+        }
+        pos1 = input.length() - 10;
+    }
+    size_t length = input.length();
+    if (pos1 == length - 2)
+    {
+        num = input.back() - '0';
+    }
+    else if (length <= 10 || pos1 >= length - 10)
+    {
+        num = toIntSimple(input.substr(pos1 + 1));
     }
     else
     {
-        if (pos1 == input.length() - 2)
-        {
-            num = input.back() - '0';
-        }
-        else
-        {
-            num = toIntSimple(input.substr(pos1 + 1));
-        }
+        num = toIntSimple(input.substr(length - 9));
+        pos1 = length - 10;
+    }
 
-        if ((input[pos1] == '_') || (input[pos1] == '#'))
-        {
-            output = input.substr(0, pos1);
-        }
-        else
-        {
-            output = input.substr(0, pos1 + 1);
-        }
+    if (input[pos1] == '_' || input[pos1] == '#')
+    {
+        output = input.substr(0, pos1);
+    }
+    else
+    {
+        output = input.substr(0, pos1 + 1);
     }
 
     return num;
@@ -203,7 +220,7 @@ int trailingStringInt(string_view input, string_view &output, int defNum)
 
 int trailingStringInt(string_view input, int defNum)
 {
-    if (isdigit(input.back()) == 0)
+    if (input.empty() || (input.back() < '0' || input.back() > '9'))
     {
         return defNum;
     }
@@ -211,13 +228,22 @@ int trailingStringInt(string_view input, int defNum)
     auto pos1 = input.find_last_not_of(digits);
     if (pos1 == string_view::npos)  // in case the whole thing is a number
     {
-        return toIntSimple(input);
+        if (input.length() <= 10)
+        {
+            return toIntSimple(input);
+        }
+        pos1 = input.length() - 10;
     }
-    if (pos1 == input.length() - 2)
+    size_t length = input.length();
+    if (pos1 == length - 2)
     {
         return input.back() - '0';
     }
-    return toIntSimple(input.substr(pos1 + 1));
+    if ((length <= 10) || (pos1 >= length - 10))
+    {
+        return toIntSimple(input.substr(pos1 + 1));
+    }
+    return toIntSimple(input.substr(length - 9));
 }
 
 }  // namespace string_viewOps

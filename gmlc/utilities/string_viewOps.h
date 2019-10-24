@@ -72,14 +72,25 @@ string_view removeBrackets(string_view str);
 @return  the tail string or the string that comes after the last separation
 character if not found returns the entire string
 */
-string_view getTailString(string_view input, char separationCharacter);
-/** @brief get a stringView that comes after the last of a specified separator
+string_view getTailString(string_view input, char separationCharacter) noexcept;
+
+/** @brief get a stringView that comes after the last of any of the specified
+separator
 @param[in] input  the string to separate
 @param[in] separationCharacters the separation characters
 @return  the tail string or the string that comes after the last separation
 character if not found returns the entire string
 */
-string_view getTailString(string_view input, string_view separationCharacters);
+string_view getTailString_any(string_view input,
+                              string_view separationCharacters) noexcept;
+
+/** @brief get a string that comes after the last of the specified separator
+@param input  the string to separate
+@param sep a character sequence indicating the tail
+@return  the tail string or the string that comes after the last of the
+separation strings if not found returns the entire string
+*/
+string_view getTailString(string_view input, string_view sep) noexcept;
 
 const string_view default_delim_chars(",;");
 const string_view default_quote_chars(R"raw('"`)raw");
@@ -140,10 +151,10 @@ string_viewVector splitlineBracket(
 @details this will only work if these are from a single original string
 the check is the gap between the start of one string and another is less than 24
 characters
-@param[in] string1 the first string
-@param[in] string2 the second string
+@param string1 the first string
+@param string2 the second string
 @return a new string view of the combined string
-@throws and out_of_range exception if the string cannot be merged
+@throws an out_of_range exception if the string cannot be merged
 */
 string_view merge(string_view string1, string_view string2);
 

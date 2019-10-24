@@ -157,7 +157,7 @@ int trailingStringInt(const std::string &input,
     {
         num = input.back() - '0';
     }
-    else if ((length <= 10) || (pos1 >= length - 10))
+    else if (length <= 10 || pos1 >= length - 10)
     {
         num = std::stol(input.substr(pos1 + 1));
     }
@@ -167,7 +167,7 @@ int trailingStringInt(const std::string &input,
         pos1 = length - 10;
     }
 
-    if ((input[pos1] == '_') || (input[pos1] == '#'))
+    if (input[pos1] == '_' || input[pos1] == '#')
     {
         output = input.substr(0, pos1);
     }
@@ -201,14 +201,11 @@ int trailingStringInt(const std::string &input, int defNum) noexcept
     {
         return input.back() - '0';
     }
-    else if ((length <= 10) || (pos1 >= length - 10))
+    if ((length <= 10) || (pos1 >= length - 10))
     {
         return std::stol(input.substr(pos1 + 1));
     }
-    else
-    {
-        return std::stol(input.substr(length - 9));
-    }
+    return std::stol(input.substr(length - 9));
 }
 
 static const std::string quoteChars(R"raw("'`)raw");

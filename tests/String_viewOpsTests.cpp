@@ -55,7 +55,6 @@ TEST(stringViewOps, trimString_tests)
     EXPECT_TRUE(test8 == "Bill45 ");
 }
 
-/** test trim*/
 TEST(stringViewOps, tailString_tests)
 {
     string_view test1 = "AbCd: *Ty; ";
@@ -81,6 +80,74 @@ TEST(stringViewOps, tailString_tests)
     string_view test6 = "4testingBeginning";
     testres = getTailString(test6, 'g');
     EXPECT_TRUE(testres.empty());
+}
+
+/** test trim*/
+TEST(stringViewOps, tailString_tests_word)
+{
+    string_view test1 = "AbCd: *Ty; ";
+    auto testres = getTailString(test1, "*");
+    EXPECT_TRUE(testres == "Ty; ");
+    string_view test2 = "bob::test1:test2:4";
+    testres = getTailString(test2, ":");
+    EXPECT_TRUE(testres == "4");
+
+    string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
+    // test with ':' also as a space
+    testres = getTailString(test3, "::");
+    EXPECT_TRUE(testres.empty());
+
+    string_view test4 = "bob::test1:test2:4";
+    testres = getTailString(test4, "-");
+    EXPECT_TRUE(testres == test4);
+
+    string_view test5 = "4testingBeginning";
+    testres = getTailString(test5, "4");
+    EXPECT_TRUE(testres == "testingBeginning");
+
+    string_view test6 = "4testingBeginning";
+    testres = getTailString(test6, "ng");
+    EXPECT_TRUE(testres.empty());
+
+    string_view test7 = "aba::aba::sharpaba";
+    testres = getTailString(test7, "sharp");
+    EXPECT_EQ(testres, "aba");
+
+    testres = getTailString(test7, "ab");
+    EXPECT_EQ(testres, "a");
+
+    testres = getTailString(test7, string_view{});
+    EXPECT_TRUE(testres.empty());
+}
+
+TEST(stringViewOps, tailString_any)
+{
+    string_view test1 = "AbCd: *Ty; ";
+    auto testres = getTailString_any(test1, ":*");
+    EXPECT_TRUE(testres == "Ty; ");
+    string_view test2 = "bob::test1:test2:4";
+    testres = getTailString_any(test2, ":");
+    EXPECT_TRUE(testres == "4");
+
+    string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
+    // test with ':' also as a space
+    testres = getTailString_any(test3, " ::");
+    EXPECT_TRUE(testres.empty());
+
+    string_view test4 = "bob::test1:test2:4";
+    testres = getTailString_any(test4, "-");
+    EXPECT_TRUE(testres == test4);
+
+    string_view test5 = "4testingBeginning";
+    testres = getTailString_any(test5, "4");
+    EXPECT_TRUE(testres == "testingBeginning");
+
+    string_view test6 = "4testingBeginning";
+    testres = getTailString_any(test6, "ing");
+    EXPECT_TRUE(testres.empty());
+
+    testres = getTailString_any(test6, string_view{});
+    EXPECT_EQ(testres, test6);
 }
 
 /** simple split line test*/
@@ -151,6 +218,64 @@ TEST(stringViewOps, removeQuotes_test)
     testres = removeQuotes(test4);
 
     EXPECT_TRUE(testres == " remove quotas ");
+
+	string_view test5 = "   ` remove quotes `  ";
+    testres = removeQuotes(test5);
+
+    EXPECT_TRUE(testres == " remove quotes ");
+}
+
+/**remove quotes test test*/
+TEST(stringViewOps, removeBrackets_test)
+{
+    string_view test1 = "remove bracket";
+    auto testres = removeBrackets(test1);
+
+    EXPECT_EQ(testres, "remove bracket");
+
+    string_view test2 = "[remove bracket]";
+    testres = removeBrackets(test2);
+
+    EXPECT_EQ(testres, "remove bracket");
+
+    string_view test3 = "{remove bracket}";
+    testres = removeBrackets(test3);
+
+    EXPECT_EQ(testres, "remove bracket");
+
+    string_view test4 = "<remove bracket>";
+    testres = removeBrackets(test4);
+
+    EXPECT_EQ(testres, "remove bracket");
+
+    string_view test5 = "< remove bracket >";
+    testres = removeBrackets(test5);
+
+    EXPECT_EQ(testres, " remove bracket ");
+
+    string_view test6 = "< remove bracket >";
+    testres = removeBrackets(test6);
+
+    EXPECT_EQ(testres, " remove bracket ");
+
+    string_view test7 = " <( remove bracket )>  ";
+    testres = removeBrackets(test7);
+
+    EXPECT_EQ(testres, "( remove bracket )");
+
+    string_view test8 = " <( remove bracket )}  ";
+    testres = removeBrackets(test8);
+
+    EXPECT_EQ(testres, "<( remove bracket )}");
+
+    testres = removeBrackets(string_view{});
+
+    EXPECT_TRUE(testres.empty());
+
+	std::string tstring(100, ' ');
+    testres = removeBrackets(tstring);
+
+    EXPECT_TRUE(testres.empty());
 }
 
 TEST(stringViewOps, splitLineQuotes_tests)
@@ -217,4 +342,96 @@ TEST(stringViewOps, splitLineBracket_tests)
     ASSERT_TRUE(testres3.size() == 2);
     EXPECT_TRUE(testres3[0] == "$45,34,45$");
     EXPECT_TRUE(testres3[1] == "$23.45,34,23.3$");
+}
+
+
+TEST(stringViewOps, trailingInt)
+{
+    string_view name;
+
+	string_view input = "bob47";
+    auto val = trailingStringInt(input, name);
+    EXPECT_EQ(val, 47);
+    EXPECT_EQ(name, "bob");
+
+    val = trailingStringInt("bob", name);
+    EXPECT_EQ(val, -1);
+    EXPECT_EQ(name, "bob");
+    val = trailingStringInt("bob", name, -45);
+    EXPECT_EQ(val, -45);
+    EXPECT_EQ(name, "bob");
+
+    val = trailingStringInt(std::string{}, name);
+    EXPECT_EQ(val, -1);
+    EXPECT_TRUE(name.empty());
+
+    val = trailingStringInt("457", name);
+    EXPECT_EQ(val, 457);
+    EXPECT_TRUE(name.empty());
+
+    val = trailingStringInt("pos5", name);
+    EXPECT_EQ(val, 5);
+    EXPECT_EQ(name, "pos");
+
+    val = trailingStringInt("pos_45", name);
+    EXPECT_EQ(val, 45);
+    EXPECT_EQ(name, "pos");
+
+    val = trailingStringInt("pos#45", name);
+    EXPECT_EQ(val, 45);
+    EXPECT_EQ(name, "pos");
+
+    val = trailingStringInt("1234567890123456789", name);
+    EXPECT_EQ(val, 123456789);
+    EXPECT_EQ(name, "1234567890");
+
+    val = trailingStringInt("abab1234567890123456789", name);
+    EXPECT_EQ(val, 123456789);
+    EXPECT_EQ(name, "abab1234567890");
+}
+
+TEST(stringViewOps, trailingIntNoRet)
+{
+    auto val = trailingStringInt("bob47");
+    EXPECT_EQ(val, 47);
+
+    val = trailingStringInt("bob");
+    EXPECT_EQ(val, -1);
+    val = trailingStringInt("bob", -45);
+    EXPECT_EQ(val, -45);
+
+    val = trailingStringInt(std::string{});
+    EXPECT_EQ(val, -1);
+
+    val = trailingStringInt("457");
+    EXPECT_EQ(val, 457);
+
+    val = trailingStringInt("pos5");
+    EXPECT_EQ(val, 5);
+
+    val = trailingStringInt("pos_45");
+    EXPECT_EQ(val, 45);
+
+    val = trailingStringInt("pos#45");
+    EXPECT_EQ(val, 45);
+
+    val = trailingStringInt("1234567890123456789");
+    EXPECT_EQ(val, 123456789);
+    val = trailingStringInt("abab1234567890123456789");
+    EXPECT_EQ(val, 123456789);
+}
+
+TEST(stringViewOps, mergeTest)
+{
+    std::string alongString = "test1";
+    alongString.append("sep");
+    alongString.append("test2");
+
+	string_view whole(alongString);
+    string_view part1 = whole.substr(0, 5);
+
+	string_view part2 = whole.substr(8);
+
+	string_view res=merge(part1, part2);
+    EXPECT_EQ(res, whole);
 }

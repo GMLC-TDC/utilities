@@ -96,7 +96,6 @@ TEST(stringops, trim_tests)
     EXPECT_TRUE(testres.empty());
 }
 
-/** test trim*/
 TEST(stringops, tailString_tests)
 {
     std::string test1 = "AbCd: *Ty; ";
