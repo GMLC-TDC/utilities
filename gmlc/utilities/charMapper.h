@@ -24,7 +24,7 @@ class CharMapper
     std::array<V, 256> key;  //!< the character map
   public:
     /** default constructor*/
-    explicit CharMapper(V defVal = V(0)) { key.fill(defVal); }
+    explicit CharMapper(V defVal = V{0}) { key.fill(defVal); }
     /** update a the value returned from a key query
     @details this is purposely distinct from the [] operator to make it an error
     to try to assign something that way

@@ -150,7 +150,8 @@ string_viewVector splitlineBracket(
 /** @brief merge two stringViews together
 @details this will only work if these are from a single original string
 the check is the gap between the start of one string and another is less than 24
-characters
+characters.  The intended use case is if a string view was split by comma or
+other separator but needed to be combined again later
 @param string1 the first string
 @param string2 the second string
 @return a new string view of the combined string

@@ -114,7 +114,7 @@ string_view merge(string_view string1, string_view string2)
 {
     ptrdiff_t diff = (string2.data() - string1.data()) -
                      static_cast<ptrdiff_t>(string1.length());
-    if ((diff >= 0) && (diff < 24))  // maximum of 24 bytes between the strings
+    if ((diff >= 0) && (diff < 24))  // maximum of 23 characters between the strings
     {
         return string_view(string1.data(),
                            diff + string1.length() + string2.length());

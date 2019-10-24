@@ -434,4 +434,21 @@ TEST(stringViewOps, mergeTest)
 
 	string_view res=merge(part1, part2);
     EXPECT_EQ(res, whole);
+
+	string_view empty;
+
+	auto p3 = merge(part1, empty);
+    EXPECT_EQ(p3, part1);
+
+	p3 = merge(empty, part1);
+    EXPECT_EQ(p3, part1);
+
+	auto p4 = merge(empty, empty);
+    EXPECT_TRUE(p4.empty());
+
+	std::string lstr(100, 'a');
+	string_view aba(lstr.c_str(),3);
+    string_view bab(lstr.c_str()+80,3);
+    EXPECT_THROW(auto p5 = merge(aba, bab), std::out_of_range);
+
 }
