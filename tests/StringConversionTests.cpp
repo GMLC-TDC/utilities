@@ -36,6 +36,15 @@ TEST(stringconversion, simple_integer_conversions_test)
 
     auto f = numeric_conversion("FF3q", -234);
     EXPECT_EQ(f, -234);
+
+    auto g = numeric_conversion<unsigned long>("978", 0);
+    EXPECT_EQ(g, 978);
+
+    auto h = numeric_conversion<unsigned long long>("123456789123456789", 0);
+    EXPECT_EQ(h, 123456789123456789);
+
+    auto i = numeric_conversion<int>("-Bad", -35);
+    EXPECT_EQ(i, -35);
 }
 
 TEST(stringconversion, simple_floating_point_conversions_test)
@@ -61,4 +70,76 @@ TEST(stringconversion, simple_floating_point_conversions_test)
 
     auto g = numeric_conversion("FF3q", 45.34);
     EXPECT_NEAR(g, 45.34, closeDef);
+}
+
+TEST(stringconversion, simple_integer_conversion_complete_test)
+{
+    auto a = numeric_conversionComplete<int>("457  ", -1);
+    EXPECT_EQ(a, 457);
+    auto b = numeric_conversionComplete<long long>("-457", -1);
+    EXPECT_EQ(b, -457);
+    static_assert(std::is_same<decltype(b), long long>::value,
+                  "conversion types do not match");
+    auto c = numeric_conversionComplete<unsigned char>("25", 0xFF);
+    EXPECT_EQ(c, 25);
+    auto d = numeric_conversionComplete<short>("-7629", 0xFF);
+    EXPECT_EQ(d, -7629);
+    EXPECT_TRUE(sizeof(d) == 2);
+
+    auto e = numeric_conversionComplete<unsigned int>("-1", 0);
+    EXPECT_EQ(e, static_cast<unsigned int>(-1));
+
+    auto f = numeric_conversionComplete("FF3q", -234);
+    EXPECT_EQ(f, -234);
+
+    auto g = numeric_conversionComplete<unsigned long>("978F", 0);
+    EXPECT_EQ(g, 0);
+
+    auto h =
+      numeric_conversionComplete<unsigned long long>(" 123456789123456789 ", 0);
+    EXPECT_EQ(h, 123456789123456789);
+
+    auto i = numeric_conversionComplete<int>("-Bad", -35);
+    EXPECT_EQ(i, -35);
+}
+
+TEST(stringconversion, str2_vector)
+{
+    auto v = str2vector<int>("1,2,3,4", 0);
+
+    std::vector<int> v2{1, 2, 3, 4};
+    EXPECT_EQ(v, v2);
+
+    v = str2vector<int>("1,2,N,4", 0);
+
+    std::vector<int> v3{1, 2, 0, 4};
+    EXPECT_EQ(v, v3);
+
+    v = str2vector<int>("1:2:-N:4", 0, ":");
+
+    EXPECT_EQ(v, v3);
+
+    v = str2vector<int>("1:2:-N|4", 0, ":|");
+
+    EXPECT_EQ(v, v3);
+}
+
+TEST(stringconversion, str2_vectorb)
+{
+    stringVector input{"1", "2", "3", "4"};
+    auto v = str2vector<int>(input, 0);
+
+    std::vector<int> v2{1, 2, 3, 4};
+    EXPECT_EQ(v, v2);
+
+    input[2] = "-N";
+    v = str2vector<int>(input, 0);
+
+    std::vector<int> v3{1, 2, 0, 4};
+    EXPECT_EQ(v, v3);
+
+    input[0] = "  1   ";
+    v = str2vector<int>(input, 0);
+
+    EXPECT_EQ(v, v3);
 }
