@@ -47,8 +47,11 @@ TEST(strViewconversion, simple_integer_conversions_test)
     auto i = numeric_conversion<int>("-Bad", -35);
     EXPECT_EQ(i, -35);
 
-    auto j = numeric_conversion<int>("0075", -35);
-    EXPECT_EQ(j, 75);
+	size_t rem;
+    EXPECT_THROW(strViewToInteger<int>("-", &rem), std::invalid_argument);
+
+	 auto j = numeric_conversion<int>("-+-", -35);
+    EXPECT_EQ(j, -35);
 }
 
 TEST(strViewconversion, simple_floating_point_conversions_test)

@@ -212,7 +212,7 @@ X numeric_conversion(string_view V, const X defValue)
 template <typename X>
 X numeric_conversionComplete(string_view V, const X defValue)
 {
-    if (nonNumericFirstCharacter(V))
+    if (nonNumericFirstOrLastCharacter(V))
     {
         return defValue;
     }
