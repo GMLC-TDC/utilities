@@ -92,7 +92,7 @@ TEST(stringconversion, simple_integer_conversion_complete_test)
     auto f = numeric_conversionComplete("FF3q", -234);
     EXPECT_EQ(f, -234);
 
-    auto g = numeric_conversionComplete<unsigned long>("978F", 0);
+    auto g = numeric_conversionComplete<unsigned long>("978F9", 0);
     EXPECT_EQ(g, 0);
 
     auto h =
@@ -142,4 +142,33 @@ TEST(stringconversion, str2_vectorb)
     v = str2vector<int>(input, 0);
 
     EXPECT_EQ(v, v3);
+}
+
+
+TEST(stringconversion, simple_floating_point_conversionsComplete_test)
+{
+    const double closeDef = 0.0000000001;
+    auto a = numeric_conversionComplete<float>("457", -1);
+    EXPECT_EQ(a, 457);
+    auto b = numeric_conversionComplete<double>("234.123131", -1);
+    EXPECT_NEAR(b, 234.123131, closeDef);
+    static_assert(std::is_same<decltype(b), double>::value,
+                  "conversion types do not match");
+    auto c = numeric_conversionComplete<double>(".456", 0xFF);
+    EXPECT_NEAR(c, .456, closeDef);
+    auto d = numeric_conversionComplete<long double>("45.456e27", 0xFF);
+    EXPECT_NEAR(d, 45.456e27, closeDef);
+    EXPECT_EQ(sizeof(d), sizeof(long double));
+
+    auto e = numeric_conversionComplete<double>("-456.234g", 0);
+    EXPECT_NEAR(e, 0.0, closeDef);
+
+    auto f = numeric_conversionComplete<double>("-23E-2", 0);
+    EXPECT_NEAR(f, -0.23, closeDef);
+
+    auto g = numeric_conversionComplete("FF3q", 45.34);
+    EXPECT_NEAR(g, 45.34, closeDef);
+
+	auto h = numeric_conversionComplete("-FF3q45", 18.7);
+    EXPECT_NEAR(h, 18.7, closeDef);
 }

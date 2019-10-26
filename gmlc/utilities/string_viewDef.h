@@ -46,7 +46,7 @@ namespace gmlc
 namespace utilities
 {
 using string_view = stx::string_view;
-}
+} //namespace utilities
 }  // namespace gmlc
 #endif
 
@@ -55,5 +55,5 @@ namespace gmlc
 namespace utilities
 {
 using string_viewVector = std::vector<string_view>;
-}
+} // namespace utilities
 }  // namespace gmlc
