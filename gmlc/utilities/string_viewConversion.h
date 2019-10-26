@@ -90,7 +90,7 @@ X strViewToInteger(string_view input, size_t *rem = nullptr)
 
     while (v1 != vend)
     {
-        if ((*v1)>='0'&&(*v1)<='9')
+        if ((*v1) >= '0' && (*v1) <= '9')
         {
             ret *= 10;
             ret += (static_cast<X>(*v1) - '0');
