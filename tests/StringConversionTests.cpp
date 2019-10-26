@@ -144,7 +144,6 @@ TEST(stringconversion, str2_vectorb)
     EXPECT_EQ(v, v3);
 }
 
-
 TEST(stringconversion, simple_floating_point_conversionsComplete_test)
 {
     const double closeDef = 0.0000000001;
@@ -169,6 +168,6 @@ TEST(stringconversion, simple_floating_point_conversionsComplete_test)
     auto g = numeric_conversionComplete("FF3q", 45.34);
     EXPECT_NEAR(g, 45.34, closeDef);
 
-	auto h = numeric_conversionComplete("-FF3q45", 18.7);
+    auto h = numeric_conversionComplete("-FF3q45", 18.7);
     EXPECT_NEAR(h, 18.7, closeDef);
 }

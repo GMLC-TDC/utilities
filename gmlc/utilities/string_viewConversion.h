@@ -62,17 +62,16 @@ X strViewToInteger(string_view input, size_t *rem = nullptr)
         case '7':
         case '8':
         case '9':
-            ret = (*v1 - '0');
+            ret = (static_cast<X>(*v1) - '0');
             inProcess = true;
             break;
         case '-':
-            sign = -1;
-            inProcess = true;
+            sign *= -1;
             break;
-        case '+':
         case '0':
             inProcess = true;
             break;
+        case '+':
         case ' ':
         case '\t':
         case '\r':
@@ -91,10 +90,10 @@ X strViewToInteger(string_view input, size_t *rem = nullptr)
 
     while (v1 != vend)
     {
-        if (isdigit(*v1))
+        if ((*v1)>='0'&&(*v1)<='9')
         {
             ret *= 10;
-            ret += (*v1 - '0');
+            ret += (static_cast<X>(*v1) - '0');
         }
         else
         {
@@ -158,6 +157,12 @@ inline X numConvComp(string_view V, size_t &rem)
 {
     return (std::is_integral<X>::value) ? strViewToInteger<X>(V, &rem) :
                                           X(numConvComp<double>(V, rem));
+}
+
+template <>
+inline float numConvComp(string_view V, size_t &rem)
+{
+    return std::stof(V.to_string(), &rem);
 }
 
 template <>
