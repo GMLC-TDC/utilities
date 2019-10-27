@@ -456,6 +456,16 @@ TEST(stringops, splitLineBracket_tests)
     ASSERT_TRUE(testres3.size() == 2);
     EXPECT_TRUE(testres3[0] == "$45,34,45$");
     EXPECT_TRUE(testres3[1] == "$23.45,34,23.3$");
+
+    std::string test4 = ")454, 345), happy; frog";
+    auto testres4 = splitlineBracket(test4);
+    trim(testres4);
+    EXPECT_EQ(testres4.size(), 4u);
+
+    std::string test5 = "454, 345[, happy; frog";
+    auto testres5 = splitlineBracket(test5);
+    trim(testres5);
+    EXPECT_EQ(testres5.size(), 2u);
 }
 
 TEST(stringops, randomString)

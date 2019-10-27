@@ -18,6 +18,7 @@ set(UTILITIES_TESTS
 	String_viewConversionTests
 	TimeSeriesTests
 	TimeSeriesMultiTests
+	charMapperTests
     )
 
 # Only affects current directory, so safe

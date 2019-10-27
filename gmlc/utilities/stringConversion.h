@@ -124,14 +124,14 @@ inline long long numConvComp(const std::string &V, size_t &rem)
 /** check if the first character of the string is a valid numerical value*/
 inline bool nonNumericFirstCharacter(const std::string &V)
 {
-    return ((V.empty()) || (numCheck[V[0]] == false));
+    return ((V.empty()) || (!numCheck[V[0]]));
 }
 
 /** check if the first character of the string is a valid numerical value*/
 inline bool nonNumericFirstOrLastCharacter(const std::string &V)
 {
-    return ((V.empty()) || (numCheck[V[0]] == false) ||
-            (numCheckEnd[V.back()] == false));
+    return ((V.empty()) || (!numCheck[V[0]]) ||
+            (!numCheckEnd[V.back()]));
 }
 
 template <typename X>

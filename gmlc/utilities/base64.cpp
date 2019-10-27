@@ -37,7 +37,7 @@ static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 static const CharMapper<unsigned char> b64Map = base64Mapper();
 
-static inline bool is_base64(unsigned char c) { return (b64Map[c] < 0xFF); }
+static inline bool is_base64(unsigned char c) { return (b64Map[c] < 0xffU); }
 std::string base64_encode(unsigned char const *bytes_to_encode, int32_t in_len)
 {
     std::string ret;
@@ -51,12 +51,12 @@ std::string base64_encode(unsigned char const *bytes_to_encode, int32_t in_len)
         char_array_3[ii++] = *(bytes_to_encode++);
         if (ii == 3)
         {
-            char_array_4[0] = (char_array_3[0] & 0xfcu) >> 2u;
-            char_array_4[1] = ((char_array_3[0] & 0x03u) << 4u) +
-                              ((char_array_3[1] & 0xf0u) >> 4u);
-            char_array_4[2] = ((char_array_3[1] & 0x0fu) << 2u) +
-                              ((char_array_3[2] & 0xc0u) >> 6u);
-            char_array_4[3] = char_array_3[2] & 0x3fu;
+            char_array_4[0] = (char_array_3[0] & 0xfcU) >> 2U;
+            char_array_4[1] = ((char_array_3[0] & 0x03U) << 4U) +
+                              ((char_array_3[1] & 0xf0U) >> 4U);
+            char_array_4[2] = ((char_array_3[1] & 0x0fU) << 2U) +
+                              ((char_array_3[2] & 0xc0U) >> 6U);
+            char_array_4[3] = char_array_3[2] & 0x3fU;
 
             for (ii = 0; (ii < 4); ii++)
             {

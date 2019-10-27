@@ -148,7 +148,7 @@ std::vector<X> generalized_section_splitting(
             else
             {
                 strVec.push_back(line.substr(start));
-                start = sectionLoc;
+                start = line.length();
             }
         }
         // get the last string
