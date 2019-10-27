@@ -102,7 +102,7 @@ TEST(stringconversion, simple_integer_conversion_complete_test)
     auto i = numeric_conversionComplete<int>("-Bad", -35);
     EXPECT_EQ(i, -35);
 
-	auto j = numeric_conversionComplete<int>("000987", -35);
+    auto j = numeric_conversionComplete<int>("000987", -35);
     EXPECT_EQ(j, 987);
 }
 

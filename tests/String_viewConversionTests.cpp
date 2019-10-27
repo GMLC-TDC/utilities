@@ -53,7 +53,7 @@ TEST(strViewconversion, simple_integer_conversions_test)
     auto j = numeric_conversion<int>("-+-", -35);
     EXPECT_EQ(j, -35);
 
-	auto k = numeric_conversionComplete<int>("000987", -35);
+    auto k = numeric_conversionComplete<int>("000987", -35);
     EXPECT_EQ(k, 987);
 }
 
