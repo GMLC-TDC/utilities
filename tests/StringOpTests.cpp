@@ -466,6 +466,16 @@ TEST(stringops, splitLineBracket_tests)
     auto testres5 = splitlineBracket(test5);
     trim(testres5);
     EXPECT_EQ(testres5.size(), 2u);
+
+    std::string test6 = "[454, 3]45[, happy; frog";
+    auto testres6 = splitlineBracket(test6);
+    trim(testres6);
+    EXPECT_EQ(testres6.size(), 3u);
+
+    std::string test7 = "454";
+    auto testres7 = splitlineBracket(test7);
+    trim(testres7);
+    EXPECT_EQ(testres7.size(), 1u);
 }
 
 TEST(stringops, randomString)

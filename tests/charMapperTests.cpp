@@ -22,6 +22,10 @@ TEST(charMapper, numericMapper)
     auto v = numericMapper();
     auto dtype = std::is_same<decltype(v[1]), bool>::value;
     EXPECT_TRUE(dtype);
+    EXPECT_TRUE(v['1']);
+    EXPECT_TRUE(v['0']);
+    EXPECT_FALSE(v['a']);
+    EXPECT_FALSE(v.at('a'));
 }
 
 TEST(charMapper, numericStartMapper)
