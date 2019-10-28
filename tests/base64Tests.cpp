@@ -23,3 +23,15 @@ TEST(base64, encode)
 
     EXPECT_STREQ(encodeSeq, decoded.c_str());
 }
+
+TEST(base64, decode_vector)
+{
+    const char encodeSeq[] = "test sequence";
+    auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq));
+    auto decoded = base64_decode(encoded);
+
+    EXPECT_EQ(strlen(encodeSeq), decoded.size() - 1);
+
+    std::string res(decoded.begin(), decoded.end() - 1);
+    EXPECT_EQ(res, encodeSeq);
+}

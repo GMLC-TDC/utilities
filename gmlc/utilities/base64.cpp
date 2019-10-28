@@ -98,12 +98,12 @@ std::string base64_encode(void const *bytes_to_encode, size_t in_len)
 std::vector<unsigned char> base64_decode(std::string const &encoded_string,
                                          size_t offset)
 {
-    auto in_len = encoded_string.size();
+    auto in_len = encoded_string.size() - offset - 1;
     int i = 0;
     int in_ = static_cast<int>(offset);
     unsigned char char_array_4[4], char_array_3[3];
     std::vector<unsigned char> ret;
-    ret.reserve(in_len);
+    ret.reserve((in_len * 4) / 3 + 2);
 
     while (((in_len--) != 0u) && (encoded_string[in_] != '=') &&
            is_base64(encoded_string[in_]))
