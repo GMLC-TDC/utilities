@@ -77,7 +77,7 @@ if(CXX_STANDARD_FLAG)
   endif(MSVC)
 endif(CXX_STANDARD_FLAG)
 
-option(GMLC_UTILTIES_INSTALL "Enable GMLC utilities to be installed" ON)
+option(GMLC_UTILITIES_INSTALL "Enable GMLC utilities to be installed" ON)
 option(GMLC_UTILITIES_INCLUDE_BOOST
        "Enable some boost library headers to be used" ON)
 option(GMLC_UTILITIES_USE_BOOST_SPIRIT

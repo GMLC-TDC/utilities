@@ -27,11 +27,24 @@ TEST(base64, encode)
 TEST(base64, decode_vector)
 {
     const char encodeSeq[] = "test sequence";
-    auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq));
+    auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq) - 1);
     auto decoded = base64_decode(encoded);
 
-    EXPECT_EQ(strlen(encodeSeq), decoded.size() - 1);
+    EXPECT_EQ(strlen(encodeSeq), decoded.size());
 
-    std::string res(decoded.begin(), decoded.end() - 1);
+    std::string res(decoded.begin(), decoded.end());
+    EXPECT_EQ(res, encodeSeq);
+}
+
+TEST(base64, decode_raw)
+{
+    const char encodeSeq[] = "test sequence";
+    auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq) - 1);
+    char result[100];
+    auto size = base64_decode(encoded, result, 100);
+
+    EXPECT_EQ(strlen(encodeSeq), size);
+
+    std::string res(result, size);
     EXPECT_EQ(res, encodeSeq);
 }
