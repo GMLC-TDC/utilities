@@ -21,5 +21,5 @@ TEST(base64, encode)
     auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq));
     auto decoded = base64_decode_to_string(encoded);
 
-	EXPECT_STREQ(encodeSeq, decoded.c_str());
+    EXPECT_STREQ(encodeSeq, decoded.c_str());
 }
