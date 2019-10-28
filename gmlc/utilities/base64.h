@@ -18,7 +18,7 @@ namespace gmlc
 namespace utilities
 {
 /** encode a binary sequence to a string*/
-std::string base64_encode(unsigned char const *bytes_to_encode, int32_t in_len);
+std::string base64_encode(void const *bytes_to_encode, size_t in_len);
 
 /** decode a string to a vector of unsigned chars*/
 std::vector<unsigned char> base64_decode(std::string const &encoded_string,

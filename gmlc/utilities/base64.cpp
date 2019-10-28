@@ -38,17 +38,18 @@ static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 static const CharMapper<unsigned char> b64Map = base64Mapper();
 
 static inline bool is_base64(unsigned char c) { return (b64Map[c] < 0xffU); }
-std::string base64_encode(unsigned char const *bytes_to_encode, int32_t in_len)
+std::string base64_encode(void const *bytes_to_encode, size_t in_len)
 {
+    auto b2e = reinterpret_cast<const unsigned char *>(bytes_to_encode);
     std::string ret;
-    ret.reserve((static_cast<size_t>(in_len) * 4) / 3 + 2);
+    ret.reserve((in_len * 4) / 3 + 2);
     int ii = 0;
     unsigned char char_array_3[3];
     unsigned char char_array_4[4];
 
     while (in_len-- != 0)
     {
-        char_array_3[ii++] = *(bytes_to_encode++);
+        char_array_3[ii++] = *b2e++;
         if (ii == 3)
         {
             char_array_4[0] = (char_array_3[0] & 0xfcU) >> 2U;
