@@ -44,7 +44,16 @@ TEST(base64, decode_raw)
     auto size = base64_decode(encoded, result, 100);
 
     EXPECT_EQ(strlen(encodeSeq), size);
-
     std::string res(result, size);
     EXPECT_EQ(res, encodeSeq);
+
+    for (size_t jj = 11; jj >= 1; jj--)
+    {
+        std::memset(result, 0, 100);
+        size = base64_decode(encoded, result, jj);
+        EXPECT_EQ(size, jj);
+        std::string sub = res.substr(0, jj);
+        std::string ressub(result, size);
+        EXPECT_EQ(ressub, sub);
+    }
 }
