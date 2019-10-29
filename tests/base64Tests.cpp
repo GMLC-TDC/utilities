@@ -49,7 +49,7 @@ TEST(base64, decode_raw)
 
     for (size_t jj = 11; jj >= 1; jj--)
     {
-        std::memset(result, 0, 100);
+        memset(result, 0, 100);
         size = base64_decode(encoded, result, jj);
         EXPECT_EQ(size, jj);
         std::string sub = res.substr(0, jj);
