@@ -13,7 +13,8 @@ set(utilities_source_files
     string_viewOps.cpp
     stringOps.cpp
     stringConversion.cpp
-    vectorOps.cpp)
+    vectorOps.cpp
+	)
 
 set(utilities_header_files
     base64.h
