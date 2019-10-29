@@ -65,8 +65,13 @@ endif(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
 
 add_library(utilities_base INTERFACE)
 
-include(compiler_flags)
-message(STATUS "setting version build options to \"${CXX_STANDARD_FLAG}\"")
+if(NOT TARGET compile_flags_target)
+    add_library(compile_flags_target INTERFACE)
+endif()
+
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+   include(compiler_flags)
+   message(STATUS "setting version build options to \"${CXX_STANDARD_FLAG}\"")
 if(CXX_STANDARD_FLAG)
   if(MSVC)
     target_compile_options(utilities_base INTERFACE ${CXX_STANDARD_FLAG})
@@ -76,6 +81,9 @@ if(CXX_STANDARD_FLAG)
       INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${CXX_STANDARD_FLAG}>)
   endif(MSVC)
 endif(CXX_STANDARD_FLAG)
+endif()
+
+target_link_libraries(utilities_base INTERFACE compile_flags_target)
 
 option(GMLC_UTILITIES_INSTALL "Enable GMLC utilities to be installed" ON)
 option(GMLC_UTILITIES_INCLUDE_BOOST
