@@ -12,7 +12,13 @@ SPDX-License-Identifier: BSD-3-Clause
 
 using namespace gmlc::utilities;
 
+namespace gmlc
+{
+namespace utilities
+{
 template class TimeSeries<double, double>;
+}
+}  // namespace gmlc
 
 TEST(timeSeries, basic_test) { 
 	TimeSeries<> simple;
