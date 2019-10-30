@@ -20,22 +20,21 @@ template class TimeSeries<double, double>;
 }
 }  // namespace gmlc
 
-TEST(timeSeries, basic_test) { 
-	TimeSeries<> simple;
+TEST(timeSeries, basic_test)
+{
+    TimeSeries<> simple;
 
-	simple.addData(0, 5.0);
+    simple.addData(0, 5.0);
     simple.addData(1, 6.0);
 
-	EXPECT_EQ(simple.size(), 2u);
+    EXPECT_EQ(simple.size(), 2u);
     EXPECT_FALSE(simple.empty());
     EXPECT_EQ(simple.data(0), 5.0);
     EXPECT_EQ(simple.time(0), 0.0);
     EXPECT_EQ(simple.data(1), 6.0);
     EXPECT_EQ(simple.time(1), 1.0);
 
-	simple.clear();
+    simple.clear();
 
-	EXPECT_TRUE(simple.empty());
-
-	
+    EXPECT_TRUE(simple.empty());
 }
