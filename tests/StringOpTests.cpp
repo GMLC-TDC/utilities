@@ -464,18 +464,31 @@ TEST(stringops, splitLineBracket_tests)
 
     std::string test5 = "454, 345[, happy; frog";
     auto testres5 = splitlineBracket(test5);
-    trim(testres5);
     EXPECT_EQ(testres5.size(), 2u);
 
     std::string test6 = "[454, 3]45[, happy; frog";
     auto testres6 = splitlineBracket(test6);
-    trim(testres6);
     EXPECT_EQ(testres6.size(), 3u);
 
     std::string test7 = "454";
     auto testres7 = splitlineBracket(test7);
-    trim(testres7);
     EXPECT_EQ(testres7.size(), 1u);
+
+    std::string test7b = "[454]";
+    auto testres7b = splitlineBracket(test7b);
+    EXPECT_EQ(testres7b.size(), 1u);
+
+    std::string test8 = "[454, 3[45], happy]; frog";
+    auto testres8 = splitlineBracket(test8);
+    EXPECT_EQ(testres8.size(), 2u);
+    std::string test9 = "[454, 3[45], happy];, frog";
+    auto testres9 = splitlineBracket(test9);
+    EXPECT_EQ(testres9.size(), 3u);
+
+    auto testres10 =
+      splitlineBracket(test9, default_delim_chars, default_bracket_chars,
+                       delimiter_compression::on);
+    EXPECT_EQ(testres10.size(), 2u);
 }
 
 TEST(stringops, randomString)

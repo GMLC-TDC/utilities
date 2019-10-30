@@ -30,10 +30,10 @@ namespace utilities
 @details solve a 2 variable set of equations Vx=y solve for x
 v11*x1+v12*x2=y1
 v21*x1+v22*x2=y2
-@param[in] v11
-@param[in] v12
-@param[in] v21
-@param[in] v22
+@param[in] v11 v(1,1)
+@param[in] v12 v(1,2)
+@param[in] v21 v(2,1)
+@param[in] v22 v(2,2)
 @param[in] y1  the result of the first equation
 @param[in] y2 the result of the second equation
 @param[out] x1 the computed first element
@@ -80,8 +80,8 @@ std::vector<double> interpolateLinear(const std::vector<double> &timeIn,
 the appropriate limit requires that the < operator be defined on the type
 @tparam valType the value type to compare must define a < operator
 @param[in] val the value to operate on
-@param[in] LowerLim the lower limit of the valid range
-@param[in] UpperLim the upper limit of the valid range
+@param[in] lowerLim the lower limit of the valid range
+@param[in] upperLim the upper limit of the valid range
 @return the clamped value */
 template <class valType>
 KEY_QUAL valType valLimit(valType val, valType lowerLim, valType upperLim)
@@ -129,7 +129,7 @@ KEY_QUAL M signn(M x)
 }
 
 /** sum a vector
-@tparam x the type of the vector
+@tparam X the type of the vector
 @param[in] a the vector to sum the contents
 @return the sum as the same type as the vector
 */
@@ -496,7 +496,7 @@ auto vecFindne(const std::vector<X> &a, X match, size_t start, size_t end)
 /** generate a vector of indices where the values of a vector are less than a
 given value
 @param a the vector of value to compare
-@param match the comparison value
+@param val the comparison value
 @return a vector of indices into a with the matching condition
 */
 template <class X>
@@ -519,7 +519,7 @@ auto vecFindlt(const std::vector<X> &a,
 /** generate a vector of indices where the values of a vector are less than or
 equal to a given value
 @param a the vector of value to compare
-@param match the comparison value
+@param val the comparison value
 @return a vector of indices into a with the matching condition
 */
 template <class X>
@@ -543,7 +543,7 @@ auto vecFindlte(const std::vector<X> &a,
 given value
 @tparam X the type of the values
 @param a the vector of value to compare
-@param match the comparison value
+@param val the comparison value
 @return a vector of indices into a with the matching condition
 */
 template <class X>
@@ -566,7 +566,7 @@ auto vecFindgt(const std::vector<X> &a, X val)
 equal to a given value
 @tparam X the type of the values
 @param a the vector of value to compare
-@param match the comparison value
+@param val the comparison value
 @return a vector of indices into a with the matching condition
 */
 template <class X>

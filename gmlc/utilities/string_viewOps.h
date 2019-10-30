@@ -54,14 +54,14 @@ void trim(string_viewVector &input,
 /** @brief remove outer quotes from a string
 only quotes around the edges are removed along with whitespace outside the
 quotes whitespace is also trimmed
-@param[in] source  the original string
+@param[in] str  the original string
 @return  the string with quotes removed
 */
 string_view removeQuotes(string_view str);
 
 /** @brief remove outer brackets from a string
 outer brackets include [({<  and their matching pair whitespace is also trimmmed
-@param[in] source  the original string
+@param[in] str  the original string
 @return  the string with outer brackets removed
 */
 string_view removeBrackets(string_view str);
@@ -103,8 +103,8 @@ enum class delimiter_compression
 };
 
 /** @brief split a line into a vector of stringViews
-@param[in] line  the string to split
-@param[in]  delimiters a string containing the valid delimiter characters
+@param[in] str the string to split
+@param[in] delimiters a string containing the valid delimiter characters
 @param[in] compression default off,  if set to delimiter_compression::on will
 merge multiple sequential delimiters together
 @return a vector of strings separated by the delimiters characters
@@ -162,14 +162,14 @@ string_view merge(string_view string1, string_view string2);
 /** @brief extract a trailing number from a string return the number and the
 string without the number
 @param[in] input the string to extract the information from
-@param[out]  the leading string with the numbers removed
-@param[in]  the default number to return if no trailing number was found
+@param[out] output the leading string with the numbers removed
+@param[in] defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
 int trailingStringInt(string_view input, string_view &output, int defNum = -1);
 
 /** @brief extract a trailing number from a string
 @param[in] input the string to extract the information from
-@param[in]  the default number to return if no trailing number was found
+@param[in] defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
 int trailingStringInt(string_view input, int defNum = -1);
 /** convert a stringView to an integer

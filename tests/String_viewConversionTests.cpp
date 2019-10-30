@@ -29,7 +29,7 @@ TEST(strViewconversion, simple_integer_conversions_test)
     auto c = numeric_conversion<unsigned char>("25", 0xFF);
     EXPECT_EQ(c, 25);
     auto d = numeric_conversion<short>("-7629", 0xFF);
-    EXPECT_EQ(d, -7629);
+    EXPECT_EQ(d, (short)(-7629));
     EXPECT_EQ(sizeof(d), 2u);
 
     auto e = numeric_conversion<unsigned int>("-1", 0);

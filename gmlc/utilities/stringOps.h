@@ -89,7 +89,7 @@ void appendInteger(std::string &input, X val)
     for (auto dig = digits - 1; dig >= 0; --dig)
     {
         unsigned int place = rem / factors[dig];
-        input.push_back(place + '0');
+        input.push_back(static_cast<char>(place + '0'));
         rem -= factors[dig] * place;
     }
 }
