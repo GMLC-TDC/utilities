@@ -11,7 +11,7 @@
  */
 #pragma once
 
-// don't need the time series object but if you include this I want timeSeries
+// don't need the time series object but if you include this I want TimeSeries
 // to be included as well along with all the other objects
 #include "TimeSeries.hpp"
 namespace gmlc
@@ -20,7 +20,7 @@ namespace utilities
 {
 /** a multidimensional time series object */
 template <typename dataType = double, typename timeType = double>
-class timeSeriesMulti
+class TimeSeriesMulti
 {
   public:
     std::string description;  //!< a description of the time series
@@ -36,25 +36,25 @@ class timeSeriesMulti
     fsize_t capacity = 0;  //!< the total capacity of the time series
 
   public:
-    timeSeriesMulti()
+    TimeSeriesMulti()
     {
         m_data.resize(1);
         fields.resize(1);
     }
-    explicit timeSeriesMulti(fsize_t numCols)
+    explicit TimeSeriesMulti(fsize_t numCols)
     {
         cols = 1;
         m_data.resize(1);
         setCols(numCols);
     }
-    timeSeriesMulti(fsize_t numCols, fsize_t numRows)
+    TimeSeriesMulti(fsize_t numCols, fsize_t numRows)
     {
         cols = 1;
         count = numRows;
         setCols(numCols);
         resize(numRows);
     }
-    explicit timeSeriesMulti(const std::string &fileName)
+    explicit TimeSeriesMulti(const std::string &fileName)
     {
         loadFile(fileName);
     }
@@ -597,31 +597,31 @@ class timeSeriesMulti
 
 // comparison functions
 template <typename dataType, typename timeType>
-dataType compare(const timeSeries<dataType, timeType> &ts1,
-                 const timeSeries<dataType, timeType> &ts2)
+dataType compare(const TimeSeries<dataType, timeType> &ts1,
+                 const TimeSeries<dataType, timeType> &ts2)
 {
     return compareVec(ts1.data(), ts2.data());
 }
 
 template <typename dataType, typename timeType>
-dataType compare(const timeSeries<dataType, timeType> &ts1,
-                 const timeSeries<dataType, timeType> &ts2,
+dataType compare(const TimeSeries<dataType, timeType> &ts1,
+                 const TimeSeries<dataType, timeType> &ts2,
                  int cnt)
 {
     return compareVec(ts1.data(), ts2.data(), cnt);
 }
 
 template <typename dataType, typename timeType>
-dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
-                 const timeSeries<dataType, timeType> &ts2,
+dataType compare(const TimeSeriesMulti<dataType, timeType> &ts1,
+                 const TimeSeries<dataType, timeType> &ts2,
                  int stream)
 {
     return compareVec(ts1[stream], ts2.data());
 }
 
 template <typename dataType, typename timeType>
-dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
-                 const timeSeries<dataType, timeType> &ts2,
+dataType compare(const TimeSeriesMulti<dataType, timeType> &ts1,
+                 const TimeSeries<dataType, timeType> &ts2,
                  int stream,
                  int cnt)
 {
@@ -629,8 +629,8 @@ dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
 }
 
 template <typename dataType, typename timeType>
-dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
-                 const timeSeriesMulti<dataType, timeType> &ts2)
+dataType compare(const TimeSeriesMulti<dataType, timeType> &ts1,
+                 const TimeSeriesMulti<dataType, timeType> &ts2)
 {
     dataType diff(0);
     auto cnt = std::min(ts1.columns(), ts2.columns());
@@ -644,16 +644,16 @@ dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
 }
 
 template <typename dataType, typename timeType>
-dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
-                 const timeSeriesMulti<dataType, timeType> &ts2,
+dataType compare(const TimeSeriesMulti<dataType, timeType> &ts1,
+                 const TimeSeriesMulti<dataType, timeType> &ts2,
                  int stream)
 {
     return compareVec(ts1[stream], ts2[stream]);
 }
 
 template <typename dataType, typename timeType>
-dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
-                 const timeSeriesMulti<dataType, timeType> &ts2,
+dataType compare(const TimeSeriesMulti<dataType, timeType> &ts1,
+                 const TimeSeriesMulti<dataType, timeType> &ts2,
                  int stream1,
                  int stream2)
 {
@@ -661,8 +661,8 @@ dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
 }
 
 template <typename dataType, typename timeType>
-dataType compare(const timeSeriesMulti<dataType, timeType> &ts1,
-                 const timeSeriesMulti<dataType, timeType> &ts2,
+dataType compare(const TimeSeriesMulti<dataType, timeType> &ts1,
+                 const TimeSeriesMulti<dataType, timeType> &ts2,
                  int stream1,
                  int stream2,
                  int cnt)

@@ -74,7 +74,7 @@ using fsize_t = std::uint32_t;
 // TODO::PT add iterators
 /** @brief class to hold a single time series*/
 template <typename dataType = double, typename timeType = double>
-class timeSeries
+class TimeSeries
 {
   public:
     std::string description;  //!< time series description
@@ -86,9 +86,9 @@ class timeSeries
     fsize_t count = 0;  //!< the current index location
   public:
     /** default constructor*/
-    timeSeries() = default;
+    TimeSeries() = default;
     /** constructor to build the time series from a file*/
-    explicit timeSeries(const std::string &fileName) { loadFile(fileName); }
+    explicit TimeSeries(const std::string &fileName) { loadFile(fileName); }
     /** add a data point to the time series
     @param[in] t the time
     @param[in] point the value
@@ -163,8 +163,8 @@ class timeSeries
     /** @brief get a vector for the data*/
     const std::vector<dataType> &data() const { return m_data; }
     /** @brief get an element of the time*/
-    dataType data(fsize_t index) const { return m_data[index]; }
-    dataType lastData() const { return m_data[count - 1]; }
+    const dataType &data(fsize_t index) const { return m_data[index]; }
+    const dataType &lastData() const { return m_data[count - 1]; }
     /** @brief load a file into the time series
     automatically detect the file type based on extension
     @param[in] fileName  the file to load

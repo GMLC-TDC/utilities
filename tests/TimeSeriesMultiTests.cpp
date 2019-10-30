@@ -9,3 +9,8 @@ SPDX-License-Identifier: BSD-3-Clause
 #include "gmlc/utilities/TimeSeriesMulti.hpp"
 #include "gtest/gtest.h"
 #include <iostream>
+
+
+using namespace gmlc::utilities;
+
+template class TimeSeriesMulti<double, double>;
