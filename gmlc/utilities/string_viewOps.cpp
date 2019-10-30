@@ -114,7 +114,8 @@ string_view merge(string_view string1, string_view string2)
 {
     ptrdiff_t diff = (string2.data() - string1.data()) -
                      static_cast<ptrdiff_t>(string1.length());
-    if ((diff >= 0) && (diff < 24))  // maximum of 23 characters between the strings
+    if ((diff >= 0) &&
+        (diff < 24))  // maximum of 23 characters between the strings
     {
         return string_view(string1.data(),
                            diff + string1.length() + string2.length());
@@ -163,7 +164,7 @@ int toIntSimple(string_view input)
     int ret = 0;
     for (auto c : input)
     {
-        if (c>='0'&& c<='9')
+        if (c >= '0' && c <= '9')
         {
             ret = 10 * ret + (c - '0');
         }
@@ -174,7 +175,7 @@ int toIntSimple(string_view input)
 static const string_view digits("0123456789");
 int trailingStringInt(string_view input, string_view &output, int defNum)
 {
-    if (input.empty()||(input.back() < '0' || input.back() > '9'))
+    if (input.empty() || (input.back() < '0' || input.back() > '9'))
     {
         output = input;
         return defNum;

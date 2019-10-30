@@ -130,8 +130,7 @@ inline bool nonNumericFirstCharacter(const std::string &V)
 /** check if the first character of the string is a valid numerical value*/
 inline bool nonNumericFirstOrLastCharacter(const std::string &V)
 {
-    return ((V.empty()) || (!numCheck[V[0]]) ||
-            (!numCheckEnd[V.back()]));
+    return ((V.empty()) || (!numCheck[V[0]]) || (!numCheckEnd[V.back()]));
 }
 
 template <typename X>

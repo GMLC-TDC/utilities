@@ -505,7 +505,7 @@ std::string randomString(std::string::size_type length)
     while (length--)
     {
         s.push_back(chars[pick(rg)]);
-	}
+    }
 
     return s;
 }
