@@ -38,3 +38,38 @@ TEST(timeSeries, basic_test)
 
     EXPECT_TRUE(simple.empty());
 }
+
+TEST(timeSeries, basic_test_vector_input)
+{
+    TimeSeries<> simple;
+
+    simple.addData({0.0, 1.0}, {5.0, 6.0});
+    EXPECT_EQ(simple.size(), 2u);
+    EXPECT_FALSE(simple.empty());
+    EXPECT_EQ(simple.data(0), 5.0);
+    EXPECT_EQ(simple.time(0), 0.0);
+    EXPECT_EQ(simple.data(1), 6.0);
+    EXPECT_EQ(simple.time(1), 1.0);
+
+    simple.clear();
+
+    EXPECT_TRUE(simple.empty());
+
+    simple.addData({0.0, 1.0}, {5.0, 6.0});
+
+    simple.addData({2.0, 3.0, 4.0}, {5.0, 6.0, 7.0});
+    EXPECT_EQ(simple.size(), 5u);
+    simple.addData(5.0, 8.0);
+    EXPECT_EQ(simple.size(), 6u);
+}
+
+TEST(timeSeries, last_data)
+{
+    TimeSeries<int, double> ts;
+
+    EXPECT_TRUE(ts.empty());
+
+    ts.addData({0.0, 1.0}, {5, 6});
+
+    EXPECT_EQ(ts.lastData(), 6);
+}

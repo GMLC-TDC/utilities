@@ -20,6 +20,7 @@ set(UTILITIES_TESTS
 	TimeSeriesMultiTests
 	charMapperTests
 	base64Tests
+	TimeTests
     )
 
 # Only affects current directory, so safe

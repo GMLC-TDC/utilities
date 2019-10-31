@@ -106,7 +106,7 @@ X strViewToInteger(string_view input, size_t *rem = nullptr)
         ++v1;
     }
 
-    return ret * sign;
+    return static_cast<X>(ret * sign);
 }
 
 // templates for single numerical conversion
