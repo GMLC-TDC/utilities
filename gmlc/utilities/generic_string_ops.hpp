@@ -13,7 +13,7 @@
 #pragma once
 
 /** this file defines some operations that can be performed on string like
- * objects
+ * objects generally string or string_view
  */
 #include "charMapper.h"
 #include <vector>
