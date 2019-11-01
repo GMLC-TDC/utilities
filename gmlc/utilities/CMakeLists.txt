@@ -14,6 +14,7 @@ set(utilities_source_files
     stringOps.cpp
     stringConversion.cpp
     vectorOps.cpp
+	timeStringOps.cpp
 	)
 
 set(utilities_header_files
@@ -26,6 +27,7 @@ set(utilities_header_files
     stringConversion.h
     stringOps.h
     timeRepresentation.hpp
+	timeStringOps.hpp
     vectorOps.hpp
     TimeSeries.hpp
     TimeSeriesMulti.hpp
