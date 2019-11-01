@@ -39,10 +39,10 @@ TEST(strViewconversion, simple_integer_conversions_test)
     EXPECT_EQ(f, -234);
 
     auto g = numeric_conversion<unsigned long>("978", 0);
-    EXPECT_EQ(g, 978);
+    EXPECT_EQ(g, 978UL);
 
     auto h = numeric_conversion<unsigned long long>("123456789123456789", 0);
-    EXPECT_EQ(h, 123456789123456789);
+    EXPECT_EQ(h, 123456789123456789ULL);
 
     auto i = numeric_conversion<int>("-Bad", -35);
     EXPECT_EQ(i, -35);
@@ -69,7 +69,7 @@ TEST(strViewconversion, simple_floating_point_conversions_test)
     auto c = numeric_conversion<double>(".456", 0xFF);
     EXPECT_NEAR(c, .456, closeDef);
     auto d = numeric_conversion<long double>("45.456e27", 0xFF);
-    EXPECT_NEAR(d, 45.456e27, closeDef);
+    EXPECT_NEAR(static_cast<double>(d), 45.456e27, closeDef);
     EXPECT_EQ(sizeof(d), sizeof(long double));
 
     auto e = numeric_conversion<double>("-456.234", 0);
@@ -103,11 +103,11 @@ TEST(strViewconversion, simple_integer_conversion_complete_test)
     EXPECT_EQ(f, -234);
 
     auto g = numeric_conversionComplete<unsigned long>("978F9", 0);
-    EXPECT_EQ(g, 0);
+    EXPECT_EQ(g, 0UL);
 
     auto h =
       numeric_conversionComplete<unsigned long long>(" 123456789123456789 ", 0);
-    EXPECT_EQ(h, 123456789123456789);
+    EXPECT_EQ(h, 123456789123456789ULL);
 
     auto i = numeric_conversionComplete<int>("-Bad", -35);
     EXPECT_EQ(i, -35);
@@ -166,7 +166,7 @@ TEST(strViewconversion, simple_floating_point_conversionsComplete_test)
     auto c = numeric_conversionComplete<double>(".456", 0xFF);
     EXPECT_NEAR(c, .456, closeDef);
     auto d = numeric_conversionComplete<long double>("45.456e27", 0xFF);
-    EXPECT_NEAR(d, 45.456e27, closeDef);
+    EXPECT_NEAR(static_cast<double>(d), 45.456e27, closeDef);
     EXPECT_EQ(sizeof(d), sizeof(long double));
 
     auto e = numeric_conversionComplete<double>("-456.234g", 0);

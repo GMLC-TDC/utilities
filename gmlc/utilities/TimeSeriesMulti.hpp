@@ -334,7 +334,6 @@ class TimeSeriesMulti
     /** @brief load a file into the time series
     automatically detect the file type based on extension
     @param[in] fileName  the file to load
-    @return the number of points that were loaded
     */
     void loadFile(const std::string &fileName)
     {

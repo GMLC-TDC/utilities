@@ -92,9 +92,8 @@ class TimeSeries
     /** add a data point to the time series
     @param[in] t the time
     @param[in] point the value
-    @return true if the data was successfully added
     */
-    void addData(timeType t, dataType point)
+    void addData(timeType t, const dataType &point)
     {
         m_time.push_back(t);
         m_data.push_back(point);
@@ -103,7 +102,6 @@ class TimeSeries
     /** add a vector of data points to the time series
     @param[in] tm the time
     @param[in] val the value
-    @return true if the data was successfully added
     */
     void addData(const std::vector<timeType> &tm,
                  const std::vector<dataType> &val)

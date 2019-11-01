@@ -448,5 +448,5 @@ TEST(stringViewOps, mergeTest)
     std::string lstr(100, 'a');
     string_view aba(lstr.c_str(), 3);
     string_view bab(lstr.c_str() + 80, 3);
-    EXPECT_THROW(auto p5 = merge(aba, bab), std::out_of_range);
+    EXPECT_THROW(merge(aba, bab), std::out_of_range);
 }

@@ -10,7 +10,7 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 /** these test cases test data_block and data_view objects
  */
 
-#include "gmlc/utilities/TimeRepresentation.hpp"
+#include "gmlc/utilities/timeRepresentation.hpp"
 
 using Time = TimeRepresentation<count_time<9>>;
 
