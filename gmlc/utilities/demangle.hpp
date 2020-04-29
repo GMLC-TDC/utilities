@@ -7,7 +7,7 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 /*
-Copyright © 2017-2019,
+Copyright (c) 2017-2020,
 Battelle Memorial Institute; Lawrence Livermore National Security, LLC; Alliance
 for Sustainable Energy, LLC.  See the top-level NOTICE for additional details.
 All rights reserved.

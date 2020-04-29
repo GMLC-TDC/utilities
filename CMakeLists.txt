@@ -1,5 +1,5 @@
 # ~~~
-# Copyright (c) 2017-2019, Battelle Memorial Institute; Lawrence Livermore
+# Copyright (c) 2017-2020, Battelle Memorial Institute; Lawrence Livermore
 # National Security, LLC; Alliance for Sustainable Energy, LLC.
 # See the top-level NOTICE for additional details.
 # All rights reserved.
@@ -7,16 +7,25 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-cmake_minimum_required(VERSION 3.4)
-cmake_policy(VERSION 3.4)
+# Make sure users don't get warnings on a tested (3.0 to 3.16) version of CMake. For
+# most of the policies, the new version is better (hence the change). We don't use the
+# 3.0...3.16 syntax because of a bug in an older MSVC's built-in and modified CMake 3.11
 
-project(GMLC_UTILITIES VERSION 0.2.1)
+cmake_minimum_required(VERSION 3.4)
+
+if(${CMAKE_VERSION} VERSION_LESS 3.17)
+    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+else()
+    cmake_policy(VERSION 3.17)
+endif()
+
+project(GMLC_UTILITIES LANGUAGES CXX VERSION 0.3.0)
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "10-22-19")
+set(GMLC_UTILITIES_DATE "04-29-20")
 
 
 
