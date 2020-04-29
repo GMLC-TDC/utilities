@@ -40,7 +40,7 @@ jobs:
     vmImage: 'ubuntu-latest'
   container: helics/buildenv:cpplint
   steps:
-    - bash: cpplint --counting=detailed --recursive gmlc tests --exclude optional.hpp
+    - bash: cpplint --counting=detailed --recursive gmlc tests --exclude string_view.hpp
       displayName: Checking against google style guide
 
 - job: Native

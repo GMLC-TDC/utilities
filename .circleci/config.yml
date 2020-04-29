@@ -1,8 +1,8 @@
 version: 2
 aliases:
 
-  - &run_containers
-    name: run_containers
+  - &run_utilities
+    name: run_utilities
     environment:
     command: |
       mkdir -p build
@@ -13,18 +13,18 @@ aliases:
 
 jobs:
 
-  containersTSan:
+  utilitiesTSan:
     docker:
-      - image: helics/clang-tsan:latest
+      - image: helics/buildenv:sanitizers
     environment:
       CMAKE_FLAGS: '-DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_FLAGS="-fsanitize=thread -stdlib=libc++ -L/root/develop/libcxx_tsan/lib -lc++abi -I/root/develop/libcxx_tsan/include -I/root/develop/libcxx_tsan/include/c++/v1 -Wno-unused-command-line-argument -g -O1 -Wl,-rpath=/root/develop/libcxx_tsan/lib"  '
       TSAN_OPTIONS: 'second_deadlock_stack=1'
 
     steps:
       - checkout
-      - run: *run_containers
+      - run: *run_utilities
 
-  containersASan:
+  utilitiesASan:
     docker:
       - image: helics/buildenv:sanitizers
     environment:
@@ -34,9 +34,9 @@ jobs:
 
     steps:
       - checkout
-      - run: *run_containers
+      - run: *run_utilities
 
-  containersMSan:
+  utilitiesMSan:
     docker:
       - image: helics/buildenv:sanitizers
     environment:
@@ -44,14 +44,14 @@ jobs:
 
     steps:
       - checkout
-      - run: *run_containers
+      - run: *run_utilities
 
 workflows:
   version: 2
-  containers_test:
+  utilities_test:
     jobs:
-      - containersMSan
-      - containersASan
-      - containersTSan
+      - utilitiesMSan
+      - utilitiesASan
+      - utilitiesTSan
 
 
