@@ -23,30 +23,36 @@
 
 namespace gmlc {
 namespace utilities {
+    static auto lower = [](char x) -> char {
+        return (x >= 'A' && x <= 'Z') ? (x - ('Z' - 'z')) : x;
+    };
+
+    static auto upper = [](char x) -> char {
+        return (x >= 'a' && x <= 'z') ? (x + ('Z' - 'z')) : x;
+    };
+
     std::string convertToLowerCase(const std::string& input)
     {
-        std::string out;
-        out.reserve(input.size());
-        std::transform(
-            input.begin(), input.end(), std::back_inserter(out), ::tolower);
+        std::string out(input);
+        std::transform(out.begin(), out.end(), out.begin(), lower);
         return out;
     }
 
     std::string convertToUpperCase(const std::string& input)
     {
         std::string out(input);
-        std::transform(input.begin(), input.end(), out.begin(), ::toupper);
+        std::transform(out.begin(), out.end(), out.begin(), upper);
         return out;
     }
 
     void makeLowerCase(std::string& input)
     {
-        std::transform(input.begin(), input.end(), input.begin(), ::tolower);
+        std::transform(input.begin(), input.end(), input.begin(), lower);
     }
 
     void makeUpperCase(std::string& input)
     {
-        std::transform(input.begin(), input.end(), input.begin(), ::toupper);
+        std::transform(input.begin(), input.end(), input.begin(), upper);
     }
 
     namespace stringOps {
