@@ -10,10 +10,9 @@
  * LLNS Copyright End
  */
 
-#include "gtest/gtest.h"
-
 #include "gmlc/utilities/string_viewOps.h"
 
+#include "gtest/gtest.h"
 #include <iostream>
 
 using namespace gmlc::utilities::string_viewOps;
@@ -304,8 +303,11 @@ TEST(stringViewOps, splitLineQuotes_tests)
     EXPECT_TRUE(testres3[2] == "\"charlie\"");
     EXPECT_TRUE(testres3[3].empty());
 
-    testres3 = splitlineQuotes(test3, default_delim_chars, default_quote_chars,
-                               delimiter_compression::on);
+    testres3 = splitlineQuotes(
+        test3,
+        default_delim_chars,
+        default_quote_chars,
+        delimiter_compression::on);
     ASSERT_TRUE(testres3.size() == 3);
 
     string_view test4 = "\"'part1' and,; 'part2'\",\"34,45,56\"";
