@@ -20,37 +20,15 @@ matrix:
   - compiler: clang
     env:
     - CCACHE_CPP2=yes
-    addons:
-      apt:
-        packages:
-        - libboost-dev
     script:
     - .ci/make_and_test.sh
 
     # thread sanitize
-  - compiler: clang
-    env:
-    - CCACHE_CPP2=yes
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-          - llvm-toolchain-xenial-7
-        packages:
-          - libc++-7-dev
-          - libc++abi-7-dev
-          - libboost-dev
-    script:
-    - .ci/make_and_sanitize.sh
 
     # Check style/tidy
   - compiler: clang
     env:
     - CHECK_STYLE=yes
-    addons:
-      apt:
-        packages:
-        - libboost-dev
     script:
     - cd "${TRAVIS_BUILD_DIR}"
     - bash scripts/check_style.sh
@@ -69,7 +47,6 @@ matrix:
         packages:
           - clang-3.6
           - libstdc++-6-dev
-          - libboost-dev
     install:
     - export CC=clang-3.6
     - export CXX=clang++-3.6
@@ -97,7 +74,6 @@ matrix:
         - g++-7
         - curl
         - lcov
-        - libboost-dev
     install:
     - export CC=gcc-7
     - export CXX=g++-7
@@ -117,7 +93,6 @@ matrix:
       apt:
         packages:
         - g++-4.9
-        - libboost-dev
     install:
     - export CC=gcc-4.9
     - export CXX=g++-4.9
