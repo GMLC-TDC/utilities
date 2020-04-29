@@ -1,6 +1,6 @@
 /*
  * LLNS Copyright Start
- * Copyright (c) 2014-2018, Lawrence Livermore National Security
+ * Copyright (c) 2014-2020, Lawrence Livermore National Security
  * This work was performed under the auspices of the U.S. Department
  * of Energy by Lawrence Livermore National Laboratory in part under
  * Contract W-7405-Eng-48 and in part under Contract DE-AC52-07NA27344.
@@ -14,23 +14,24 @@
 // don't need the time series object but if you include this I want TimeSeries
 // to be included as well along with all the other objects
 #include "TimeSeries.hpp"
+
 namespace gmlc {
 namespace utilities {
     /** a multidimensional time series object */
     template<typename dataType = double, typename timeType = double>
     class TimeSeriesMulti {
       public:
-        std::string description; //!< a description of the time series
+        std::string description;  //!< a description of the time series
       private:
         std::vector<timeType>
-            m_time; //!< a vector of times associated with the m_data
+            m_time;  //!< a vector of times associated with the m_data
         std::vector<std::vector<dataType>>
-            m_data; //!< a 2d vector of m_data to store the time series information
-        std::vector<std::string> fields; //!< container for all the strings
+            m_data;  //!< a 2d vector of m_data to store the time series information
+        std::vector<std::string> fields;  //!< container for all the strings
             //!< associated with the different columns
-        fsize_t cols = 1; //!< the number of columns of m_data
-        fsize_t count = 0; //!< the current m_data location
-        fsize_t capacity = 0; //!< the total capacity of the time series
+        fsize_t cols = 1;  //!< the number of columns of m_data
+        fsize_t count = 0;  //!< the current m_data location
+        fsize_t capacity = 0;  //!< the total capacity of the time series
 
       public:
         TimeSeriesMulti()
@@ -357,9 +358,9 @@ namespace utilities {
             fio.read(reinterpret_cast<char*>(&rcount), sizeof(fsize_t));
 
             setCols(
-                rcount - 1); // update the number of columns the file contains
+                rcount - 1);  // update the number of columns the file contains
             // the time, then the m_data columns
-            resize(nc); // update the size
+            resize(nc);  // update the size
 
             // now read the field names
             unsigned char len;
@@ -632,5 +633,5 @@ namespace utilities {
         return compareVec(ts1[stream1], ts2[stream2], cnt);
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

@@ -1,6 +1,6 @@
 /*
  * LLNS Copyright Start
- * Copyright (c) 2014-2018, Lawrence Livermore National Security
+ * Copyright (c) 2014-2020, Lawrence Livermore National Security
  * This work was performed under the auspices of the U.S. Department
  * of Energy by Lawrence Livermore National Laboratory in part under
  * Contract W-7405-Eng-48 and in part under Contract DE-AC52-07NA27344.
@@ -14,11 +14,15 @@
 #include "stringConversion.h"
 #include "vectorOps.hpp"
 
+#include <algorithm>
 #include <cstdint>
 #include <exception>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace gmlc {
 namespace utilities {
@@ -64,18 +68,18 @@ namespace utilities {
 
     using fsize_t = std::uint32_t;
 
-    // TODO::PT add iterators
+    // TODO(PT) add iterators
     /** @brief class to hold a single time series*/
     template<typename dataType = double, typename timeType = double>
     class TimeSeries {
       public:
-        std::string description; //!< time series description
-        std::string field; //!< the name of the field the data comes from
+        std::string description;  //!< time series description
+        std::string field;  //!< the name of the field the data comes from
       private:
-        std::vector<timeType> m_time; //!< storage for time data
-        std::vector<dataType> m_data; //!< storage for value data
+        std::vector<timeType> m_time;  //!< storage for time data
+        std::vector<dataType> m_data;  //!< storage for value data
 
-        fsize_t count = 0; //!< the current index location
+        fsize_t count = 0;  //!< the current index location
       public:
         /** default constructor*/
         TimeSeries() = default;
@@ -207,7 +211,7 @@ namespace utilities {
             fio.read(reinterpret_cast<char*>(&nc), sizeof(fsize_t));
             fio.read(reinterpret_cast<char*>(&rcount), sizeof(fsize_t));
 
-            resize(nc); // update the size
+            resize(nc);  // update the size
             fsize_t cols = rcount - 1;
 
             // now read the field names
@@ -406,5 +410,5 @@ namespace utilities {
         }
     };
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

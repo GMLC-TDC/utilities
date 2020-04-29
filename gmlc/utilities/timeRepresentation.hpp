@@ -110,7 +110,7 @@ class integer_time {
     static_assert(N < 8 * sizeof(base), "N must be less than 16");
     static_assert(
         std::is_signed<base>::value,
-        "base type must be signed"); // to allow negative numbers for time
+        "base type must be signed");  // to allow negative numbers for time
   private:
     static constexpr base scalar = (1u << N);
     static constexpr base fracMask = ((1u << N) - 1);
@@ -229,11 +229,11 @@ class count_time {
     static_assert(N >= 0, "N must be greater than or equal to 0");
     static_assert(std::is_signed<base>::value, "base type must be signed");
     static constexpr std::int64_t iFactor =
-        fac10[N]; //!< the integer multiplier factor
+        fac10[N];  //!< the integer multiplier factor
     static constexpr double dFactor =
-        fac10f[N]; //!< the floating point multiplication factor
+        fac10f[N];  //!< the floating point multiplication factor
     static constexpr double ddivFactor =
-        1.0 / fac10f[N]; // the floating point division factor
+        1.0 / fac10f[N];  // the floating point division factor
   public:
     using baseType = base;
     /** the maximum representable value must be negatable hence the +1 in the
@@ -259,7 +259,7 @@ class count_time {
     {
         return (
             static_cast<double>(val / iFactor) +
-            static_cast<double>(val % iFactor) * ddivFactor); // NOLINT
+            static_cast<double>(val % iFactor) * ddivFactor);  // NOLINT
     }
     static constexpr baseType convert(double t) noexcept
     {
@@ -400,7 +400,7 @@ class TimeRepresentation {
     using baseType = typename Tconv::baseType;
 
   private:
-    baseType internalTimeCode; //!< the underlying representation of time
+    baseType internalTimeCode;  //!< the underlying representation of time
 #ifdef _DEBUG
     // this is a debugging aid to display the time as a double when looking at
     // debug output it isn't involved in any calculations and is removed when
@@ -424,42 +424,42 @@ class TimeRepresentation {
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 0> /*unused*/) noexcept:
         internalTimeCode(Tconv::zeroVal()),
-        doubleTimeValue(0.0){};
+        doubleTimeValue(0.0){}
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, -1> /*unused*/) noexcept:
         internalTimeCode(Tconv::minVal()),
-        doubleTimeValue(-1.456e47){};
+        doubleTimeValue(-1.456e47){}
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 1> /*unused*/) noexcept:
         internalTimeCode(Tconv::maxVal()),
-        doubleTimeValue(1e49){};
+        doubleTimeValue(1e49){}
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 2> /*unused*/) noexcept:
         internalTimeCode(Tconv::epsilon()),
-        doubleTimeValue(1e-9){};
+        doubleTimeValue(1e-9){}
     constexpr TimeRepresentation(
         std::integral_constant<int, 4> /*unused*/,
         baseType initBaseVal,
         double initDoubleTime) noexcept:
         internalTimeCode(initBaseVal),
-        doubleTimeValue(initDoubleTime){};
+        doubleTimeValue(initDoubleTime){}
 #else
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 0> /*unused*/) noexcept:
-        internalTimeCode(Tconv::zeroVal()){};
+        internalTimeCode(Tconv::zeroVal()){}
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, -1> /*unused*/) noexcept:
-        internalTimeCode(Tconv::minVal()){};
+        internalTimeCode(Tconv::minVal()){}
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 1> /*unused*/) noexcept:
-        internalTimeCode(Tconv::maxVal()){};
+        internalTimeCode(Tconv::maxVal()){}
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 2> /*unused*/) noexcept:
-        internalTimeCode(Tconv::epsilon()){};
+        internalTimeCode(Tconv::epsilon()){}
     constexpr TimeRepresentation(
         std::integral_constant<int, 4> /*unused*/,
         baseType initBaseVal) noexcept:
-        internalTimeCode(initBaseVal){};
+        internalTimeCode(initBaseVal){}
 #endif
 
   public:
@@ -483,9 +483,9 @@ class TimeRepresentation {
     constexpr TimeRepresentation(double t) noexcept:
         internalTimeCode(Tconv::convert(t))
     {
-    } // NOLINT
+    }  // NOLINT
     CHRONO_CONSTEXPR
-    TimeRepresentation(std::chrono::nanoseconds nsTime) noexcept // NOLINT
+    TimeRepresentation(std::chrono::nanoseconds nsTime) noexcept  // NOLINT
         :
         internalTimeCode(Tconv::convert(nsTime))
     {
@@ -562,7 +562,7 @@ class TimeRepresentation {
     constexpr operator double() const noexcept
     {
         return Tconv::toDouble(internalTimeCode);
-    } // NOLINT
+    }  // NOLINT
 
     TimeRepresentation& operator+=(const TimeRepresentation& rhs) noexcept
     {

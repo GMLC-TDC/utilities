@@ -1,6 +1,6 @@
 /*
  * LLNS Copyright Start
- * Copyright (c) 2014-2019, Lawrence Livermore National Security
+ * Copyright (c) 2014-2020, Lawrence Livermore National Security
  * This work was performed under the auspices of the U.S. Department
  * of Energy by Lawrence Livermore National Laboratory in part under
  * Contract W-7405-Eng-48 and in part under Contract DE-AC52-07NA27344.
@@ -22,6 +22,8 @@
 #include <numeric>
 #include <type_traits>
 #include <vector>
+#include <utility>
+
 namespace gmlc {
 namespace utilities {
     /** solve a 2x2 matrix problem
@@ -382,7 +384,7 @@ according to nth_element
     template<class X>
     X median(const std::vector<X>& a)
     {
-        std::vector<X> b(a); // copy the vector
+        std::vector<X> b(a);  // copy the vector
         return medianReorder(b);
     }
 
@@ -429,7 +431,7 @@ given value
     template<class X>
     auto vecFindeq(
         const std::vector<X>& a,
-        X match) //->std::vector<decltype (a.size ())>
+        X match)  //->std::vector<decltype (a.size ())>
     {
         auto cnt = a.size();
         std::vector<decltype(cnt)> locs;
@@ -494,7 +496,7 @@ given value
     template<class X>
     auto vecFindlt(
         const std::vector<X>& a,
-        X val) //->std::vector<decltype (a.size ())>
+        X val)  //->std::vector<decltype (a.size ())>
     {
         auto cnt = a.size();
         std::vector<decltype(cnt)> locs;
@@ -516,7 +518,7 @@ equal to a given value
     template<class X>
     auto vecFindlte(
         const std::vector<X>& a,
-        X val) //->std::vector<decltype (a.size ())>
+        X val)  //->std::vector<decltype (a.size ())>
     {
         auto cnt = a.size();
         std::vector<decltype(cnt)> locs;
@@ -818,7 +820,7 @@ to the sum
     {
         auto cnt = (std::min)(a.size(), b.size());
         for (typename std::vector<X>::size_type ii = 0; ii < cnt; ++ii) {
-            res[ii] = std::fma(Multiplier, b[ii], a[ii]); // fast multiply add
+            res[ii] = std::fma(Multiplier, b[ii], a[ii]);  // fast multiply add
         }
     }
 
@@ -1079,7 +1081,7 @@ reference
             std::vector<X> ret = dvec;
             return ret;
         }
-    } // namespace vectorConvertDetail
+    }  // namespace vectorConvertDetail
 
     /** convert a vector of one type into a vector of another type
 @tparam X the desired resultant type
@@ -1133,5 +1135,5 @@ original
             dvec, std::is_same<X, Y>{});
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

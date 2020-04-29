@@ -120,7 +120,7 @@ namespace utilities {
         {
             const auto strStart = input.find_first_not_of(whitespace);
             if (strStart == std::string::npos) {
-                return std::string(); // no content
+                return std::string();  // no content
             }
 
             const auto strEnd = input.find_last_not_of(whitespace);
@@ -148,7 +148,7 @@ namespace utilities {
             int num = defNum;
             auto pos1 = input.find_last_not_of(digits);
             if (pos1 ==
-                std::string::npos) // in case the whole thing is a number
+                std::string::npos)  // in case the whole thing is a number
             {
                 if (input.length() <= 10) {
                     output.clear();
@@ -185,7 +185,7 @@ namespace utilities {
 
             auto pos1 = input.find_last_not_of(digits);
             if (pos1 ==
-                std::string::npos) // in case the whole thing is a number
+                std::string::npos)  // in case the whole thing is a number
             {
                 if (input.length() <= 10) {
                     return std::stol(input);
@@ -269,8 +269,8 @@ namespace utilities {
             const stringVector& iStrings,
             string_match_type matchType)
         {
-            std::string lct; // lower case test string
-            std::string lcis; // lower case input string
+            std::string lct;  // lower case test string
+            std::string lcis;  // lower case input string
             stringVector lciStrings = iStrings;
             // make all the input strings lower case
             for (auto& st : lciStrings) {
@@ -304,8 +304,8 @@ namespace utilities {
                             }
                             break;
                         case string_match_type::close:
-                            if (lct.length() == 1) // special case
-                            { // we are checking if the single character is isolated from
+                            if (lct.length() == 1)  // special case
+                            {  // we are checking if the single character is isolated from
                                 // other other alphanumeric characters
                                 auto bf = lcis.find(lct);
                                 while (bf != std::string::npos) {
@@ -428,7 +428,7 @@ namespace utilities {
             }
             return out;
         }
-    } // namespace stringOps
+    }  // namespace stringOps
 
     std::string randomString(std::string::size_type length)
     {
@@ -486,5 +486,5 @@ namespace utilities {
         return s;
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc
