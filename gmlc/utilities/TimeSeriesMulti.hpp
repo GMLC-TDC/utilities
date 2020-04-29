@@ -358,7 +358,7 @@ namespace utilities {
 
             setCols(
                 rcount - 1); // update the number of columns the file contains
-                // the time, then the m_data columns
+            // the time, then the m_data columns
             resize(nc); // update the size
 
             // now read the field names
