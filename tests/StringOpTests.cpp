@@ -10,10 +10,9 @@
  * LLNS Copyright End
  */
 
-#include "gtest/gtest.h"
-
 #include "gmlc/utilities/stringOps.h"
 
+#include "gtest/gtest.h"
 #include <iostream>
 
 using namespace gmlc::utilities;
@@ -406,8 +405,11 @@ TEST(stringops, splitLineQuotes_tests)
     EXPECT_TRUE(testres3[2] == "\"charlie\"");
     EXPECT_TRUE(testres3[3].empty());
 
-    testres3 = splitlineQuotes(test3, default_delim_chars, default_quote_chars,
-                               delimiter_compression::on);
+    testres3 = splitlineQuotes(
+        test3,
+        default_delim_chars,
+        default_quote_chars,
+        delimiter_compression::on);
     ASSERT_TRUE(testres3.size() == 3);
 
     std::string test4 = "\"'part1' and,; 'part2'\",\"34,45,56\"";
@@ -421,13 +423,13 @@ TEST(stringops, splitLineQuotes_tests)
     EXPECT_TRUE(testres5[1] == "\"34,45,56\"");
 
     std::string test6 =
-      "--arg1 --arg2=bob --arg3=\"string1 string2\" --arg3=\"bob\"";
+        "--arg1 --arg2=bob --arg3=\"string1 string2\" --arg3=\"bob\"";
     auto testres6 = splitlineQuotes(test6, " \t");
     ASSERT_TRUE(testres6.size() == 4);
     EXPECT_TRUE(testres6[2] == "--arg3=\"string1 string2\"");
 
     std::string test7 =
-      "--arg1 --arg2=bob --arg3=`string1 string2` --arg3=\"bob\"";
+        "--arg1 --arg2=bob --arg3=`string1 string2` --arg3=\"bob\"";
     auto testres7 = splitlineQuotes(test7, " \t");
     ASSERT_TRUE(testres7.size() == 4);
     EXPECT_TRUE(testres7[2] == "--arg3=`string1 string2`");
@@ -485,9 +487,11 @@ TEST(stringops, splitLineBracket_tests)
     auto testres9 = splitlineBracket(test9);
     EXPECT_EQ(testres9.size(), 3u);
 
-    auto testres10 =
-      splitlineBracket(test9, default_delim_chars, default_bracket_chars,
-                       delimiter_compression::on);
+    auto testres10 = splitlineBracket(
+        test9,
+        default_delim_chars,
+        default_bracket_chars,
+        delimiter_compression::on);
     EXPECT_EQ(testres10.size(), 2u);
 }
 
@@ -499,8 +503,7 @@ TEST(stringops, randomString)
     EXPECT_EQ(ept - str1.begin(), 62u);
 
     std::vector<std::string> rstring;
-    for (int ii = 0; ii < 20; ++ii)
-    {
+    for (int ii = 0; ii < 20; ++ii) {
         rstring.push_back(randomString(10));
     }
 
@@ -652,17 +655,17 @@ TEST(stringops, findClosestMatch)
 
 TEST(stringops, findClosestMatch2)
 {
-    stringVector iString{"stringabcd", "Abcd2_i", "Abracabcdabra", "n idea",
-                         "having 8;idea"};
+    stringVector iString{
+        "stringabcd", "Abcd2_i", "Abracabcdabra", "n idea", "having 8;idea"};
 
-    int res = findCloseStringMatch({"abcd", "ABcd2_i"}, iString,
-                                   string_match_type::exact);
+    int res = findCloseStringMatch(
+        {"abcd", "ABcd2_i"}, iString, string_match_type::exact);
     EXPECT_EQ(res, 1);
-    res = findCloseStringMatch({"invalidity", "abcd"}, iString,
-                               string_match_type::exact);
+    res = findCloseStringMatch(
+        {"invalidity", "abcd"}, iString, string_match_type::exact);
     EXPECT_EQ(res, -1);
-    res = findCloseStringMatch({"invalidity", "abcd"}, iString,
-                               string_match_type::end);
+    res = findCloseStringMatch(
+        {"invalidity", "abcd"}, iString, string_match_type::end);
     EXPECT_EQ(res, 0);
     res = findCloseStringMatch({"A"}, iString, string_match_type::close);
     EXPECT_EQ(res, -1);
@@ -674,8 +677,8 @@ TEST(stringops, findClosestMatch2)
     EXPECT_EQ(res, 4);
     res = findCloseStringMatch({"abcd2i"}, iString, string_match_type::close);
     EXPECT_EQ(res, 1);
-    res =
-      findCloseStringMatch({"string_abcd"}, iString, string_match_type::close);
+    res = findCloseStringMatch(
+        {"string_abcd"}, iString, string_match_type::close);
     EXPECT_EQ(res, 0);
 }
 
