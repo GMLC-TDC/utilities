@@ -73,12 +73,12 @@ namespace utilities {
                 char_array_3[jj] = '\0';
             }
 
-            char_array_4[0] = (char_array_3[0] & 0xfcu) >> 2;
-            char_array_4[1] = ((char_array_3[0] & 0x03u) << 4) +
-                ((char_array_3[1] & 0xf0u) >> 4);
-            char_array_4[2] = ((char_array_3[1] & 0x0fu) << 2) +
-                ((char_array_3[2] & 0xc0u) >> 6);
-            char_array_4[3] = char_array_3[2] & 0x3fu;
+            char_array_4[0] = (char_array_3[0] & 0xfcU) >> 2;
+            char_array_4[1] = ((char_array_3[0] & 0x03U) << 4) +
+                ((char_array_3[1] & 0xf0U) >> 4);
+            char_array_4[2] = ((char_array_3[1] & 0x0fU) << 2) +
+                ((char_array_3[2] & 0xc0U) >> 6);
+            char_array_4[3] = char_array_3[2] & 0x3fU;
 
             for (int jj = 0; (jj < ii + 1); ++jj) {
                 ret.push_back(base64_chars[char_array_4[jj]]);
@@ -224,9 +224,9 @@ namespace utilities {
         int in_ = 0;
         std::array<unsigned char, 3> char_array_3{'\0', '\0', '\0'};
         std::array<unsigned char, 4> char_array_4{'\0', '\0', '\0', '\0'};
-        auto outData = reinterpret_cast<unsigned char*>(data);
-        size_t dataIndex = 0;
-        while (((in_len--) != 0u) && (encoded_string[in_] != '=') &&
+        auto outData = static_cast<unsigned char*>(data);
+        size_t dataIndex = 0U;
+        while (((in_len--) != 0U) && (encoded_string[in_] != '=') &&
                is_base64(encoded_string[in_])) {
             char_array_4[i++] = encoded_string[in_];
             in_++;
