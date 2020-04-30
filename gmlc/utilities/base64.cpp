@@ -26,9 +26,9 @@
 
 #include "charMapper.h"
 
+#include <array>
 #include <iostream>
 #include <vector>
-#include <array>
 
 namespace gmlc {
 namespace utilities {
@@ -44,12 +44,12 @@ namespace utilities {
     }
     std::string base64_encode(void const* bytes_to_encode, size_t in_len)
     {
-        auto b2e = reinterpret_cast<const unsigned char*>(bytes_to_encode);
+        auto b2e = static_cast<const unsigned char*>(bytes_to_encode);
         std::string ret;
         ret.reserve((in_len * 4) / 3 + 2);
         int ii = 0;
-    std::array<unsigned char,3> char_array_3;
-    std::array<unsigned char, 4> char_array_4;
+        std::array<unsigned char, 3> char_array_3{};
+        std::array<unsigned char, 4> char_array_4{};
 
         while (in_len-- != 0) {
             char_array_3[ii++] = *b2e++;
@@ -98,8 +98,8 @@ namespace utilities {
         auto in_len = encoded_string.size() - offset - 1;
         int i = 0;
         int in_ = static_cast<int>(offset);
-        std::array<unsigned char, 3> char_array_3;
-        std::array<unsigned char, 4> char_array_4;
+        std::array<unsigned char, 3> char_array_3{};
+        std::array<unsigned char, 4> char_array_4{};
         std::vector<unsigned char> ret;
         ret.reserve((in_len * 4) / 3 + 2);
 
@@ -114,8 +114,8 @@ namespace utilities {
                 char_array_4[3] = b64Map[char_array_4[3]];
 
                 char_array_3[0] =
-                    (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4u);
-                char_array_3[1] = ((char_array_4[1] & 0xfu) << 4U) +
+                    (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
+                char_array_3[1] = ((char_array_4[1] & 0xfU) << 4U) +
                     ((char_array_4[2] & 0x3cU) >> 2U);
                 char_array_3[2] =
                     ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
@@ -138,11 +138,11 @@ namespace utilities {
             char_array_4[3] = b64Map[char_array_4[3]];
 
             char_array_3[0] =
-                (char_array_4[0] << 2u) + ((char_array_4[1] & 0x30u) >> 4u);
-            char_array_3[1] = ((char_array_4[1] & 0xfu) << 4u) +
-                ((char_array_4[2] & 0x3cu) >> 2u);
+                (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
+            char_array_3[1] = ((char_array_4[1] & 0xfU) << 4U) +
+                ((char_array_4[2] & 0x3cU) >> 2U);
             char_array_3[2] =
-                ((char_array_4[2] & 0x3u) << 6u) + char_array_4[3];
+                ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
             for (int j = 0; (j < i - 1); j++) {
                 ret.push_back(char_array_3[j]);
@@ -159,8 +159,8 @@ namespace utilities {
         auto in_len = encoded_string.size();
         int i = 0;
         int in_ = static_cast<int>(offset);
-        std::array<unsigned char, 3> char_array_3;
-        std::array<unsigned char, 4> char_array_4;
+        std::array<unsigned char, 3> char_array_3{};
+        std::array<unsigned char, 4> char_array_4{};
         std::string ret;
         ret.reserve(in_len);
 
@@ -175,11 +175,11 @@ namespace utilities {
                 char_array_4[3] = b64Map[char_array_4[3]];
 
                 char_array_3[0] =
-                    (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4u);
-                char_array_3[1] = ((char_array_4[1] & 0xfU) << 4u) +
-                    ((char_array_4[2] & 0x3cU) >> 2U);
+                    (char_array_4[0] << 2) + ((char_array_4[1] & 0x30U) >> 4);
+                char_array_3[1] = ((char_array_4[1] & 0xfU) << 4) +
+                    ((char_array_4[2] & 0x3cU) >> 2);
                 char_array_3[2] =
-                    ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
+                    ((char_array_4[2] & 0x3U) << 6) + char_array_4[3];
 
                 ret.push_back(char_array_3[0]);
                 ret.push_back(char_array_3[1]);
