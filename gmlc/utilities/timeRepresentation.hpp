@@ -470,7 +470,7 @@ class TimeRepresentation {
     {
     }
     TimeRepresentation(std::int64_t count, time_units units) noexcept:
-        internalTimeCode(Tconv::fromCount(count, units)){DOUBLETIME};
+        internalTimeCode(Tconv::fromCount(count, units)){DOUBLETIME}
     TimeRepresentation(std::chrono::nanoseconds nsTime) noexcept:
         internalTimeCode(Tconv::convert(nsTime))
     {
