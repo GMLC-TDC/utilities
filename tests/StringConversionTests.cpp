@@ -31,7 +31,7 @@ TEST(stringconversion, simple_integer_conversions_test)
     EXPECT_EQ(c, 25);
     auto d = numeric_conversion<int16_t>("-7629", 0xFF);
     EXPECT_EQ(d, -7629);
-    EXPECT_EQ(sizeof(d),2U);
+    EXPECT_EQ(sizeof(d), 2U);
 
     auto e = numeric_conversion<unsigned int>("-1", 0);
     EXPECT_EQ(e, static_cast<unsigned int>(-1));
@@ -88,7 +88,7 @@ TEST(stringconversion, simple_integer_conversion_complete_test)
     EXPECT_EQ(c, 25);
     auto d = numeric_conversionComplete<int16_t>("-7629", 0xFF);
     EXPECT_EQ(d, -7629);
-    EXPECT_EQ(sizeof(d),2U);
+    EXPECT_EQ(sizeof(d), 2U);
 
     auto e = numeric_conversionComplete<unsigned int>("-1", 0);
     EXPECT_EQ(e, static_cast<unsigned int>(-1));
@@ -99,8 +99,7 @@ TEST(stringconversion, simple_integer_conversion_complete_test)
     auto g = numeric_conversionComplete<uint32_t>("978F9", 0);
     EXPECT_EQ(g, 0UL);
 
-    auto h = numeric_conversionComplete<uint64_t>(
-        " 123456789123456789 ", 0);
+    auto h = numeric_conversionComplete<uint64_t>(" 123456789123456789 ", 0);
     EXPECT_EQ(h, 123456789123456789ULL);
 
     auto i = numeric_conversionComplete<int>("-Bad", -35);

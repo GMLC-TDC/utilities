@@ -25,8 +25,8 @@ namespace utilities {
         /** a set of white space characters*/
         const string_view whiteSpaceCharacters(" \t\n\r\0\v\f");
 
-        /** @brief trim whitespace characters from a string at the beginning and end of
-the string
+        /** @brief trim whitespace characters from a string at the beginning and
+end of the string
 @param[in,out] input  the string to convert
 @param[in] trimCharacters the characters to potentially tr
 */
@@ -66,7 +66,8 @@ outer brackets include [({<  and their matching pair whitespace is also trimmmed
 */
         string_view removeBrackets(string_view str);
 
-        /** @brief get a string that comes after the last of a specified separator
+        /** @brief get a string that comes after the last of a specified
+separator
 @param[in] input  the string to separate
 @param[in] separationCharacter the separation character
 @return  the tail string or the string that comes after the last separation
@@ -75,8 +76,8 @@ character if not found returns the entire string
         string_view
             getTailString(string_view input, char separationCharacter) noexcept;
 
-        /** @brief get a stringView that comes after the last of any of the specified
-separator
+        /** @brief get a stringView that comes after the last of any of the
+specified separator
 @param[in] input  the string to separate
 @param[in] separationCharacters the separation characters
 @return  the tail string or the string that comes after the last separation
@@ -86,7 +87,8 @@ character if not found returns the entire string
             string_view input,
             string_view separationCharacters) noexcept;
 
-        /** @brief get a string that comes after the last of the specified separator
+        /** @brief get a string that comes after the last of the specified
+separator
 @param input  the string to separate
 @param sep a character sequence indicating the tail
 @return  the tail string or the string that comes after the last of the
@@ -115,9 +117,9 @@ merge multiple sequential delimiters together
             string_view str,
             string_view delimiters = default_delim_chars,
             delimiter_compression compression = delimiter_compression::off);
-        /** @brief split a line into a vector of strings taking into account quote
-characters the delimiter characters are allowed inside the brackets and the
-resulting vector will take the brackets into account
+        /** @brief split a line into a vector of strings taking into account
+quote characters the delimiter characters are allowed inside the brackets and
+the resulting vector will take the brackets into account
 @param[in] line  the string to split
 @param[in]  delimiters a string containing the valid delimiter characters
 @param[in] compression default off,  if set to delimiter_compression::on will
@@ -131,10 +133,10 @@ for bracketing characters
             string_view quoteChars = default_quote_chars,
             delimiter_compression compression = delimiter_compression::off);
 
-        /** @brief split a line into a vector of strings taking into account bracketing
-characters bracket characters include "()","{}","[]","<>" as well as quote
-characters ' and " the delimiter characters are allowed inside the brackets and
-the resulting vector will take the brackets into account
+        /** @brief split a line into a vector of strings taking into account
+bracketing characters bracket characters include "()","{}","[]","<>" as well as
+quote characters ' and " the delimiter characters are allowed inside the
+brackets and the resulting vector will take the brackets into account
 @param[in] line  the string to spit
 @param[in]  delimiters a string containing the valid delimiter characters
 @param[in] compression default off,  if set to delimiter_compression::on will
@@ -160,8 +162,8 @@ other separator but needed to be combined again later
 */
         string_view merge(string_view string1, string_view string2);
 
-        /** @brief extract a trailing number from a string return the number and the
-string without the number
+        /** @brief extract a trailing number from a string return the number and
+the string without the number
 @param[in] input the string to extract the information from
 @param[out] output the leading string with the numbers removed
 @param[in] defNum the default number to return if no trailing number was found

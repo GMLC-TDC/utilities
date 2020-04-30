@@ -86,14 +86,14 @@ namespace utilities {
             while (timeIn[kk + 1] < timeOut[jj]) {
                 ++kk;
                 if (kk + 1 == mx) {
-                    goto breakLoop; // break out of a double loop
+                    goto breakLoop;  // break out of a double loop
                 }
             }
             out[jj] = valIn[kk] +
                 (valIn[kk + 1] - valIn[kk]) / (timeIn[kk + 1] - timeIn[kk]) *
                     (timeOut[jj] - timeIn[kk]);
-            // out[jj] = std::fma((valIn[kk + 1] - valIn[kk]) / (timeIn[kk + 1] -
-            // timeIn[kk]), (timeOut[jj] - timeIn[kk]), valIn[kk]);
+            // out[jj] = std::fma((valIn[kk + 1] - valIn[kk]) / (timeIn[kk + 1]
+            // - timeIn[kk]), (timeOut[jj] - timeIn[kk]), valIn[kk]);
             ++jj;
         }
     breakLoop:
@@ -106,5 +106,5 @@ namespace utilities {
         }
         return out;
     }
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

@@ -306,7 +306,8 @@ namespace utilities {
                             break;
                         case string_match_type::close:
                             if (lct.length() == 1)  // special case
-                            {  // we are checking if the single character is isolated from
+                            {  // we are checking if the single character is
+                               // isolated from
                                 // other other alphanumeric characters
                                 auto bf = lcis.find(lct);
                                 while (bf != std::string::npos) {
@@ -454,8 +455,8 @@ namespace utilities {
             std::string::size_type>
             pick(0, 61);
 #else
-        // this will leak on thread termination,  older apple clang does not have
-        // proper thread_local variables so there really isn't any option
+        // this will leak on thread termination,  older apple clang does not
+        // have proper thread_local variables so there really isn't any option
 
         static __thread std::mt19937* genPtr = nullptr;
         if (genPtr == nullptr) {

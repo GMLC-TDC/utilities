@@ -52,8 +52,8 @@ namespace utilities {
         float wink_adj = 0.0f;
         int f = 0; /*the number of first character matches*/
 
-        char str_large
-            [26]; /*26 instead of 25 to accomodate a termination Character*/
+        char str_large[26]; /*26 instead of 25 to accomodate a termination
+                               Character*/
         char str_small[26];
         int j_max = 0;
         int j_min = 0;
@@ -136,9 +136,9 @@ namespace utilities {
         }
         // printf("c=%d, t=%d, l1=%d, l2=%d, f=%d, half_length=%d\n",c,t,len_s1,
         // len_s2,f,half_length);
-        Result = ((static_cast<float>(c) / static_cast<float> (len_s1)) +
-            (static_cast<float>(c) / static_cast<float>(len_s2)) +
-            (static_cast<float>(t) / static_cast<float>(c))) /
+        Result = ((static_cast<float>(c) / static_cast<float>(len_s1)) +
+                  (static_cast<float>(c) / static_cast<float>(len_s2)) +
+                  (static_cast<float>(t) / static_cast<float>(c))) /
             3.0F;
 
         if (use_winkler) {

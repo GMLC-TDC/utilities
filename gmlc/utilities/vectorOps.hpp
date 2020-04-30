@@ -118,8 +118,8 @@ returns the limit
         return (val < lowerLim) ? lowerLim : val;
     }
 
-    /** get the sign of a number (-1) for numbers less than 1 for greater than 0 and
-0 for == 0
+    /** get the sign of a number (-1) for numbers less than 1 for greater than 0
+and 0 for == 0
 @details this could be used with other types if they define a constructor which
 take and integer argument and a less than operator and != operator
 @tparam M the value type to compare must define a < operator and != operator
@@ -143,7 +143,8 @@ take and integer argument and a less than operator and != operator
         return sum_of_vector;
     }
 
-    /** check that a vector has the requested number of elements if not resize it*/
+    /** check that a vector has the requested number of elements if not resize
+     * it*/
     template<class X>
     void ensureSizeAtLeast(std::vector<X>& a, size_t minRequiredSize)
     {
@@ -152,8 +153,8 @@ take and integer argument and a less than operator and != operator
         }
     }
 
-    /** check that a vector has the requested number of elements if not resize it
- * with all new elements having value = defArg*/
+    /** check that a vector has the requested number of elements if not resize
+     * it with all new elements having value = defArg*/
     template<class X>
     void ensureSizeAtLeast(
         std::vector<X>& a,
@@ -199,7 +200,8 @@ operator
     X absMax(const std::vector<X>& a)
     {
         // auto result = std::minmax_element (a.begin (), a.end ());
-        // return std::max (std::abs (*(result.first)),std::abs (*(result.second)));
+        // return std::max (std::abs (*(result.first)),std::abs
+        // (*(result.second)));
 
         X max_of_vector =
             std::accumulate(a.begin(), a.end(), X(0), [](X a1, X a2) -> X {
@@ -280,8 +282,8 @@ the vector
         return std::make_pair(a1, result - a.begin());
     }
 
-    /** calculate the maximum absolute difference between values in two vectors and
-return the maximum difference and the location
+    /** calculate the maximum absolute difference between values in two vectors
+and return the maximum difference and the location
 @tparam X the type of the vector must have std::abs defined
 @return a pair the first element is the absMax value the second is the index
 into the vector
@@ -309,8 +311,8 @@ into the vector
         return std::make_pair(mdiff, loc);
     }
 
-    /** calculate the maximum absolute difference between values in two vectors and
-return the maximum difference
+    /** calculate the maximum absolute difference between values in two vectors
+and return the maximum difference
 @tparam X the type of the vector must have std::abs defined
 @return the maximum absolute value of the difference between two vectors
 */
@@ -444,8 +446,8 @@ given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are not equal to a
-given value
+    /** generate a vector of indices where the values of a vector are not equal
+to a given value
 @param a the vector of value to compare
 @param match the matching value
 @return a vector of indices into a with the matching condition
@@ -464,8 +466,8 @@ given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are not equal to a
-given value within a defined range
+    /** generate a vector of indices where the values of a vector are not equal
+to a given value within a defined range
 @param a the vector of value to compare
 @param match the matching value
 @param start the starting index
@@ -487,8 +489,8 @@ given value within a defined range
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are less than a
-given value
+    /** generate a vector of indices where the values of a vector are less than
+a given value
 @param a the vector of value to compare
 @param val the comparison value
 @return a vector of indices into a with the matching condition
@@ -509,8 +511,8 @@ given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are less than or
-equal to a given value
+    /** generate a vector of indices where the values of a vector are less than
+or equal to a given value
 @param a the vector of value to compare
 @param val the comparison value
 @return a vector of indices into a with the matching condition
@@ -531,8 +533,8 @@ equal to a given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are greater than a
-given value
+    /** generate a vector of indices where the values of a vector are greater
+than a given value
 @tparam X the type of the values
 @param a the vector of value to compare
 @param val the comparison value
@@ -595,8 +597,8 @@ given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are not equal to a
-given value
+    /** generate a vector of indices where the values of a vector are not equal
+to a given value
 @tparam X the type of the values
 @tparam Y the type of the indices desired
 @param a the vector of value to compare
@@ -617,8 +619,8 @@ given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are not equal to a
-given value within a defined range
+    /** generate a vector of indices where the values of a vector are not equal
+to a given value within a defined range
 @tparam X the type of the values
 @tparam Y the type of the indices desired
 @param a the vector of value to compare
@@ -643,8 +645,8 @@ given value within a defined range
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are less than a
-given value
+    /** generate a vector of indices where the values of a vector are less than
+a given value
 @tparam X the type of the values
 @tparam Y the type of the indices desired
 @param a the vector of value to compare
@@ -665,8 +667,8 @@ given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are less than or
-equal to a given value
+    /** generate a vector of indices where the values of a vector are less than
+or equal to a given value
 @tparam X the type of the values
 @tparam Y the type of the indices desired
 @param a the vector of value to compare
@@ -686,8 +688,8 @@ equal to a given value
         }
         return locs;
     }
-    /** generate a vector of indices where the values of a vector are greater than a
-given value
+    /** generate a vector of indices where the values of a vector are greater
+than a given value
 @tparam X the type of the values
 @tparam Y the type of the indices desired
 @param a the vector of value to compare
@@ -707,8 +709,8 @@ given value
         }
         return locs;
     }
-    /** generate a vector of indices where the values of a vector are greater than
-or equal to a given value
+    /** generate a vector of indices where the values of a vector are greater
+than or equal to a given value
 @tparam X the type of the values
 @tparam Y the type of the indices desired
 @param a the vector of value to compare
@@ -729,7 +731,8 @@ or equal to a given value
         return locs;
     }
 
-    /** sum a vector elements where an indicator function matches a defined value
+    /** sum a vector elements where an indicator function matches a defined
+value
 @param[in] a vector to sum specif elements of
 @param[in] b an indicator vector
 @param match if an element of b == match then add the corresponding value of a
@@ -776,7 +779,8 @@ to the sum
             a.begin(), a + cnt, b.begin(), a.begin(), std::plus<X>());
     }
 
-    /** subtract a vector from another and store the result in the original vector
+    /** subtract a vector from another and store the result in the original
+vector
 @param[in,out] a vector 1
 @param[in] b vector 2
 */
@@ -805,7 +809,8 @@ to the sum
             a.begin(), a + cnt, b.begin(), M.begin(), std::multiplies<X>());
     }
 
-    /** multiply a vector by a constant and add a second vector and store the result
+    /** multiply a vector by a constant and add a second vector and store the
+result
 @param[in] a vector 1
 @param[in] b vector 2
 @param[in] Multiplier the multiplication factor
@@ -870,8 +875,8 @@ to the sum
         return sum_of_diff;
     }
 
-    /** count the differences between two vectors if the difference is greater than
-a tolerance
+    /** count the differences between two vectors if the difference is greater
+than a tolerance
 @param a the first vector
 @param b the second vector
 @param maxAllowableDiff the tolerable difference between two values
@@ -893,8 +898,8 @@ a tolerance
         return diffs;
     }
 
-    /** count the differences between two vectors if the difference is greater than
-a tolerance, ignore a common mode difference between the two
+    /** count the differences between two vectors if the difference is greater
+than a tolerance, ignore a common mode difference between the two
 @param a the first vector
 @param b the second vector
 @param maxAllowableDiff the tolerable difference between two values
@@ -926,8 +931,8 @@ a tolerance, ignore a common mode difference between the two
         return diffs;
     }
 
-    /** count the differences between two vectors if the difference is greater than
-a tolerance
+    /** count the differences between two vectors if the difference is greater
+than a tolerance
 @param a the first vector
 @param b the second vector
 @param maxAllowableDiff the tolerable difference between two values
@@ -952,8 +957,8 @@ a tolerance
         return diffs;
     }
 
-    /** count the differences between two vectors if the difference is greater than
-a tolerance and the a value is valid (ie !=0)
+    /** count the differences between two vectors if the difference is greater
+than a tolerance and the a value is valid (ie !=0)
 @param a the first vector
 @param b the second vector
 @param maxAllowableDiff the tolerable difference between two values
@@ -975,8 +980,8 @@ a tolerance and the a value is valid (ie !=0)
         return diffs;
     }
 
-    /** count the differences between two vectors if the difference is greater than
-a tolerance and call a callback function for each difference
+    /** count the differences between two vectors if the difference is greater
+than a tolerance and call a callback function for each difference
 @param a the first vector
 @param b the second vector
 @param maxAllowableDiff the tolerable difference between two values
@@ -1002,9 +1007,9 @@ each of the two vectors in the index
         return diffs;
     }
 
-    /** count the differences between two vectors if the difference is greater than
-a tolerance and the a value is valid (ie !=0) and call a callback function for
-each difference
+    /** count the differences between two vectors if the difference is greater
+than a tolerance and the a value is valid (ie !=0) and call a callback function
+for each difference
 @param a the first vector
 @param b the second vector
 @param maxAllowableDiff the tolerable difference between two values
@@ -1030,12 +1035,12 @@ each of the two vectors in the index
         }
         return diffs;
     }
-    /** functions that action do the vector conversions  if the types are actually
-the same just copy or move them if possible.  If they are not the same type do a
-static cast in a transform to make a new vector the code use SFINAE magic with
-the std::false_type and std::true_type to discriminate which overload to use the
-function below them vectorConvert include a type_trait check for if the vector
-types are the same
+    /** functions that action do the vector conversions  if the types are
+actually the same just copy or move them if possible.  If they are not the same
+type do a static cast in a transform to make a new vector the code use SFINAE
+magic with the std::false_type and std::true_type to discriminate which overload
+to use the function below them vectorConvert include a type_trait check for if
+the vector types are the same
 */
     namespace vectorConvertDetail {
         /** perform a vector conversion of one type to another

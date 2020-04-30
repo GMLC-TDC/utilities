@@ -198,7 +198,7 @@ namespace utilities {
     }
 
     /** do a numeric conversion of the complete string
- */
+     */
     template<typename X>
     X numeric_conversionComplete(string_view V, const X defValue)
     {

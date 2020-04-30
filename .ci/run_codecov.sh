@@ -7,7 +7,7 @@ set -evx
 cd ${TRAVIS_BUILD_DIR}
 mkdir -p build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Coverage 
+cmake .. -DCMAKE_BUILD_TYPE=Coverage
 cmake --build . -- -j2
 cmake --build . --target UTILITIES_coverage
 

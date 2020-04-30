@@ -101,8 +101,8 @@ namespace utilities {
         const std::string whiteSpaceCharacters(
             std::string(" \t\n\r\a\v\f") + std::string(1, '\0'));
 
-        /** @brief trim whitespace characters from a string at the beginning and end of
-the string
+        /** @brief trim whitespace characters from a string at the beginning and
+end of the string
 @param[in,out] input  the string to convert
 */
         void trimString(
@@ -128,14 +128,16 @@ the string
             stringVector& input,
             const std::string& whitespace = whiteSpaceCharacters);
 
-        /** @brief get a string that comes after the last of a specified separator
+        /** @brief get a string that comes after the last of a specified
+separator
 @param input  the string to separate
 @param sep the separation character
 @return  the tail string or the string that comes after the last sep character
 if not found returns the entire string
 */
         std::string getTailString(const std::string& input, char sep) noexcept;
-        /** @brief get a string that comes after the last of a specified separator
+        /** @brief get a string that comes after the last of a specified
+separator
 @param input  the string to separate
 @param sep the separation string (single character or sequence of characters
 @return  the tail string or the string that comes after the last of the
@@ -145,7 +147,8 @@ separation strings if not found returns the entire string
             const std::string& input,
             const std::string& sep) noexcept;
 
-        /** @brief get a string that comes after the last of any specified separator
+        /** @brief get a string that comes after the last of any specified
+separator
 @param input  the string to separate
 @param sep the set of separation characters
 @return  the tail string or the string that comes after the last of the
@@ -204,9 +207,9 @@ multiple sequential delimiters together
             const std::string& delimiters = default_delim_chars,
             delimiter_compression compression = delimiter_compression::off);
 
-        /** @brief split a line into a vector of strings taking into account quote
-characters the delimiter characters are allowed inside the brackets and the
-resulting vector will take the brackets into account
+        /** @brief split a line into a vector of strings taking into account
+quote characters the delimiter characters are allowed inside the brackets and
+the resulting vector will take the brackets into account
 @param line  the string to split
 @param  delimiters a string containing the valid delimiter characters
 @param compression default off,  if set to delimiter_compression::on will merge
@@ -220,10 +223,10 @@ for bracketing characters
             const std::string& quoteChars = default_quote_chars,
             delimiter_compression compression = delimiter_compression::off);
 
-        /** @brief split a line into a vector of strings taking into account bracketing
-characters bracket characters include "()","{}","[]","<>" as well as quote
-characters ' and " the delimiter characters are allowed inside the brackets and
-the resulting vector will take the brackets into account
+        /** @brief split a line into a vector of strings taking into account
+bracketing characters bracket characters include "()","{}","[]","<>" as well as
+quote characters ' and " the delimiter characters are allowed inside the
+brackets and the resulting vector will take the brackets into account
 @param line  the string to spit
 @param  delimiters a string containing the valid delimiter characters
 @param bracketChars a string of characters define what valid bracket characters
@@ -239,8 +242,8 @@ for bracketing characters
             const std::string& bracketChars = default_bracket_chars,
             delimiter_compression compression = delimiter_compression::off);
 
-        /** @brief extract a trailing number from a string return the number and the
-string without the number
+        /** @brief extract a trailing number from a string return the number and
+the string without the number
 @details will convert up to the last 9 digits so there is no overload there is
 no throw technically could if the string allocation were to fail but that is a
 strange case
@@ -265,7 +268,7 @@ strange case
             int defNum = -1) noexcept;
 
         /**@brief enumeration for string close matches
- */
+         */
         enum class string_match_type {
             close,  //!< the middle of one string matches another, ignoring '_'
             begin,  //!< the beginning of one string matches another

@@ -76,9 +76,8 @@ namespace utilities {
     template<class X>
     inline X numConvComp(const std::string& V, size_t& rem)
     {
-        return (std::is_integral<X>::value) ?
-            X(numConvComp<int64_t>(V, rem)) :
-            X(numConvComp<double>(V, rem));
+        return (std::is_integral<X>::value) ? X(numConvComp<int64_t>(V, rem)) :
+                                              X(numConvComp<double>(V, rem));
     }
 
     template<>
@@ -150,7 +149,7 @@ namespace utilities {
     }
 
     /** do a numeric conversion of the complete string
- */
+     */
     template<typename X>
     X numeric_conversionComplete(const std::string& V, const X defValue)
     {

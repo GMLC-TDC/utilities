@@ -18,7 +18,7 @@ namespace utilities {
     template<typename V>
     class CharMapper {
       private:
-        std::array<V, 256> key; //!< the character map
+        std::array<V, 256> key;  //!< the character map
       public:
         /** default constructor*/
         explicit CharMapper(V defVal = V{0}) { key.fill(defVal); }
@@ -28,39 +28,39 @@ namespace utilities {
     */
         void addKey(unsigned char x, V val) { key[x] = val; }
         /** get the value assigned to a character
-     * @param x the character to test or convert
-     * @return the resulting value,  0 if nothing in particular is specified in
-     * a given map
-     */
+         * @param x the character to test or convert
+         * @return the resulting value,  0 if nothing in particular is specified
+         * in a given map
+         */
         V at(unsigned char x) const { return key[x]; }
         /** get the value assigned to a character by bracket notation
-     * @param x the character to test or convert
-     * @return the resulting value,  0 if nothing in particular is specified in
-     * a given map
-     */
+         * @param x the character to test or convert
+         * @return the resulting value,  0 if nothing in particular is specified
+         * in a given map
+         */
         V operator[](unsigned char x) const { return key[x]; }
     };
     /** map that translates all characters that could be in numbers to true all
- * others to false*/
+     * others to false*/
     CharMapper<bool> numericMapper();
     /** map that translates all characters that could start a number to true all
- * others to false*/
+     * others to false*/
     CharMapper<bool> numericStartMapper();
     /** map that translates all characters that could end a number to true all
- * others to false*/
+     * others to false*/
     CharMapper<bool> numericEndMapper();
     /** map that translates all base 64 characters to the appropriate numerical
- * value*/
+     * value*/
     CharMapper<unsigned char> base64Mapper();
     /** map that translates numerical characters to the appropriate numerical
- * value*/
+     * value*/
     CharMapper<unsigned char> digitMapper();
-    /** map that translates all hexadecimal characters to the appropriate numerical
- * value*/
+    /** map that translates all hexadecimal characters to the appropriate
+     * numerical value*/
     CharMapper<unsigned char> hexMapper();
     /** map that all containing characters that come in pairs to the appropriate
- * match '{' to '}'*/
+     * match '{' to '}'*/
     CharMapper<unsigned char> pairMapper();
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

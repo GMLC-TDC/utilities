@@ -31,13 +31,11 @@ namespace utilities {
 
         DV[0][0] = charcomp[n1[0]][n2[0]];
         for (ii = 1; ii < strlen(n2); ii++) {
-            DV[ii][0] =
-                (std::max)(charcomp[n1[0]][n2[ii]], DV[ii - 1][0]);
+            DV[ii][0] = (std::max)(charcomp[n1[0]][n2[ii]], DV[ii - 1][0]);
             if (DV[ii][0] == 1.0) break;
         }
         for (jj = 1; jj < strlen(n1); jj++) {
-            DV[0][jj] =
-                (std::max)(charcomp[n1[jj]][n2[0]], DV[0][jj - 1]);
+            DV[0][jj] = (std::max)(charcomp[n1[jj]][n2[0]], DV[0][jj - 1]);
             if (DV[0][jj] == 1.0) break;
         }
         for (ii = 1; ii < strlen(n2); ii++) {

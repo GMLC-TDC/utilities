@@ -80,8 +80,7 @@ namespace utilities {
         for (ii = 1; ii <= l2; ii++) {
             for (jj = 1; jj <= l1; jj++) {
                 DV[ii][jj] = (std::max)(
-                    DV[ii - 1][jj - 1] +
-                        charcomp[c1[jj - 1]][c2[ii - 1]],
+                    DV[ii - 1][jj - 1] + charcomp[c1[jj - 1]][c2[ii - 1]],
                     (std::max)(
                         0.0F,
                         (std::max)(
@@ -228,7 +227,7 @@ namespace utilities {
             }
             jj = maxj;
 
-            ws2[kk] /= static_cast<float> (lc);
+            ws2[kk] /= static_cast<float>(lc);
             // printf("ws2[%d]=%f\n",kk,ws2[kk]);
             if (lc < 4) {
                 if (lc == 2) {
@@ -309,7 +308,7 @@ namespace utilities {
             }
             ii = maxi;
 
-            ws1[kk] /= static_cast<float> (lc);
+            ws1[kk] /= static_cast<float>(lc);
 
             if (lc < 4) {
                 if (lc == 2) {
