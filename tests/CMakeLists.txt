@@ -13,14 +13,14 @@ include(AddGoogletest)
 
 set(UTILITIES_TESTS
     StringOpTests
-	StringConversionTests
-	String_viewOpsTests
-	String_viewConversionTests
-	TimeSeriesTests
-	TimeSeriesMultiTests
-	charMapperTests
-	base64Tests
-	TimeTests
+    StringConversionTests
+    String_viewOpsTests
+    String_viewConversionTests
+    TimeSeriesTests
+    TimeSeriesMultiTests
+    charMapperTests
+    base64Tests
+    TimeTests
     )
 
 # Only affects current directory, so safe
@@ -31,8 +31,7 @@ foreach(T ${UTILITIES_TESTS})
     add_executable(${T} ${T}.cpp )
     target_link_libraries(${T} PUBLIC gmlc_utilities)
     add_gtest(${T})
-	set_target_properties(${T} PROPERTIES FOLDER tests)
-   
+    set_target_properties(${T} PROPERTIES FOLDER tests)
 endforeach()
 
 if(CMAKE_BUILD_TYPE STREQUAL Coverage)

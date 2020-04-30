@@ -10,10 +10,9 @@
  * LLNS Copyright End
  */
 
-#include "gtest/gtest.h"
-
 #include "gmlc/utilities/stringOps.h"
 
+#include "gtest/gtest.h"
 #include <iostream>
 
 using namespace gmlc::utilities;
@@ -24,9 +23,9 @@ TEST(stringops, convert_to_lower_case_test)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = convertToLowerCase(test1);
-    EXPECT_TRUE(testres == "abcd: *ty; ");
+    EXPECT_EQ(testres, "abcd: *ty; ");
     testres = convertToLowerCase("  1234:ABC\n\t RTrt ");
-    EXPECT_TRUE(testres == "  1234:abc\n\t rtrt ");
+    EXPECT_EQ(testres, "  1234:abc\n\t rtrt ");
 }
 
 /** test make lower case*/
@@ -34,10 +33,10 @@ TEST(stringops, make_lower_case_test)
 {
     std::string test1 = "AbCd: *Ty; ";
     makeLowerCase(test1);
-    EXPECT_TRUE(test1 == "abcd: *ty; ");
+    EXPECT_EQ(test1, "abcd: *ty; ");
     std::string test2 = "  1234:ABC\n\t RTrt ";
     makeLowerCase(test2);
-    EXPECT_TRUE(test2 == "  1234:abc\n\t rtrt ");
+    EXPECT_EQ(test2, "  1234:abc\n\t rtrt ");
 }
 
 /** test conversion to upper case*/
@@ -45,9 +44,9 @@ TEST(stringops, convert_to_upper_case_test)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = convertToUpperCase(test1);
-    EXPECT_TRUE(testres == "ABCD: *TY; ");
+    EXPECT_EQ(testres, "ABCD: *TY; ");
     testres = convertToUpperCase("  1234:ABC\n\t RTrt ");
-    EXPECT_TRUE(testres == "  1234:ABC\n\t RTRT ");
+    EXPECT_EQ(testres, "  1234:ABC\n\t RTRT ");
 }
 
 /** test make upper case*/
@@ -55,10 +54,10 @@ TEST(stringops, make_upper_case_test)
 {
     std::string test1 = "AbCd: *Ty; ";
     makeUpperCase(test1);
-    EXPECT_TRUE(test1 == "ABCD: *TY; ");
+    EXPECT_EQ(test1, "ABCD: *TY; ");
     std::string test2 = "  1234:ABC\n\t RTrt ";
     makeUpperCase(test2);
-    EXPECT_TRUE(test2 == "  1234:ABC\n\t RTRT ");
+    EXPECT_EQ(test2, "  1234:ABC\n\t RTRT ");
 }
 
 /** test trim*/
@@ -66,10 +65,10 @@ TEST(stringops, trimString_tests)
 {
     std::string test1 = "AbCd: *Ty; ";
     trimString(test1);
-    EXPECT_TRUE(test1 == "AbCd: *Ty;");
+    EXPECT_EQ(test1, "AbCd: *Ty;");
     std::string test2 = "  \t1234:AbC\n\t RTrt\n ";
     trimString(test2);
-    EXPECT_TRUE(test2 == "1234:AbC\n\t RTrt");
+    EXPECT_EQ(test2, "1234:AbC\n\t RTrt");
     // test for an empty results
     std::string test3 = "  \t\n \t\t \n ";
     trimString(test3);
@@ -81,15 +80,15 @@ TEST(stringops, trim_tests)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = trim(test1);
-    EXPECT_TRUE(testres == "AbCd: *Ty;");
+    EXPECT_EQ(testres, "AbCd: *Ty;");
     std::string test2 = "  \t1234:AbC\n\t RTrt\n ";
     testres = trim(test2);
-    EXPECT_TRUE(testres == "1234:AbC\n\t RTrt");
+    EXPECT_EQ(testres, "1234:AbC\n\t RTrt");
 
     std::string test3 = "::  \t1234:AbC\n\t RTrt\n ::";
     // test with ':' also as a space
     testres = trim(test3, "\t\n: ");
-    EXPECT_TRUE(testres == "1234:AbC\n\t RTrt");
+    EXPECT_EQ(testres, "1234:AbC\n\t RTrt");
 
     std::string test4 = "  \t\n \t\t \n ";
     testres = trim(test4);
@@ -100,10 +99,10 @@ TEST(stringops, tailString_tests)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = getTailString(test1, '*');
-    EXPECT_TRUE(testres == "Ty; ");
+    EXPECT_EQ(testres, "Ty; ");
     std::string test2 = "bob::test1:test2:4";
     testres = getTailString(test2, ':');
-    EXPECT_TRUE(testres == "4");
+    EXPECT_EQ(testres, "4");
 
     std::string test3 = "::  \t1234:AbC\n\t RTrt\n ::";
     // test with ':' also as a space
@@ -112,11 +111,11 @@ TEST(stringops, tailString_tests)
 
     std::string test4 = "bob::test1:test2:4";
     testres = getTailString(test4, '-');
-    EXPECT_TRUE(testres == test4);
+    EXPECT_EQ(testres, test4);
 
     std::string test5 = "4testingBeginning";
     testres = getTailString(test5, '4');
-    EXPECT_TRUE(testres == "testingBeginning");
+    EXPECT_EQ(testres, "testingBeginning");
 
     std::string test6 = "4testingBeginning";
     testres = getTailString(test6, 'g');
@@ -128,10 +127,10 @@ TEST(stringops, tailString_tests_word)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = getTailString(test1, "*");
-    EXPECT_TRUE(testres == "Ty; ");
+    EXPECT_EQ(testres, "Ty; ");
     std::string test2 = "bob::test1:test2:4";
     testres = getTailString(test2, ":");
-    EXPECT_TRUE(testres == "4");
+    EXPECT_EQ(testres, "4");
 
     std::string test3 = "::  \t1234:AbC\n\t RTrt\n ::";
     // test with ':' also as a space
@@ -140,11 +139,11 @@ TEST(stringops, tailString_tests_word)
 
     std::string test4 = "bob::test1:test2:4";
     testres = getTailString(test4, "-");
-    EXPECT_TRUE(testres == test4);
+    EXPECT_EQ(testres, test4);
 
     std::string test5 = "4testingBeginning";
     testres = getTailString(test5, "4");
-    EXPECT_TRUE(testres == "testingBeginning");
+    EXPECT_EQ(testres, "testingBeginning");
 
     std::string test6 = "4testingBeginning";
     testres = getTailString(test6, "ng");
@@ -165,10 +164,10 @@ TEST(stringops, tailString_any)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = getTailString_any(test1, ":*");
-    EXPECT_TRUE(testres == "Ty; ");
+    EXPECT_EQ(testres, "Ty; ");
     std::string test2 = "bob::test1:test2:4";
     testres = getTailString_any(test2, ":");
-    EXPECT_TRUE(testres == "4");
+    EXPECT_EQ(testres, "4");
 
     std::string test3 = "::  \t1234:AbC\n\t RTrt\n ::";
     // test with ':' also as a space
@@ -177,11 +176,11 @@ TEST(stringops, tailString_any)
 
     std::string test4 = "bob::test1:test2:4";
     testres = getTailString_any(test4, "-");
-    EXPECT_TRUE(testres == test4);
+    EXPECT_EQ(testres, test4);
 
     std::string test5 = "4testingBeginning";
     testres = getTailString_any(test5, "4");
-    EXPECT_TRUE(testres == "testingBeginning");
+    EXPECT_EQ(testres, "testingBeginning");
 
     std::string test6 = "4testingBeginning";
     testres = getTailString_any(test6, "ing");
@@ -198,16 +197,16 @@ TEST(stringops, splitline_test1)
     auto testres = splitline(test1);
 
     ASSERT_EQ(testres.size(), 3u);
-    EXPECT_TRUE(testres[0] == "alpha");
-    EXPECT_TRUE(testres[1] == " bravo");
-    EXPECT_TRUE(testres[2] == " charlie");
+    EXPECT_EQ(testres[0], "alpha");
+    EXPECT_EQ(testres[1], " bravo");
+    EXPECT_EQ(testres[2], " charlie");
 
     testres = splitline(test1, ", ", delimiter_compression::on);
 
     ASSERT_EQ(testres.size(), 3u);
-    EXPECT_TRUE(testres[0] == "alpha");
-    EXPECT_TRUE(testres[1] == "bravo");
-    EXPECT_TRUE(testres[2] == "charlie");
+    EXPECT_EQ(testres[0], "alpha");
+    EXPECT_EQ(testres[1], "bravo");
+    EXPECT_EQ(testres[2], "charlie");
 }
 
 /** simple split line test for multiple tokens*/
@@ -224,7 +223,7 @@ TEST(stringops, splitline_test2)
     std::string test2 = "alpha, bravo,;, charlie,";
     testres = splitline(test1, ";, ", delimiter_compression::on);
 
-    EXPECT_TRUE(testres.size() == 3);
+    EXPECT_EQ(testres.size(), 3);
 
     // test the vector fill overload
     std::vector<std::string> resVector;
@@ -238,10 +237,10 @@ TEST(stringops, splitline_test3)
     std::string test1 = " alpha,   bravo ; charlie ";
     auto testres = splitline(test1);
     trim(testres);
-    ASSERT_TRUE(testres.size() == 3);
-    EXPECT_TRUE(testres[0] == "alpha");
-    EXPECT_TRUE(testres[1] == "bravo");
-    EXPECT_TRUE(testres[2] == "charlie");
+    ASSERT_EQ(testres.size(), 3);
+    EXPECT_EQ(testres[0], "alpha");
+    EXPECT_EQ(testres[1], "bravo");
+    EXPECT_EQ(testres[2], "charlie");
 }
 
 /** simple split line test*/
@@ -250,10 +249,10 @@ TEST(stringops, splitline_char)
     std::string test1 = " alpha-bravo-charlie";
     auto testres = splitline(test1, '-');
     trim(testres);
-    ASSERT_TRUE(testres.size() == 3);
-    EXPECT_TRUE(testres[0] == "alpha");
-    EXPECT_TRUE(testres[1] == "bravo");
-    EXPECT_TRUE(testres[2] == "charlie");
+    ASSERT_EQ(testres.size(), 3);
+    EXPECT_EQ(testres[0], "alpha");
+    EXPECT_EQ(testres[1], "bravo");
+    EXPECT_EQ(testres[2], "charlie");
 
     // test the vector overload
     std::vector<std::string> resVector;
@@ -268,26 +267,26 @@ TEST(stringops, removeQuotes_test)
     std::string test1 = "\'remove quotes\'";
     auto testres = removeQuotes(test1);
 
-    EXPECT_TRUE(testres == "remove quotes");
+    EXPECT_EQ(testres, "remove quotes");
     std::string test2 = "\"remove quotes \"";
     testres = removeQuotes(test2);
 
-    EXPECT_TRUE(testres == "remove quotes ");
+    EXPECT_EQ(testres, "remove quotes ");
 
     std::string test3 = "\"remove quotes \'";
     testres = removeQuotes(test3);
 
-    EXPECT_TRUE(testres == "\"remove quotes \'");
+    EXPECT_EQ(testres, "\"remove quotes \'");
 
     std::string test4 = "   \" remove quotes \"  ";
     testres = removeQuotes(test4);
 
-    EXPECT_TRUE(testres == " remove quotes ");
+    EXPECT_EQ(testres, " remove quotes ");
 
     std::string test5 = "   ` remove quotes `  ";
     testres = removeQuotes(test5);
 
-    EXPECT_TRUE(testres == " remove quotes ");
+    EXPECT_EQ(testres, " remove quotes ");
 }
 
 /**remove quotes test test*/
@@ -345,39 +344,39 @@ TEST(stringops, removeBrackets_test)
 TEST(stringops, appendInteger_tests)
 {
     std::string str1 = "tail_";
-    appendInteger(str1, 456u);
-    EXPECT_TRUE(str1 == "tail_456");
+    appendInteger(str1, 456U);
+    EXPECT_EQ(str1, "tail_456");
 
     std::string str2 = "tail_";
     appendInteger(str2, 0);
-    EXPECT_TRUE(str2 == "tail_0");
+    EXPECT_EQ(str2, "tail_0");
 
     std::string str3 = "tail";
     appendInteger(str3, -34);
-    EXPECT_TRUE(str3 == "tail-34");
+    EXPECT_EQ(str3, "tail-34");
 
     std::string str4 = "tail";
-    appendInteger(str4, 12345678ull);
-    EXPECT_TRUE(str4 == "tail12345678");
+    appendInteger(str4, 12345678ULL);
+    EXPECT_EQ(str4, "tail12345678");
 
     // only use the integer part of the number if it is less than 1,000,000,000
     std::string str5 = "num=";
     appendInteger(str5, 98.2341);
-    EXPECT_TRUE(str5 == "num=98");
+    EXPECT_EQ(str5, "num=98");
 
     // the result here is not well defined so this check is mainly to make sure
     // it didn't crash
     std::string str6 = "num=";
     appendInteger(str6, 45e34);
-    EXPECT_TRUE(str6 != "num=");
+    EXPECT_NE(str6, "num=");
 
     std::string str7 = "long num_";
-    appendInteger(str7, 1234567890123456ll);
-    EXPECT_TRUE(str7 == "long num_1234567890123456");
+    appendInteger(str7, 1234567890123456LL);
+    EXPECT_EQ(str7, "long num_1234567890123456");
 
     std::string str8 = "long num_";
-    appendInteger(str8, -1234567890123ll);
-    EXPECT_TRUE(str8 == "long num_-1234567890123");
+    appendInteger(str8, -1234567890123LL);
+    EXPECT_EQ(str8, "long num_-1234567890123");
 }
 
 TEST(stringops, splitLineQuotes_tests)
@@ -385,52 +384,55 @@ TEST(stringops, splitLineQuotes_tests)
     std::string test1 = "454, 345, happy; frog";
     auto testres = splitlineQuotes(test1);
     trim(testres);
-    ASSERT_TRUE(testres.size() == 4);
-    EXPECT_TRUE(testres[0] == "454");
-    EXPECT_TRUE(testres[1] == "345");
-    EXPECT_TRUE(testres[2] == "happy");
-    EXPECT_TRUE(testres[3] == "frog");
+    ASSERT_EQ(testres.size(), 4U);
+    EXPECT_EQ(testres[0], "454");
+    EXPECT_EQ(testres[1], "345");
+    EXPECT_EQ(testres[2], "happy");
+    EXPECT_EQ(testres[3], "frog");
     std::string test2 = " \'alpha,   bravo\' ; charlie ";
     auto testres2 = splitlineQuotes(test2);
     trim(testres2);
-    ASSERT_TRUE(testres2.size() == 2);
-    EXPECT_TRUE(testres2[0] == "\'alpha,   bravo\'");
-    EXPECT_TRUE(testres2[1] == "charlie");
+    ASSERT_EQ(testres2.size(), 2U);
+    EXPECT_EQ(testres2[0], "\'alpha,   bravo\'");
+    EXPECT_EQ(testres2[1], "charlie");
 
     std::string test3 = " \"test1\",\'test2\' ; \"charlie\",";
     auto testres3 = splitlineQuotes(test3);
     trim(testres3);
-    ASSERT_TRUE(testres3.size() == 4);
-    EXPECT_TRUE(testres3[0] == "\"test1\"");
-    EXPECT_TRUE(testres3[1] == "\'test2\'");
-    EXPECT_TRUE(testres3[2] == "\"charlie\"");
+    ASSERT_EQ(testres3.size(), 4U);
+    EXPECT_EQ(testres3[0], "\"test1\"");
+    EXPECT_EQ(testres3[1], "\'test2\'");
+    EXPECT_EQ(testres3[2], "\"charlie\"");
     EXPECT_TRUE(testres3[3].empty());
 
-    testres3 = splitlineQuotes(test3, default_delim_chars, default_quote_chars,
-                               delimiter_compression::on);
-    ASSERT_TRUE(testres3.size() == 3);
+    testres3 = splitlineQuotes(
+        test3,
+        default_delim_chars,
+        default_quote_chars,
+        delimiter_compression::on);
+    ASSERT_EQ(testres3.size(), 3U);
 
     std::string test4 = "\"'part1' and,; 'part2'\",\"34,45,56\"";
     auto testres4 = splitlineQuotes(test4);
-    ASSERT_TRUE(testres4.size() == 2);
-    EXPECT_TRUE(testres4[1] == "\"34,45,56\"");
+    ASSERT_EQ(testres4.size(), 2U);
+    EXPECT_EQ(testres4[1], "\"34,45,56\"");
 
     std::string test5 = "\"part1'\" and \"part2\",\"34,45,56\"";
     auto testres5 = splitlineQuotes(test5);
-    ASSERT_TRUE(testres5.size() == 2);
-    EXPECT_TRUE(testres5[1] == "\"34,45,56\"");
+    ASSERT_EQ(testres5.size(), 2U);
+    EXPECT_EQ(testres5[1], "\"34,45,56\"");
 
     std::string test6 =
-      "--arg1 --arg2=bob --arg3=\"string1 string2\" --arg3=\"bob\"";
+        "--arg1 --arg2=bob --arg3=\"string1 string2\" --arg3=\"bob\"";
     auto testres6 = splitlineQuotes(test6, " \t");
-    ASSERT_TRUE(testres6.size() == 4);
-    EXPECT_TRUE(testres6[2] == "--arg3=\"string1 string2\"");
+    ASSERT_EQ(testres6.size(), 4U);
+    EXPECT_EQ(testres6[2], "--arg3=\"string1 string2\"");
 
     std::string test7 =
-      "--arg1 --arg2=bob --arg3=`string1 string2` --arg3=\"bob\"";
+        "--arg1 --arg2=bob --arg3=`string1 string2` --arg3=\"bob\"";
     auto testres7 = splitlineQuotes(test7, " \t");
-    ASSERT_TRUE(testres7.size() == 4);
-    EXPECT_TRUE(testres7[2] == "--arg3=`string1 string2`");
+    ASSERT_EQ(testres7.size(), 4U);
+    EXPECT_EQ(testres7[2], "--arg3=`string1 string2`");
 }
 
 TEST(stringops, splitLineBracket_tests)
@@ -438,57 +440,59 @@ TEST(stringops, splitLineBracket_tests)
     std::string test1 = "(454, 345), happy; frog";
     auto testres = splitlineBracket(test1);
     trim(testres);
-    ASSERT_TRUE(testres.size() == 3);
-    EXPECT_TRUE(testres[0] == "(454, 345)");
-    EXPECT_TRUE(testres[1] == "happy");
-    EXPECT_TRUE(testres[2] == "frog");
+    ASSERT_EQ(testres.size(), 3U);
+    EXPECT_EQ(testres[0], "(454, 345)");
+    EXPECT_EQ(testres[1], "happy");
+    EXPECT_EQ(testres[2], "frog");
     std::string test2 = " \'alpha,   bravo\' ; charlie ";
     // the default bracket split should recognize strings as well
     auto testres2 = splitlineBracket(test2);
     trim(testres2);
-    ASSERT_TRUE(testres2.size() == 2);
-    EXPECT_TRUE(testres2[0] == "\'alpha,   bravo\'");
-    EXPECT_TRUE(testres2[1] == "charlie");
+    ASSERT_EQ(testres2.size(), 2);
+    EXPECT_EQ(testres2[0], "\'alpha,   bravo\'");
+    EXPECT_EQ(testres2[1], "charlie");
 
     std::string test3 = "$45,34,45$;$23.45,34,23.3$";
     auto testres3 = splitlineBracket(test3, ";,", "$");
     trim(testres3);
-    ASSERT_TRUE(testres3.size() == 2);
-    EXPECT_TRUE(testres3[0] == "$45,34,45$");
-    EXPECT_TRUE(testres3[1] == "$23.45,34,23.3$");
+    ASSERT_EQ(testres3.size(), 2U);
+    EXPECT_EQ(testres3[0], "$45,34,45$");
+    EXPECT_EQ(testres3[1], "$23.45,34,23.3$");
 
     std::string test4 = ")454, 345), happy; frog";
     auto testres4 = splitlineBracket(test4);
     trim(testres4);
-    EXPECT_EQ(testres4.size(), 4u);
+    EXPECT_EQ(testres4.size(), 4U);
 
     std::string test5 = "454, 345[, happy; frog";
     auto testres5 = splitlineBracket(test5);
-    EXPECT_EQ(testres5.size(), 2u);
+    EXPECT_EQ(testres5.size(), 2U);
 
     std::string test6 = "[454, 3]45[, happy; frog";
     auto testres6 = splitlineBracket(test6);
-    EXPECT_EQ(testres6.size(), 3u);
+    EXPECT_EQ(testres6.size(), 3U);
 
     std::string test7 = "454";
     auto testres7 = splitlineBracket(test7);
-    EXPECT_EQ(testres7.size(), 1u);
+    EXPECT_EQ(testres7.size(), 1U);
 
     std::string test7b = "[454]";
     auto testres7b = splitlineBracket(test7b);
-    EXPECT_EQ(testres7b.size(), 1u);
+    EXPECT_EQ(testres7b.size(), 1U);
 
     std::string test8 = "[454, 3[45], happy]; frog";
     auto testres8 = splitlineBracket(test8);
-    EXPECT_EQ(testres8.size(), 2u);
+    EXPECT_EQ(testres8.size(), 2U);
     std::string test9 = "[454, 3[45], happy];, frog";
     auto testres9 = splitlineBracket(test9);
-    EXPECT_EQ(testres9.size(), 3u);
+    EXPECT_EQ(testres9.size(), 3U);
 
-    auto testres10 =
-      splitlineBracket(test9, default_delim_chars, default_bracket_chars,
-                       delimiter_compression::on);
-    EXPECT_EQ(testres10.size(), 2u);
+    auto testres10 = splitlineBracket(
+        test9,
+        default_delim_chars,
+        default_bracket_chars,
+        delimiter_compression::on);
+    EXPECT_EQ(testres10.size(), 2U);
 }
 
 TEST(stringops, randomString)
@@ -496,11 +500,10 @@ TEST(stringops, randomString)
     auto str1 = randomString(50000);
     std::sort(str1.begin(), str1.end());
     auto ept = std::unique(str1.begin(), str1.end());
-    EXPECT_EQ(ept - str1.begin(), 62u);
+    EXPECT_EQ(ept - str1.begin(), 62U);
 
     std::vector<std::string> rstring;
-    for (int ii = 0; ii < 20; ++ii)
-    {
+    for (int ii = 0; ii < 20; ++ii) {
         rstring.push_back(randomString(10));
     }
 
@@ -652,17 +655,17 @@ TEST(stringops, findClosestMatch)
 
 TEST(stringops, findClosestMatch2)
 {
-    stringVector iString{"stringabcd", "Abcd2_i", "Abracabcdabra", "n idea",
-                         "having 8;idea"};
+    stringVector iString{
+        "stringabcd", "Abcd2_i", "Abracabcdabra", "n idea", "having 8;idea"};
 
-    int res = findCloseStringMatch({"abcd", "ABcd2_i"}, iString,
-                                   string_match_type::exact);
+    int res = findCloseStringMatch(
+        {"abcd", "ABcd2_i"}, iString, string_match_type::exact);
     EXPECT_EQ(res, 1);
-    res = findCloseStringMatch({"invalidity", "abcd"}, iString,
-                               string_match_type::exact);
+    res = findCloseStringMatch(
+        {"invalidity", "abcd"}, iString, string_match_type::exact);
     EXPECT_EQ(res, -1);
-    res = findCloseStringMatch({"invalidity", "abcd"}, iString,
-                               string_match_type::end);
+    res = findCloseStringMatch(
+        {"invalidity", "abcd"}, iString, string_match_type::end);
     EXPECT_EQ(res, 0);
     res = findCloseStringMatch({"A"}, iString, string_match_type::close);
     EXPECT_EQ(res, -1);
@@ -674,8 +677,8 @@ TEST(stringops, findClosestMatch2)
     EXPECT_EQ(res, 4);
     res = findCloseStringMatch({"abcd2i"}, iString, string_match_type::close);
     EXPECT_EQ(res, 1);
-    res =
-      findCloseStringMatch({"string_abcd"}, iString, string_match_type::close);
+    res = findCloseStringMatch(
+        {"string_abcd"}, iString, string_match_type::close);
     EXPECT_EQ(res, 0);
 }
 

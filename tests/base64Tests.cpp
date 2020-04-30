@@ -11,6 +11,7 @@
  */
 
 #include "gmlc/utilities/base64.h"
+
 #include "gtest/gtest.h"
 
 using namespace gmlc::utilities;
@@ -47,8 +48,7 @@ TEST(base64, decode_raw)
     std::string res(result, size);
     EXPECT_EQ(res, encodeSeq);
 
-    for (size_t jj = 11; jj >= 1; jj--)
-    {
+    for (size_t jj = 11; jj >= 1; jj--) {
         memset(result, 0, 100);
         size = base64_decode(encoded, result, jj);
         EXPECT_EQ(size, jj);

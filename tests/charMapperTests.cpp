@@ -11,6 +11,7 @@
  */
 
 #include "gmlc/utilities/charMapper.h"
+
 #include "gtest/gtest.h"
 #include <iostream>
 #include <type_traits>
