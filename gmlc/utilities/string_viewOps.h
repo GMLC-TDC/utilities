@@ -181,7 +181,7 @@ string without the number
 characters including negative signs and returns a positive integer or 0
 basically the number you would get if all non integer characters were erased*/
         int toIntSimple(string_view input);
-    } // namespace string_viewOps
-} // namespace utilities
+    }  // namespace string_viewOps
+}  // namespace utilities
 
-} // namespace gmlc
+}  // namespace gmlc

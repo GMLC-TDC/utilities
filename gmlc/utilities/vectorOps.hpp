@@ -21,8 +21,8 @@
 #include <functional>
 #include <numeric>
 #include <type_traits>
-#include <vector>
 #include <utility>
+#include <vector>
 
 namespace gmlc {
 namespace utilities {

@@ -27,6 +27,8 @@
 #endif
 
 #include <stdexcept>
+#include <vector>
+
 namespace gmlc {
 namespace utilities {
     extern const CharMapper<bool> numCheck;
@@ -258,5 +260,5 @@ namespace utilities {
         return av;
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

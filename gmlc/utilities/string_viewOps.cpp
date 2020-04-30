@@ -16,6 +16,7 @@
 
 #include <algorithm>
 #include <stdexcept>
+#include <string>
 
 namespace gmlc {
 namespace utilities {
@@ -34,7 +35,7 @@ namespace utilities {
         {
             const auto strStart = input.find_first_not_of(trimCharacters);
             if (strStart == std::string::npos) {
-                return string_view(); // no content
+                return string_view();  // no content
             }
 
             const auto strEnd = input.find_last_not_of(trimCharacters);
@@ -112,7 +113,7 @@ namespace utilities {
             ptrdiff_t diff = (string2.data() - string1.data()) -
                 static_cast<ptrdiff_t>(string1.length());
             if ((diff >= 0) &&
-                (diff < 24)) // maximum of 23 characters between the strings
+                (diff < 24))  // maximum of 23 characters between the strings
             {
                 return string_view(
                     string1.data(), diff + string1.length() + string2.length());
@@ -181,7 +182,7 @@ namespace utilities {
             int num = defNum;
             auto pos1 = input.find_last_not_of(digits);
             if (pos1 ==
-                string_view::npos) // in case the whole thing is a number
+                string_view::npos)  // in case the whole thing is a number
             {
                 if (input.length() <= 10) {
                     output = string_view{};
@@ -217,7 +218,7 @@ namespace utilities {
 
             auto pos1 = input.find_last_not_of(digits);
             if (pos1 ==
-                string_view::npos) // in case the whole thing is a number
+                string_view::npos)  // in case the whole thing is a number
             {
                 if (input.length() <= 10) {
                     return toIntSimple(input);
@@ -234,6 +235,6 @@ namespace utilities {
             return toIntSimple(input.substr(length - 9));
         }
 
-    } // namespace string_viewOps
-} // namespace utilities
-} // namespace gmlc
+    }  // namespace string_viewOps
+}  // namespace utilities
+}  // namespace gmlc

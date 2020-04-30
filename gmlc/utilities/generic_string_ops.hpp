@@ -88,7 +88,7 @@ namespace utilities {
         }
 
         auto d1 = line.find_first_of(delimiterCharacters);
-        if (d1 == X::npos) // there are no delimiters
+        if (d1 == X::npos)  // there are no delimiters
         {
             return {line};
         }
@@ -105,7 +105,7 @@ namespace utilities {
                 }
                 start = d1 + 1;
                 d1 = line.find_first_of(delimiterCharacters, start);
-            } else // now we are in a quote
+            } else  // now we are in a quote
             {
                 auto endLoc = getChunkEnd(
                     sectionLoc + 1,
@@ -143,5 +143,5 @@ namespace utilities {
         return strVec;
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

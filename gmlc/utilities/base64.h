@@ -43,5 +43,5 @@ namespace utilities {
         return ret;
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc
