@@ -29,9 +29,9 @@ TEST(stringconversion, simple_integer_conversions_test)
         "conversion types do not match");
     auto c = numeric_conversion<unsigned char>("25", 0xFF);
     EXPECT_EQ(c, 25);
-    auto d = numeric_conversion<short>("-7629", 0xFF);
+    auto d = numeric_conversion<int16_t>("-7629", 0xFF);
     EXPECT_EQ(d, -7629);
-    EXPECT_TRUE(sizeof(d) == 2);
+    EXPECT_EQ(sizeof(d),2U);
 
     auto e = numeric_conversion<unsigned int>("-1", 0);
     EXPECT_EQ(e, static_cast<unsigned int>(-1));
@@ -88,7 +88,7 @@ TEST(stringconversion, simple_integer_conversion_complete_test)
     EXPECT_EQ(c, 25);
     auto d = numeric_conversionComplete<int16_t>("-7629", 0xFF);
     EXPECT_EQ(d, -7629);
-    EXPECT_TRUE(sizeof(d) == 2);
+    EXPECT_EQ(sizeof(d),2U);
 
     auto e = numeric_conversionComplete<unsigned int>("-1", 0);
     EXPECT_EQ(e, static_cast<unsigned int>(-1));
