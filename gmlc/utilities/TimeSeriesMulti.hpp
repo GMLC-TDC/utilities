@@ -13,7 +13,12 @@
 
 // don't need the time series object but if you include this I want TimeSeries
 // to be included as well along with all the other objects
+
 #include "TimeSeries.hpp"
+#include <vector>
+#include <utility>
+#include <string>
+#include <algorithm>
 
 namespace gmlc {
 namespace utilities {

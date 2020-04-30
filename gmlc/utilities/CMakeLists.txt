@@ -17,6 +17,14 @@ set(utilities_source_files
 	timeStringOps.cpp
 	)
 
+ set(string_comparison_files
+    editdist.cpp
+    smithWat.cpp
+    namecmp.h
+    jwink.cpp
+    dpcomp.cpp
+    )
+
 set(utilities_header_files
     base64.h
     charMapper.h
@@ -35,7 +43,8 @@ set(utilities_header_files
 
 if(GMLC_UTILITIES_OBJECT_LIB)
   add_library(gmlc_utilities_obj OBJECT ${utilities_source_files}
-                                        ${utilities_header_files})
+                                        ${utilities_header_files} 
+                                        ${string_comparison_files})
   target_include_directories(
     gmlc_utilities_obj
     PUBLIC $<BUILD_INTERFACE:${GMLC_UTILITIES_SOURCE_DIR}>)
@@ -56,7 +65,8 @@ endif()
 if(GMLC_UTILITIES_STATIC_LIB)
 
   add_library(gmlc_utilities STATIC ${utilities_source_files}
-                                    ${utilities_header_files})
+                                    ${utilities_header_files}
+                                    ${string_comparison_files})
   target_include_directories(
     gmlc_utilities
     PUBLIC $<BUILD_INTERFACE:${GMLC_UTILITIES_SOURCE_DIR}>)

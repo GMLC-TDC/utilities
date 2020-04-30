@@ -280,5 +280,5 @@ namespace utilities {
         }
         return dataIndex;
     }
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

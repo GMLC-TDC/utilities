@@ -7,7 +7,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-# Make sure users don't get warnings on a tested (3.0 to 3.16) version of CMake. For
+# Make sure users don't get warnings on a tested (3.0 to 3.17) version of CMake. For
 # most of the policies, the new version is better (hence the change). We don't use the
 # 3.0...3.16 syntax because of a bug in an older MSVC's built-in and modified CMake 3.11
 
@@ -25,7 +25,7 @@ project(GMLC_UTILITIES LANGUAGES CXX VERSION 0.3.0)
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "04-29-20")
+set(GMLC_UTILITIES_DATE "04-30-20")
 
 
 
