@@ -55,5 +55,5 @@ for example "1.234"  or "1032ms"
         return timeX(getTimeValue(timeString, defUnit));
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

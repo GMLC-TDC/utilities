@@ -107,6 +107,6 @@ inline std::string demangle(char const* name)
 
 #endif
 
-} // namespace gmlc
+}  // namespace gmlc
 
 #undef DEMANGLE_HAS_CXXABI_H

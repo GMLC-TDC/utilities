@@ -85,7 +85,7 @@ namespace utilities {
                                                             (x < 1'000'000'000 ?
                                                                  9 :
                                                                  500))))))));
-            if (digits > 9) // don't deal with really big numbers
+            if (digits > 9)  // don't deal with really big numbers
             {
                 input += std::to_string(x);
                 return;
@@ -267,10 +267,10 @@ strange case
         /**@brief enumeration for string close matches
  */
         enum class string_match_type {
-            close, //!< the middle of one string matches another, ignoring '_'
-            begin, //!< the beginning of one string matches another
-            end, //!< the ends of one string matches another
-            exact //!< an exact match
+            close,  //!< the middle of one string matches another, ignoring '_'
+            begin,  //!< the beginning of one string matches another
+            end,  //!< the ends of one string matches another
+            exact  //!< an exact match
         };
 
         /** @brief find a close match in a vector of strings to a test string
@@ -333,11 +333,11 @@ Bracket characters include [({<
 appropriate character
 */
         std::string xmlCharacterCodeReplace(std::string str);
-    } // namespace stringOps
+    }  // namespace stringOps
     /** brief generate a random string of a specific length
 @details the randomly generated string will contain characters from a-zA-Z0-9
 @return a randomly generated string*/
     std::string randomString(std::string::size_type length);
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc
