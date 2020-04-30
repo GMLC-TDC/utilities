@@ -1,8 +1,0 @@
-# Checks that will be implemented in future PRs:
-# performance-unnecessary-value-param, hints to ~110 issues. Be careful with implementing the suggested changes of this one, as auto-fixes may break the code
-
-FormatStyle: file
-
-Checks: '
--*
-'
