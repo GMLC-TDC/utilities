@@ -44,16 +44,15 @@ namespace utilities {
     void makeUpperCase(std::string& input);
 
     namespace stringOps {
-        constexpr unsigned int factors[] = {
-            1,
-            10,
-            100,
-            1'000,
-            10'000,
-            100'000,
-            1'000'000,
-            10'000'000,
-            100'000'000};
+        constexpr unsigned int factors[] = {1,
+                                            10,
+                                            100,
+                                            1'000,
+                                            10'000,
+                                            100'000,
+                                            1'000'000,
+                                            10'000'000,
+                                            100'000'000};
         /**@brief append the text of the integral part of a number to a string*/
         template<typename X>
         void appendInteger(std::string& input, X val)

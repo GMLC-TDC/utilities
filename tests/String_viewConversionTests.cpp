@@ -28,8 +28,8 @@ TEST(strViewconversion, simple_integer_conversions_test)
         "conversion types do not match");
     auto c = numeric_conversion<unsigned char>("25", 0xFF);
     EXPECT_EQ(c, 25);
-    auto d = numeric_conversion<int16_t>("-7629", 0xFF);  //NOLINT
-    EXPECT_EQ(d, static_cast<int16_t>(-7629)); //NOLINT
+    auto d = numeric_conversion<int16_t>("-7629", 0xFF);  // NOLINT
+    EXPECT_EQ(d, static_cast<int16_t>(-7629));  // NOLINT
     EXPECT_EQ(sizeof(d), 2u);
 
     auto e = numeric_conversion<unsigned int>("-1", 0);
@@ -96,7 +96,7 @@ TEST(strViewconversion, simple_integer_conversion_complete_test)
     EXPECT_EQ(c, 25);
     auto d = numeric_conversionComplete<int16_t>("-7629", 0xFF);
     EXPECT_EQ(d, -7629);
-    EXPECT_EQ(sizeof(d),2U);
+    EXPECT_EQ(sizeof(d), 2U);
 
     auto e = numeric_conversionComplete<unsigned int>("-1", 0);
     EXPECT_EQ(e, static_cast<unsigned int>(-1));
@@ -107,8 +107,7 @@ TEST(strViewconversion, simple_integer_conversion_complete_test)
     auto g = numeric_conversionComplete<uint32_t>("978F9", 0UL);
     EXPECT_EQ(g, 0UL);
 
-    auto h = numeric_conversionComplete<uint64_t>(
-        " 123456789123456789 ", 0);
+    auto h = numeric_conversionComplete<uint64_t>(" 123456789123456789 ", 0);
     EXPECT_EQ(h, 123456789123456789ULL);
 
     auto i = numeric_conversionComplete<int>("-Bad", -35);

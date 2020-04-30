@@ -20,8 +20,8 @@ namespace utilities {
         {"ms", time_units::ms},
         {"s", time_units::s},
         {"sec", time_units::sec},
-        {"",
-         time_units::sec}, // don't want empty string to error default is sec
+        // don't want empty string to error default is sec
+        {"", time_units::sec},
         {"seconds", time_units::sec},
         {"second", time_units::sec},
         {"min", time_units::minutes},
@@ -60,5 +60,5 @@ namespace utilities {
         return val * toSecondMultiplier(timeUnitsFromString(units));
     }
 
-} // namespace utilities
-} // namespace gmlc
+}  // namespace utilities
+}  // namespace gmlc

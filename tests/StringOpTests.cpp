@@ -368,7 +368,7 @@ TEST(stringops, appendInteger_tests)
     // it didn't crash
     std::string str6 = "num=";
     appendInteger(str6, 45e34);
-    EXPECT_NE(str6,"num=");
+    EXPECT_NE(str6, "num=");
 
     std::string str7 = "long num_";
     appendInteger(str7, 1234567890123456LL);
