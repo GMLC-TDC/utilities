@@ -29,21 +29,21 @@ namespace utilities {
             return 100.0;
         }
 
-        DV[0][0] = charcomp[(int)n1[0]][(int)n2[0]];
+        DV[0][0] = charcomp[n1[0]][n2[0]];
         for (ii = 1; ii < strlen(n2); ii++) {
             DV[ii][0] =
-                (std::max)(charcomp[(int)n1[0]][(int)n2[ii]], DV[ii - 1][0]);
+                (std::max)(charcomp[n1[0]][n2[ii]], DV[ii - 1][0]);
             if (DV[ii][0] == 1.0) break;
         }
         for (jj = 1; jj < strlen(n1); jj++) {
             DV[0][jj] =
-                (std::max)(charcomp[(int)n1[jj]][(int)n2[0]], DV[0][jj - 1]);
+                (std::max)(charcomp[n1[jj]][n2[0]], DV[0][jj - 1]);
             if (DV[0][jj] == 1.0) break;
         }
         for (ii = 1; ii < strlen(n2); ii++) {
             for (jj = 1; jj < strlen(n1); jj++) {
                 DV[ii][jj] = (std::max)(
-                    DV[ii - 1][jj - 1] + charcomp[(int)n1[jj]][(int)n2[ii]],
+                    DV[ii - 1][jj - 1] + charcomp[n1[jj]][n2[ii]],
                     (std::max)(DV[ii][jj - 1], DV[ii - 1][jj]));
                 if ((ii > 1) && (jj > 1)) {
                     if ((DV[ii - 1][jj] == DV[ii][jj - 1]) &&
@@ -69,8 +69,8 @@ namespace utilities {
         }
 #endif
         /*Run the back trace algorithm and score simultaneously*/
-        jj = strlen(n1) - 1;
-        ii = strlen(n2) - 1;
+        jj = static_cast<int>(strlen(n1) - 1);
+        ii = static_cast<int>(strlen(n2) - 1);
         kk = 0;
         score = 0.0;
         while ((ii > 0) || (jj > 0)) {
@@ -111,7 +111,7 @@ namespace utilities {
                         if ((DV[ii - 1][jj]) >= (DV[ii][jj - 1])) {
                             inspacei = 0;
                             inspacej = 0;
-                            score += charcomp[(int)'_'][(int)n2[ii]];
+                            score += charcomp['_'][n2[ii]];
                             if (inspacej == 1) {
                                 gapcnt++;
                                 inspacej = 2;
@@ -123,7 +123,7 @@ namespace utilities {
                             ii--;
                         } else {
                             inspacej = 0;
-                            score += charcomp[(int)'_'][(int)n1[jj]];
+                            score += charcomp['_'][n1[jj]];
                             if (inspacei == 1) {
                                 gapcnt++;
                                 inspacei = 2;
@@ -138,7 +138,7 @@ namespace utilities {
                         // printf("(%d,%d);DV[%d][%d]=%f,
                         // DV[%d][%d]=%f\n",ii,jj,ii,jj-1,DV[ii][jj-1],ii-1,jj-1,DV[ii-1][jj-1]);
                         inspacej = 0;
-                        score += charcomp[(int)'_'][(int)n1[jj]];
+                        score += charcomp['_'][n1[jj]];
                         if (inspacei == 1) {
                             gapcnt++;
                             inspacei = 2;
@@ -160,7 +160,7 @@ namespace utilities {
                             jj -= 2;
                             kk++;
                         } else {
-                            score += charcomp[(int)n1[jj]][(int)n2[ii]];
+                            score += charcomp[n1[jj]][n2[ii]];
                             printf("%c %c\n", n1[jj], n2[ii]);
                             ii--;
                             jj--;
@@ -168,7 +168,7 @@ namespace utilities {
                     }
                 } else if (jj > 0) {
                     inspacej = 0;
-                    score += charcomp[(int)'_'][(int)n1[jj]];
+                    score += charcomp['_'][n1[jj]];
                     if (inspacei == 1) {
                         gapcnt++;
                         inspacei = 2;
@@ -179,7 +179,7 @@ namespace utilities {
                     printf("%c %c\n", n1[jj], '*');
                     jj--;
                 } else {
-                    score += charcomp[(int)'_'][(int)n2[ii]];
+                    score += charcomp['_'][n2[ii]];
                     if (inspacej == 1) {
                         gapcnt++;
                         inspacej = 2;
@@ -198,8 +198,8 @@ namespace utilities {
         if (score < 0.0) {
             score = 0.0;
         }
-        score /= (float)(kk);
-        return (score);
+        score /= (double)(kk);
+        return static_cast<float>(score);
     }
 
     void gencharcomp()
@@ -207,11 +207,11 @@ namespace utilities {
         int ii, jj;
         for (ii = 0; ii < 28; ii++) {
             for (jj = 0; jj < 28; jj++) {
-                charcomp[ii][jj] = -0.4;
+                charcomp[ii][jj] = -0.4F;
             }
         }
         for (ii = 0; ii < 28; ii++) {
-            charcomp[ii][ii] = 1.0;
+            charcomp[ii][ii] = 1.0F;
         }
     }
 

@@ -38,7 +38,7 @@ TEST(strViewconversion, simple_integer_conversions_test)
     auto f = numeric_conversion("FF3q", -234);
     EXPECT_EQ(f, -234);
 
-    auto g = numeric_conversion<unsigned long>("978", 0UL);
+    auto g = numeric_conversion<uint32_t>("978", 0UL);
     EXPECT_EQ(g, 978UL);
 
     auto h = numeric_conversion<uint64_t>("123456789123456789", 0ULL);
@@ -96,7 +96,7 @@ TEST(strViewconversion, simple_integer_conversion_complete_test)
     EXPECT_EQ(c, 25);
     auto d = numeric_conversionComplete<int16_t>("-7629", 0xFF);
     EXPECT_EQ(d, -7629);
-    EXPECT_TRUE(sizeof(d) == 2);
+    EXPECT_EQ(sizeof(d),2U);
 
     auto e = numeric_conversionComplete<unsigned int>("-1", 0);
     EXPECT_EQ(e, static_cast<unsigned int>(-1));
@@ -104,7 +104,7 @@ TEST(strViewconversion, simple_integer_conversion_complete_test)
     auto f = numeric_conversionComplete("FF3q", -234);
     EXPECT_EQ(f, -234);
 
-    auto g = numeric_conversionComplete<unsigned long>("978F9", 0UL);
+    auto g = numeric_conversionComplete<uint32_t>("978F9", 0UL);
     EXPECT_EQ(g, 0UL);
 
     auto h = numeric_conversionComplete<uint64_t>(

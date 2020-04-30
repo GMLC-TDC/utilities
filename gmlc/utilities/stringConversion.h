@@ -27,7 +27,7 @@ namespace utilities {
     template<typename X>
     inline X numConv(const std::string& V)
     {
-        return (std::is_integral<X>::value) ? X(numConv<long long>(V)) :
+        return (std::is_integral<X>::value) ? X(numConv<int64_t>(V)) :
                                               X(numConv<double>(V));
     }
 
@@ -54,20 +54,20 @@ namespace utilities {
 
     // template definition for unsigned long conversion
     template<>
-    inline unsigned long numConv(const std::string& V)
+    inline uint32_t numConv(const std::string& V)
     {
         return std::stoul(V);
     }
     // template definition for unsigned long long conversion
     template<>
-    inline unsigned long long numConv(const std::string& V)
+    inline uint64_t numConv(const std::string& V)
     {
         return std::stoull(V);
     }
 
     // template definition for long long conversion
     template<>
-    inline long long numConv(const std::string& V)
+    inline int64_t numConv(const std::string& V)
     {
         return std::stoll(V);
     }
@@ -77,7 +77,7 @@ namespace utilities {
     inline X numConvComp(const std::string& V, size_t& rem)
     {
         return (std::is_integral<X>::value) ?
-            X(numConvComp<long long>(V, rem)) :
+            X(numConvComp<int64_t>(V, rem)) :
             X(numConvComp<double>(V, rem));
     }
 
@@ -106,19 +106,19 @@ namespace utilities {
     }
 
     template<>
-    inline unsigned long numConvComp(const std::string& V, size_t& rem)
+    inline uint32_t numConvComp(const std::string& V, size_t& rem)
     {
         return std::stoul(V, &rem);
     }
 
     template<>
-    inline unsigned long long numConvComp(const std::string& V, size_t& rem)
+    inline uint64_t numConvComp(const std::string& V, size_t& rem)
     {
         return std::stoull(V, &rem);
     }
 
     template<>
-    inline long long numConvComp(const std::string& V, size_t& rem)
+    inline int64_t numConvComp(const std::string& V, size_t& rem)
     {
         return std::stoll(V, &rem);
     }

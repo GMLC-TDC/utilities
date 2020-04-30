@@ -28,7 +28,7 @@ namespace gmlc {
 namespace utilities {
     class fileNotFoundError: public std::exception {
       public:
-        virtual const char* what() const noexcept override
+        const char* what() const noexcept override
         {
             return "file not found";
         }
@@ -36,7 +36,7 @@ namespace utilities {
 
     class openFileError: public std::exception {
       public:
-        virtual const char* what() const noexcept override
+        const char* what() const noexcept override
         {
             return "unable to open file";
         }
@@ -44,7 +44,7 @@ namespace utilities {
 
     class fileLoadFailure: public std::exception {
       public:
-        virtual const char* what() const noexcept override
+        const char* what() const noexcept override
         {
             return "file load failure";
         }
@@ -52,7 +52,7 @@ namespace utilities {
 
     class fileIncomplete: public std::exception {
       public:
-        virtual const char* what() const noexcept override
+        const char* what() const noexcept override
         {
             return "file incomplete";
         }
@@ -60,7 +60,7 @@ namespace utilities {
 
     class invalidDataSize: public std::exception {
       public:
-        virtual const char* what() const noexcept override
+        const char* what() const noexcept override
         {
             return "input data sizes are not valid";
         }

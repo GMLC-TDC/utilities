@@ -136,8 +136,9 @@ namespace utilities {
         }
         // printf("c=%d, t=%d, l1=%d, l2=%d, f=%d, half_length=%d\n",c,t,len_s1,
         // len_s2,f,half_length);
-        Result = ((float)((float)c / (float)len_s1) +
-                  (float)((float)c / (float)len_s2) + ((float)t / (float)c)) /
+        Result = ((static_cast<float>(c) / static_cast<float> (len_s1)) +
+            (static_cast<float>(c) / static_cast<float>(len_s2)) +
+            (static_cast<float>(t) / static_cast<float>(c))) /
             3.0F;
 
         if (use_winkler) {

@@ -67,7 +67,7 @@ namespace utilities {
             }
         }
         for (ii = 0; ii < l2; ii++) {
-            c2[ii] = (signed char)toupper(n2[ii]) - 65;
+            c2[ii] = static_cast<char>(toupper(n2[ii]) - 65);
             if (c2[ii] == -33) {
                 c2[ii] = 27;
                 gnum2[numwords2] = ii + 1;
@@ -81,7 +81,7 @@ namespace utilities {
             for (jj = 1; jj <= l1; jj++) {
                 DV[ii][jj] = (std::max)(
                     DV[ii - 1][jj - 1] +
-                        charcomp[(int)c1[jj - 1]][(int)c2[ii - 1]],
+                        charcomp[c1[jj - 1]][c2[ii - 1]],
                     (std::max)(
                         0.0F,
                         (std::max)(
@@ -142,7 +142,7 @@ namespace utilities {
         }
         fclose(fp);
         /*matrix score algorithm*/
-        if (maxdv / (float)((std::min)(l1, l2)) < 0.3F) {
+        if (maxdv / static_cast<float>((std::min)(l1, l2)) < 0.3F) {
             return 0.0F;
         }
         memset(v1, 0, 50);
@@ -174,7 +174,7 @@ namespace utilities {
                     ii--;
                     continue;
                 }
-                if (charcomp[(int)c1[jj - 1]][(int)c2[ii - 1]] > 0.4F) {
+                if (charcomp[c1[jj - 1]][c2[ii - 1]] > 0.4F) {
                     ws2[kk] += DV[ii][jj] - DV[ii - 1][jj - 1];
                     v2[jj] = 1;
                     lc++;
@@ -228,7 +228,7 @@ namespace utilities {
             }
             jj = maxj;
 
-            ws2[kk] /= (float)lc;
+            ws2[kk] /= static_cast<float> (lc);
             // printf("ws2[%d]=%f\n",kk,ws2[kk]);
             if (lc < 4) {
                 if (lc == 2) {
@@ -256,7 +256,7 @@ namespace utilities {
                     continue;
                 }
                 // printf("DV[%d][%d]=%f\n",ii,jj,DV[ii][jj]);
-                if (charcomp[(int)c1[jj - 1]][(int)c2[ii - 1]] > 0.4F) {
+                if (charcomp[c1[jj - 1]][c2[ii - 1]] > 0.4F) {
                     ws1[kk] += DV[ii][jj] - DV[ii - 1][jj - 1];
                     v1[ii] = 1;
                     ii--;
@@ -309,7 +309,7 @@ namespace utilities {
             }
             ii = maxi;
 
-            ws1[kk] /= (float)lc;
+            ws1[kk] /= static_cast<float> (lc);
 
             if (lc < 4) {
                 if (lc == 2) {
