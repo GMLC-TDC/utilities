@@ -35,11 +35,11 @@ namespace utilities {
         /*more null checks if one string is a null*/
         /*also not relevent to C*/
         for (ii = 0; ii < (std::min)(25, len_s1); ii++) {
-            s1_loc[ii] = toupper(n1[ii]);
+            s1_loc[ii] = static_cast<char>(toupper(n1[ii]));
         }
         len_s1 = ii;
         for (ii = 0; ii < (std::min)(25, len_s2); ii++) {
-            s2_loc[ii] = toupper(n2[ii]);
+            s2_loc[ii] = static_cast<char>(toupper(n2[ii]));
         }
         len_s2 = ii;
         memset(edit, 0, sizeof(int) * 26 * 26);

@@ -198,7 +198,7 @@ namespace utilities {
         if (score < 0.0) {
             score = 0.0;
         }
-        score /= (double)(kk);
+        score /= static_cast<double>(kk);
         return static_cast<float>(score);
     }
 

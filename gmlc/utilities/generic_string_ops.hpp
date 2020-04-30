@@ -105,8 +105,8 @@ namespace utilities {
                 }
                 start = d1 + 1;
                 d1 = line.find_first_of(delimiterCharacters, start);
-            } else  // now we are in a quote
-            {
+            } else {
+                // now we are in a quote
                 auto endLoc = getChunkEnd(
                     sectionLoc + 1,
                     line,

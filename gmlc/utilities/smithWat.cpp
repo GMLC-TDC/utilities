@@ -159,8 +159,8 @@ namespace utilities {
         printf("gnum2[%d]=%d\n",ii,gnum2[ii]);
     }
     */
-        words1 = (float)numwords1;
-        words2 = (float)numwords2;
+        words1 = static_cast<float>(numwords1);
+        words2 = static_cast<float>(numwords2);
         // printf("numwords1=%d,numwords2=%d\n",numwords1,numwords2);
         /*backtrace along name 2*/
         jj = maxj;
