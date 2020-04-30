@@ -17,7 +17,7 @@ set(utilities_source_files
     timeStringOps.cpp
     )
 
- set(string_comparison_files_ni
+ set(string_comparison_sources
     editdist.cpp
     smithWat.cpp
     namecmp.h
