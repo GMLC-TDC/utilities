@@ -14,8 +14,8 @@ set(utilities_source_files
     stringOps.cpp
     stringConversion.cpp
     vectorOps.cpp
-	timeStringOps.cpp
-	)
+    timeStringOps.cpp
+    )
 
  set(string_comparison_files
     editdist.cpp
@@ -35,7 +35,7 @@ set(utilities_header_files
     stringConversion.h
     stringOps.h
     timeRepresentation.hpp
-	timeStringOps.hpp
+    timeStringOps.hpp
     vectorOps.hpp
     TimeSeries.hpp
     TimeSeriesMulti.hpp
@@ -43,7 +43,7 @@ set(utilities_header_files
 
 if(GMLC_UTILITIES_OBJECT_LIB)
   add_library(gmlc_utilities_obj OBJECT ${utilities_source_files}
-                                        ${utilities_header_files} 
+                                        ${utilities_header_files}
                                         ${string_comparison_files})
   target_include_directories(
     gmlc_utilities_obj

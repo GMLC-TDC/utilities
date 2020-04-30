@@ -15,10 +15,11 @@
 // to be included as well along with all the other objects
 
 #include "TimeSeries.hpp"
-#include <vector>
-#include <utility>
-#include <string>
+
 #include <algorithm>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace gmlc {
 namespace utilities {
@@ -31,9 +32,11 @@ namespace utilities {
         std::vector<timeType>
             m_time;  //!< a vector of times associated with the m_data
         std::vector<std::vector<dataType>>
-            m_data;  //!< a 2d vector of m_data to store the time series information
-        std::vector<std::string> fields;  //!< container for all the strings
-            //!< associated with the different columns
+            m_data;  //!< a 2d vector of m_data to store the time series
+                     //!< information
+        std::vector<std::string>
+            fields;  //!< container for all the strings
+                     //!< associated with the different columns
         fsize_t cols = 1;  //!< the number of columns of m_data
         fsize_t count = 0;  //!< the current m_data location
         fsize_t capacity = 0;  //!< the total capacity of the time series

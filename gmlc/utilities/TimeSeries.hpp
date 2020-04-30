@@ -28,10 +28,7 @@ namespace gmlc {
 namespace utilities {
     class fileNotFoundError: public std::exception {
       public:
-        const char* what() const noexcept override
-        {
-            return "file not found";
-        }
+        const char* what() const noexcept override { return "file not found"; }
     };
 
     class openFileError: public std::exception {
@@ -52,10 +49,7 @@ namespace utilities {
 
     class fileIncomplete: public std::exception {
       public:
-        const char* what() const noexcept override
-        {
-            return "file incomplete";
-        }
+        const char* what() const noexcept override { return "file incomplete"; }
     };
 
     class invalidDataSize: public std::exception {
