@@ -36,7 +36,7 @@ namespace utilities {
 }
 }  // namespace gmlc
 #else
-#include "gmlc/extra/string_view.hpp"
+#include <gmlc/extra/string_view.hpp>
 namespace gmlc {
 namespace utilities {
     using string_view = stx::string_view;
