@@ -26,7 +26,7 @@ TEST(timeSeries, basic_test)
     simple.addData(0, 5.0);
     simple.addData(1, 6.0);
 
-    EXPECT_EQ(simple.size(), 2u);
+    EXPECT_EQ(simple.size(), 2U);
     EXPECT_FALSE(simple.empty());
     EXPECT_EQ(simple.data(0), 5.0);
     EXPECT_EQ(simple.time(0), 0.0);
@@ -43,7 +43,7 @@ TEST(timeSeries, basic_test_vector_input)
     TimeSeries<> simple;
 
     simple.addData({0.0, 1.0}, {5.0, 6.0});
-    EXPECT_EQ(simple.size(), 2u);
+    EXPECT_EQ(simple.size(), 2U);
     EXPECT_FALSE(simple.empty());
     EXPECT_EQ(simple.data(0), 5.0);
     EXPECT_EQ(simple.time(0), 0.0);
@@ -57,9 +57,9 @@ TEST(timeSeries, basic_test_vector_input)
     simple.addData({0.0, 1.0}, {5.0, 6.0});
 
     simple.addData({2.0, 3.0, 4.0}, {5.0, 6.0, 7.0});
-    EXPECT_EQ(simple.size(), 5u);
+    EXPECT_EQ(simple.size(), 5U);
     simple.addData(5.0, 8.0);
-    EXPECT_EQ(simple.size(), 6u);
+    EXPECT_EQ(simple.size(), 6U);
 }
 
 TEST(timeSeries, last_data)

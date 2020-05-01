@@ -196,14 +196,14 @@ TEST(stringops, splitline_test1)
     std::string test1 = "alpha, bravo, charlie";
     auto testres = splitline(test1);
 
-    ASSERT_EQ(testres.size(), 3u);
+    ASSERT_EQ(testres.size(), 3U);
     EXPECT_EQ(testres[0], "alpha");
     EXPECT_EQ(testres[1], " bravo");
     EXPECT_EQ(testres[2], " charlie");
 
     testres = splitline(test1, ", ", delimiter_compression::on);
 
-    ASSERT_EQ(testres.size(), 3u);
+    ASSERT_EQ(testres.size(), 3U);
     EXPECT_EQ(testres[0], "alpha");
     EXPECT_EQ(testres[1], "bravo");
     EXPECT_EQ(testres[2], "charlie");
@@ -215,7 +215,7 @@ TEST(stringops, splitline_test2)
     std::string test1 = "alpha, bravo,;, charlie,";
     auto testres = splitline(test1);
 
-    ASSERT_EQ(testres.size(), 6u);
+    ASSERT_EQ(testres.size(), 6U);
     EXPECT_TRUE(testres[2].empty());
     EXPECT_TRUE(testres[3].empty());
     EXPECT_TRUE(testres[5].empty());
@@ -223,7 +223,7 @@ TEST(stringops, splitline_test2)
     std::string test2 = "alpha, bravo,;, charlie,";
     testres = splitline(test1, ";, ", delimiter_compression::on);
 
-    EXPECT_EQ(testres.size(), 3);
+    EXPECT_EQ(testres.size(), 3U);
 
     // test the vector fill overload
     std::vector<std::string> resVector;
@@ -396,7 +396,7 @@ TEST(stringops, splitLineQuotes_tests)
     EXPECT_EQ(testres2[0], "\'alpha,   bravo\'");
     EXPECT_EQ(testres2[1], "charlie");
 
-    std::string test3 = " \"test1\",\'test2\' ; \"charlie\",";
+    std::string test3 = R"( "test1",'test2' ; "charlie",)";
     auto testres3 = splitlineQuotes(test3);
     trim(testres3);
     ASSERT_EQ(testres3.size(), 4U);
@@ -412,18 +412,18 @@ TEST(stringops, splitLineQuotes_tests)
         delimiter_compression::on);
     ASSERT_EQ(testres3.size(), 3U);
 
-    std::string test4 = "\"'part1' and,; 'part2'\",\"34,45,56\"";
+    std::string test4 = R"("'part1' and,; 'part2'","34,45,56")";
     auto testres4 = splitlineQuotes(test4);
     ASSERT_EQ(testres4.size(), 2U);
     EXPECT_EQ(testres4[1], "\"34,45,56\"");
 
-    std::string test5 = "\"part1'\" and \"part2\",\"34,45,56\"";
+    std::string test5 = R"("part1'" and "part2","34,45,56")";
     auto testres5 = splitlineQuotes(test5);
     ASSERT_EQ(testres5.size(), 2U);
     EXPECT_EQ(testres5[1], "\"34,45,56\"");
 
     std::string test6 =
-        "--arg1 --arg2=bob --arg3=\"string1 string2\" --arg3=\"bob\"";
+        R"(--arg1 --arg2=bob --arg3="string1 string2" --arg3="bob")";
     auto testres6 = splitlineQuotes(test6, " \t");
     ASSERT_EQ(testres6.size(), 4U);
     EXPECT_EQ(testres6[2], "--arg3=\"string1 string2\"");
@@ -503,6 +503,7 @@ TEST(stringops, randomString)
     EXPECT_EQ(ept - str1.begin(), 62U);
 
     std::vector<std::string> rstring;
+    rstring.reserve(20);
     for (int ii = 0; ii < 20; ++ii) {
         rstring.push_back(randomString(10));
     }

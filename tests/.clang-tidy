@@ -8,19 +8,13 @@ Checks: '
 google-*,
 -google-runtime-int,
 -google-runtime-references,
+-google-build-using-namespace,
 modernize*,
-hicpp-*,
+-modernize-pass-by-value,
+-modernize-avoid-c-arrays,
 clang-analyzer-*,
 bugprone-*,
 -bugprone-narrowing-conversions,
-misc-*,
-cppcoreguidelines-*,
--cppcoreguidelines-narrowing-conversions,
--cppcoreguidelines-avoid-magic-numbers,
--cppcoreguidelines-special-member-functions,
--cppcoreguidelines-macro-usage,
--cppcoreguidelines-pro-bounds-pointer-arithmetic,
--cppcoreguidelines-pro-bounds-constant-array-index,
 cert-*,
 -cert-err58-cpp,
 portability-*,
@@ -34,28 +28,20 @@ WarningsAsErrors: '
 google-*,
 -google-runtime-int,
 -google-runtime-references,
+-google-build-using-namespace
 modernize*,
-hicpp-*,
--hicpp-use-equals-default,
--hicpp-signed-bitwise,
+-modernize-pass-by-value,
+-modernize-avoid-c-arrays,
 clang-analyzer-*,
 bugprone-*,
 -bugprone-narrowing-conversions,
-misc-*,
-cppcoreguidelines-*,
--cppcoreguidelines-narrowing-conversions,
--cppcoreguidelines-avoid-magic-numbers,
--cppcoreguidelines-special-member-functions,
--cppcoreguidelines-macro-usage,
--cppcoreguidelines-pro-bounds-pointer-arithmetic,
--cppcoreguidelines-pro-bounds-constant-array-index,
 portability-*,
 readability-*,
 -readability-magic-numbers,
 performance-*
 '
 
-HeaderFilterRegex: 'gmlc/utilities/*.hp?p?'
+HeaderFilterRegex: 'src/helics/*.hp?p?'
 
 CheckOptions:
 - key:             google-readability-braces-around-statements.ShortStatementLines

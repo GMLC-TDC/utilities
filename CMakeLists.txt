@@ -25,7 +25,7 @@ project(GMLC_UTILITIES LANGUAGES CXX VERSION 0.3.0)
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "04-30-20")
+set(GMLC_UTILITIES_DATE "05-01-20")
 
 
 
@@ -71,6 +71,19 @@ else(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
   set(UTILITIES_LIBRARY_EXPORT_COMMAND)
 endif(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
 
+
+cmake_dependent_option(
+    GMLC_UTILITIES_CLANG_TIDY "Look for and use Clang-Tidy" OFF
+    "CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME;NOT CMAKE_VERSION VERSION_LESS 3.6" OFF
+)
+set(GMLC_UTILITIES_CLANG_TIDY_OPTIONS
+    ""
+    CACHE STRING "Clang tidy options, such as -fix, semicolon separated"
+)
+
+mark_as_advanced(GMLC_UTILITIES_CLANG_TIDY_OPTIONS)
+mark_as_advanced(GMLC_UTILITIES_CLANG_TIDY)
+
 add_library(utilities_base INTERFACE)
 
 if(NOT TARGET compile_flags_target)
@@ -115,6 +128,19 @@ if(GMLC_UTILITIES_INCLUDE_BOOST)
 
   endif()
 endif()
+
+
+# Prepare Clang-Tidy
+if(GMLC_UTILITIES_CLANG_TIDY)
+    find_program(
+        CLANG_TIDY_EXE
+        NAMES "clang-tidy"
+        DOC "Path to clang-tidy executable" REQUIRED
+    )
+
+    set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" ${GMLC_UTILITIES_CLANG_TIDY_OPTIONS})
+endif()
+
 
 if(GMLC_UTILITIES_INSTALL)
   install(TARGETS utilities_base ${UTILITIES_LIBRARY_EXPORT_COMMAND})

@@ -54,18 +54,19 @@ namespace utilities {
             getTailString(string_view input, char separationCharacter) noexcept
         {
             auto tc = input.find_last_of(separationCharacter);
-            string_view ret =
-                (tc == string_view::npos) ? input : input.substr(tc + 1);
-            return ret;
+            if (tc != string_view::npos) {
+                input.remove_prefix(tc + 1);
+            }
+            return input;
         }
 
         string_view getTailString(string_view input, string_view sep) noexcept
         {
             auto tc = input.rfind(sep);
-            string_view ret = (tc == string_view::npos) ?
-                input :
-                input.substr(tc + sep.size());
-            return ret;
+            if (tc != string_view::npos) {
+                input.remove_prefix(tc + sep.size());
+            }
+            return input;
         }
 
         string_view getTailString_any(
@@ -73,9 +74,10 @@ namespace utilities {
             string_view separationCharacters) noexcept
         {
             auto tc = input.find_last_of(separationCharacters);
-            string_view ret =
-                (tc == string_view::npos) ? input : input.substr(tc + 1);
-            return ret;
+            if (tc != string_view::npos) {
+                input.remove_prefix(tc + 1);
+            }
+            return input;
         }
 
         string_view removeQuotes(string_view str)

@@ -13,12 +13,14 @@
 #include "gmlc/utilities/base64.h"
 
 #include "gtest/gtest.h"
+#include <array>
 
 using namespace gmlc::utilities;
+constexpr char encodeSeq[] = "test sequence";
+
 /** test conversion to lower case*/
 TEST(base64, encode)
 {
-    const char encodeSeq[] = "test sequence";
     auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq));
     auto decoded = base64_decode_to_string(encoded);
 
@@ -27,7 +29,6 @@ TEST(base64, encode)
 
 TEST(base64, decode_vector)
 {
-    const char encodeSeq[] = "test sequence";
     auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq) - 1);
     auto decoded = base64_decode(encoded);
 
@@ -39,21 +40,20 @@ TEST(base64, decode_vector)
 
 TEST(base64, decode_raw)
 {
-    const char encodeSeq[] = "test sequence";
     auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq) - 1);
-    char result[100];
-    auto size = base64_decode(encoded, result, 100);
+    std::array<char, 100> result;
+    auto size = base64_decode(encoded, result.data(), 100);
 
     EXPECT_EQ(strlen(encodeSeq), size);
-    std::string res(result, size);
+    std::string res(result.data(), size);
     EXPECT_EQ(res, encodeSeq);
 
     for (size_t jj = 11; jj >= 1; jj--) {
-        memset(result, 0, 100);
-        size = base64_decode(encoded, result, jj);
+        memset(result.data(), 0, 100);
+        size = base64_decode(encoded, result.data(), jj);
         EXPECT_EQ(size, jj);
         std::string sub = res.substr(0, jj);
-        std::string ressub(result, size);
+        std::string ressub(result.data(), size);
         EXPECT_EQ(ressub, sub);
     }
 }

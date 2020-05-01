@@ -17,7 +17,7 @@
 
 using namespace gmlc::utilities;
 
-TEST(strViewconversion, simple_integer_conversions_test)
+TEST(strViewconversion, simple_integer_conversions)
 {
     auto a = numeric_conversion<int>("457", -1);
     EXPECT_EQ(a, 457);
@@ -30,7 +30,7 @@ TEST(strViewconversion, simple_integer_conversions_test)
     EXPECT_EQ(c, 25);
     auto d = numeric_conversion<int16_t>("-7629", 0xFF);  // NOLINT
     EXPECT_EQ(d, static_cast<int16_t>(-7629));  // NOLINT
-    EXPECT_EQ(sizeof(d), 2u);
+    EXPECT_EQ(sizeof(d), 2U);
 
     auto e = numeric_conversion<unsigned int>("-1", 0);
     EXPECT_EQ(e, static_cast<unsigned int>(-1));
@@ -57,7 +57,7 @@ TEST(strViewconversion, simple_integer_conversions_test)
     EXPECT_EQ(k, 987);
 }
 
-TEST(strViewconversion, simple_floating_point_conversions_test)
+TEST(strViewconversion, simple_floating_point_conversions)
 {
     const double closeDef = 0.0000000001;
     auto a = numeric_conversion<float>("457", -1);
@@ -83,7 +83,7 @@ TEST(strViewconversion, simple_floating_point_conversions_test)
     EXPECT_NEAR(g, 45.34, closeDef);
 }
 
-TEST(strViewconversion, simple_integer_conversion_complete_test)
+TEST(strViewconversion, simple_integer_conversion_complete)
 {
     auto a = numeric_conversionComplete<int>("457  ", -1);
     EXPECT_EQ(a, 457);
@@ -155,7 +155,7 @@ TEST(strViewconversion, str2_vectorb)
     EXPECT_EQ(v, v3);
 }
 
-TEST(strViewconversion, simple_floating_point_conversionsComplete_test)
+TEST(strViewconversion, simple_floating_point_conversionsComplete)
 {
     const double closeDef = 0.0000000001;
     auto a = numeric_conversionComplete<float>("457", -1);
