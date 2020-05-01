@@ -20,7 +20,7 @@ repos:
   - id: docker-clang-format
     name: Docker Clang Format
     language: docker_image
-    exclude: ^(ThirdParty/|gmlc/utilities/extra)
+    exclude: ^(ThirdParty/|gmlc/extra)
     types:
     - c++
     entry: unibeautify/clang-format:latest

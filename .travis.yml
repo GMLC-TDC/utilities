@@ -23,17 +23,6 @@ matrix:
     script:
     - .ci/make_and_test.sh
 
-    # thread sanitize
-
-    # Check style/tidy
-  - compiler: clang
-    env:
-    - CHECK_STYLE=yes
-    script:
-    - cd "${TRAVIS_BUILD_DIR}"
-    - bash scripts/check_style.sh
-    - bash .ci/check_tidy.sh
-
     # Docs and clang 3.6
   - compiler: clang
     env:
