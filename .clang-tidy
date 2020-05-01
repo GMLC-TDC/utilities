@@ -55,7 +55,7 @@ readability-*,
 performance-*
 '
 
-HeaderFilterRegex: '.*hpp'
+HeaderFilterRegex: 'gmlc/utilities/*.hp?p?'
 
 CheckOptions:
 - key:             google-readability-braces-around-statements.ShortStatementLines
