@@ -55,7 +55,7 @@ namespace utilities {
         {
             auto tc = input.find_last_of(separationCharacter);
             if (tc != string_view::npos) {
-                input.remove_prefix(tc+1);
+                input.remove_prefix(tc + 1);
             }
             return input;
         }
@@ -75,7 +75,7 @@ namespace utilities {
         {
             auto tc = input.find_last_of(separationCharacters);
             if (tc != string_view::npos) {
-                input.remove_prefix(tc+1);
+                input.remove_prefix(tc + 1);
             }
             return input;
         }

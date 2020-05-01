@@ -25,7 +25,7 @@ project(GMLC_UTILITIES LANGUAGES CXX VERSION 0.3.0)
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "04-30-20")
+set(GMLC_UTILITIES_DATE "05-01-20")
 
 
 
