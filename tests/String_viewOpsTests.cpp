@@ -294,7 +294,7 @@ TEST(stringViewOps, splitLineQuotes_tests)
     EXPECT_EQ(testres2[0], "\'alpha,   bravo\'");
     EXPECT_EQ(testres2[1], "charlie");
 
-    string_view test3 = " \"test1\",\'test2\' ; \"charlie\",";
+    string_view test3 = R"( "test1",'test2' ; "charlie",)";
     auto testres3 = splitlineQuotes(test3);
     trim(testres3);
     ASSERT_EQ(testres3.size(), 4U);
@@ -310,12 +310,12 @@ TEST(stringViewOps, splitLineQuotes_tests)
         delimiter_compression::on);
     ASSERT_EQ(testres3.size(), 3U);
 
-    string_view test4 = "\"'part1' and,; 'part2'\",\"34,45,56\"";
+    string_view test4 = R"("'part1' and,; 'part2'","34,45,56")";
     auto testres4 = splitlineQuotes(test4);
     ASSERT_EQ(testres4.size(), 2U);
     EXPECT_EQ(testres4[1], "\"34,45,56\"");
 
-    string_view test5 = "\"part1'\" and \"part2\",\"34,45,56\"";
+    string_view test5 = R"("part1'" and "part2","34,45,56")";
     auto testres5 = splitlineQuotes(test5);
     ASSERT_EQ(testres5.size(), 2U);
     EXPECT_EQ(testres5[1], "\"34,45,56\"");
