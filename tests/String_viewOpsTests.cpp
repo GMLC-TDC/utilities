@@ -303,11 +303,10 @@ TEST(stringViewOps, splitLineQuotes_tests)
     EXPECT_EQ(testres3[2], "\"charlie\"");
     EXPECT_TRUE(testres3[3].empty());
 
-    testres3 = splitlineQuotes(
-        test3,
-        default_delim_chars,
-        default_quote_chars,
-        delimiter_compression::on);
+    testres3 = splitlineQuotes(test3,
+                               default_delim_chars,
+                               default_quote_chars,
+                               delimiter_compression::on);
     ASSERT_EQ(testres3.size(), 3U);
 
     string_view test4 = R"("'part1' and,; 'part2'","34,45,56")";

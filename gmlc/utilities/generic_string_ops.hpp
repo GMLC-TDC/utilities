@@ -21,10 +21,9 @@
 namespace gmlc {
 namespace utilities {
     template<class X>
-    std::vector<X> generalized_string_split(
-        const X& str,
-        const X& delimiterCharacters,
-        bool compress)
+    std::vector<X> generalized_string_split(const X& str,
+                                            const X& delimiterCharacters,
+                                            bool compress)
     {
         std::vector<X> ret;
 
@@ -83,8 +82,9 @@ namespace utilities {
         auto sectionLoc = line.find_first_of(sectionStartCharacters);
 
         if (sectionLoc == X::npos) {
-            return generalized_string_split(
-                line, delimiterCharacters, compress);
+            return generalized_string_split(line,
+                                            delimiterCharacters,
+                                            compress);
         }
 
         auto d1 = line.find_first_of(delimiterCharacters);
@@ -107,11 +107,10 @@ namespace utilities {
                 d1 = line.find_first_of(delimiterCharacters, start);
             } else {
                 // now we are in a quote
-                auto endLoc = getChunkEnd(
-                    sectionLoc + 1,
-                    line,
-                    line[sectionLoc],
-                    sectionMatch[line[sectionLoc]]);
+                auto endLoc = getChunkEnd(sectionLoc + 1,
+                                          line,
+                                          line[sectionLoc],
+                                          sectionMatch[line[sectionLoc]]);
                 if (endLoc != X::npos) {
                     d1 = line.find_first_of(delimiterCharacters, endLoc + 1);
                     if (d1 == X::npos) {

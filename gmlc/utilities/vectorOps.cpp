@@ -14,15 +14,14 @@
 
 namespace gmlc {
 namespace utilities {
-    double solve2x2(
-        double v11,
-        double v12,
-        double v21,
-        double v22,
-        double y1,
-        double y2,
-        double& x1,
-        double& x2)
+    double solve2x2(double v11,
+                    double v12,
+                    double v21,
+                    double v22,
+                    double y1,
+                    double y2,
+                    double& x1,
+                    double& x2)
     {
         double det = 1.0 / (v11 * v22 - v12 * v21);
         x1 = det * (v22 * y1 - v12 * y2);
@@ -30,9 +29,9 @@ namespace utilities {
         return det;
     }
 
-    std::array<double, 3> solve3x3(
-        const std::array<std::array<double, 3>, 3>& input,
-        const std::array<double, 3>& vals)
+    std::array<double, 3>
+        solve3x3(const std::array<std::array<double, 3>, 3>& input,
+                 const std::array<double, 3>& vals)
     {
         double a11 = input[0][0];
         double a12 = input[0][1];
@@ -67,10 +66,9 @@ namespace utilities {
     }
 
     // Linear Interpolation function
-    std::vector<double> interpolateLinear(
-        const std::vector<double>& timeIn,
-        const std::vector<double>& valIn,
-        const std::vector<double>& timeOut)
+    std::vector<double> interpolateLinear(const std::vector<double>& timeIn,
+                                          const std::vector<double>& valIn,
+                                          const std::vector<double>& timeOut)
     {
         size_t mx = (std::min)(valIn.size(), timeIn.size());
         std::vector<double> out(timeOut.size(), 0);
