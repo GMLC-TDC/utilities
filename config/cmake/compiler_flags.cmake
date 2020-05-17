@@ -8,9 +8,11 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 option(HELICS_ENABLE_EXTRA_COMPILER_WARNINGS
-       "disable compiler warning for ${CMAKE_PROJECT_NAME} build" ON)
+       "disable compiler warning for ${CMAKE_PROJECT_NAME} build" ON
+)
 option(HELICS_ENABLE_ERROR_ON_WARNINGS
-       "generate a compiler error for any warning encountered" OFF)
+       "generate a compiler error for any warning encountered" OFF
+)
 
 mark_as_advanced(HELICS_ENABLE_EXTRA_COMPILER_WARNINGS)
 mark_as_advanced(HELICS_ENABLE_ERROR_ON_WARNINGS)
@@ -32,18 +34,14 @@ target_compile_options(
 
 if(HELICS_ENABLE_EXTRA_COMPILER_WARNINGS)
     target_compile_options(
-        compile_flags_target
-        INTERFACE $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -pedantic>
+        compile_flags_target INTERFACE $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall
+                                       -pedantic>
     )
     target_compile_options(
         compile_flags_target
-        INTERFACE
-            $<$<COMPILE_LANGUAGE:CXX>:$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wextra
-            -Wshadow
-            -Wstrict-aliasing=1
-            -Wunreachable-code
-            -Woverloaded-virtual
-            -Wundef>>
+        INTERFACE $<$<COMPILE_LANGUAGE:CXX>:$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wextra
+                  -Wshadow -Wstrict-aliasing=1 -Wunreachable-code -Woverloaded-virtual
+                  -Wundef>>
     )
 
     target_compile_options(
@@ -77,8 +75,8 @@ if(HELICS_ENABLE_EXTRA_COMPILER_WARNINGS)
         if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 6.0)
             target_compile_options(
                 compile_flags_target
-                INTERFACE
-                    $<$<COMPILE_LANGUAGE:CXX>:-Wduplicated-cond -Wnull-dereference>
+                INTERFACE $<$<COMPILE_LANGUAGE:CXX>:-Wduplicated-cond
+                          -Wnull-dereference>
             )
         endif()
         if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 7.0)
@@ -97,8 +95,8 @@ if(HELICS_ENABLE_EXTRA_COMPILER_WARNINGS)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 6.0)
             target_compile_options(
-                compile_flags_target
-                INTERFACE -Wdocumentation -Wno-documentation-deprecated-sync
+                compile_flags_target INTERFACE -Wdocumentation
+                                               -Wno-documentation-deprecated-sync
             )
         endif()
     endif()
@@ -109,7 +107,10 @@ endif(HELICS_ENABLE_EXTRA_COMPILER_WARNINGS)
 # -------------------------------------------------------------
 if(MSVC)
 
-    target_compile_options(compile_flags_target INTERFACE -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
+    target_compile_options(
+        compile_flags_target INTERFACE -D_CRT_SECURE_NO_WARNINGS
+                                       -D_SCL_SECURE_NO_WARNINGS
+    )
     # these next two should be global
     add_compile_options(/MP /EHsc)
     if(HELICS_ENABLE_EXTRA_COMPILER_WARNINGS)

@@ -6,7 +6,7 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 */
 
 /* Created by Anjuta version 1.2.4 */
-/*	This file will not be overwritten */
+/*    This file will not be overwritten */
 
 #include <stdio.h>
 #include <stdlib.h>

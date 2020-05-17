@@ -57,10 +57,9 @@ namespace utilities {
     }
 
     namespace stringOps {
-        stringVector splitline(
-            const std::string& line,
-            const std::string& delimiters,
-            delimiter_compression compression)
+        stringVector splitline(const std::string& line,
+                               const std::string& delimiters,
+                               delimiter_compression compression)
         {
             return generalized_string_split(
                 line, delimiters, (compression == delimiter_compression::on));
@@ -71,11 +70,10 @@ namespace utilities {
             return generalized_string_split(line, std::string{1, del}, false);
         }
 
-        void splitline(
-            const std::string& line,
-            stringVector& strVec,
-            const std::string& delimiters,
-            delimiter_compression compression)
+        void splitline(const std::string& line,
+                       stringVector& strVec,
+                       const std::string& delimiters,
+                       delimiter_compression compression)
         {
             strVec = generalized_string_split(
                 line, delimiters, (compression == delimiter_compression::on));
@@ -88,22 +86,20 @@ namespace utilities {
 
         static const auto pmap = pairMapper();
 
-        stringVector splitlineQuotes(
-            const std::string& line,
-            const std::string& delimiters,
-            const std::string& quoteChars,
-            delimiter_compression compression)
+        stringVector splitlineQuotes(const std::string& line,
+                                     const std::string& delimiters,
+                                     const std::string& quoteChars,
+                                     delimiter_compression compression)
         {
             bool compress = (compression == delimiter_compression::on);
             return generalized_section_splitting(
                 line, delimiters, quoteChars, pmap, compress);
         }
 
-        stringVector splitlineBracket(
-            const std::string& line,
-            const std::string& delimiters,
-            const std::string& bracketChars,
-            delimiter_compression compression)
+        stringVector splitlineBracket(const std::string& line,
+                                      const std::string& delimiters,
+                                      const std::string& bracketChars,
+                                      delimiter_compression compression)
         {
             bool compress = (compression == delimiter_compression::on);
             return generalized_section_splitting(
@@ -116,8 +112,8 @@ namespace utilities {
             input.erase(0, input.find_first_not_of(whitespace));
         }
 
-        std::string
-            trim(const std::string& input, const std::string& whitespace)
+        std::string trim(const std::string& input,
+                         const std::string& whitespace)
         {
             const auto strStart = input.find_first_not_of(whitespace);
             if (strStart == std::string::npos) {
@@ -137,10 +133,9 @@ namespace utilities {
         }
 
         static const std::string digits("0123456789");
-        int trailingStringInt(
-            const std::string& input,
-            std::string& output,
-            int defNum) noexcept
+        int trailingStringInt(const std::string& input,
+                              std::string& output,
+                              int defNum) noexcept
         {
             if ((input.empty()) || (isdigit(input.back()) == 0)) {
                 output = input;
@@ -244,9 +239,8 @@ namespace utilities {
             return ret;
         }
 
-        std::string getTailString(
-            const std::string& input,
-            const std::string& sep) noexcept
+        std::string getTailString(const std::string& input,
+                                  const std::string& sep) noexcept
         {
             auto tc = input.rfind(sep);
             std::string ret = (tc == std::string::npos) ?
@@ -255,9 +249,8 @@ namespace utilities {
             return ret;
         }
 
-        std::string getTailString_any(
-            const std::string& input,
-            const std::string& sep) noexcept
+        std::string getTailString_any(const std::string& input,
+                                      const std::string& sep) noexcept
         {
             auto tc = input.find_last_of(sep);
             std::string ret =
@@ -265,10 +258,9 @@ namespace utilities {
             return ret;
         }
 
-        int findCloseStringMatch(
-            const stringVector& testStrings,
-            const stringVector& iStrings,
-            string_match_type matchType)
+        int findCloseStringMatch(const stringVector& testStrings,
+                                 const stringVector& iStrings,
+                                 string_match_type matchType)
         {
             std::string lct;  // lower case test string
             std::string lcis;  // lower case input string
@@ -297,10 +289,9 @@ namespace utilities {
                             if (lct.length() > lcis.length()) {
                                 continue;
                             }
-                            if (lcis.compare(
-                                    lcis.length() - lct.length(),
-                                    lct.length(),
-                                    lct) == 0) {
+                            if (lcis.compare(lcis.length() - lct.length(),
+                                             lct.length(),
+                                             lct) == 0) {
                                 return kk;
                             }
                             break;
@@ -353,20 +344,19 @@ namespace utilities {
             return -1;
         }
 
-        std::string
-            removeChars(const std::string& source, const std::string& remchars)
+        std::string removeChars(const std::string& source,
+                                const std::string& remchars)
         {
             std::string result;
             result.reserve(source.length());
-            std::remove_copy_if(
-                source.begin(),
-                source.end(),
-                std::back_inserter(result),
-                [remchars](char in) {
-                    return (
-                        std::find(remchars.begin(), remchars.end(), in) !=
-                        remchars.end());
-                });
+            std::remove_copy_if(source.begin(),
+                                source.end(),
+                                std::back_inserter(result),
+                                [remchars](char in) {
+                                    return (std::find(remchars.begin(),
+                                                      remchars.end(),
+                                                      in) != remchars.end());
+                                });
             return result;
         }
 
@@ -374,18 +364,16 @@ namespace utilities {
         {
             std::string result;
             result.reserve(source.length());
-            std::remove_copy(
-                source.begin(),
-                source.end(),
-                std::back_inserter(result),
-                remchar);
+            std::remove_copy(source.begin(),
+                             source.end(),
+                             std::back_inserter(result),
+                             remchar);
             return result;
         }
 
-        std::string characterReplace(
-            const std::string& source,
-            char key,
-            const std::string& repStr)
+        std::string characterReplace(const std::string& source,
+                                     char key,
+                                     const std::string& repStr)
         {
             std::string result;
             result.reserve(source.length());
@@ -440,8 +428,8 @@ namespace utilities {
 #ifndef __apple_build_version__
         thread_local static std::mt19937 rg{
             std::random_device{}() +
-            static_cast<uint32_t>(
-                reinterpret_cast<uint64_t>(&length) & 0xFFFFFFFFU)};  // NOLINT
+            static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) &  // NOLINT
+                                  0xFFFFFFFFU)}; 
         thread_local static std::uniform_int_distribution<
             std::string::size_type>
             pick(0, 61);
@@ -449,8 +437,8 @@ namespace utilities {
 #if __clang_major__ >= 8
         thread_local static std::mt19937 rg{
             std::random_device{}() +
-            static_cast<uint32_t>(
-                reinterpret_cast<uint64_t>(&length) & 0xFFFFFFFFU)};
+            static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) &
+                                  0xFFFFFFFFU)};
         thread_local static std::uniform_int_distribution<
             std::string::size_type>
             pick(0, 61);
@@ -462,15 +450,16 @@ namespace utilities {
         if (genPtr == nullptr) {
             genPtr = new std::mt19937(
                 std::random_device{}() + std::random_device{}() +
-                static_cast<uint32_t>(
-                    reinterpret_cast<uint64_t>(&length) & 0xFFFFFFFFU));
+                static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) &
+                                      0xFFFFFFFFU));
         }
         auto& rg = *genPtr;
         static __thread std::uniform_int_distribution<std::string::size_type>*
             pickPtr = nullptr;
         if (pickPtr == nullptr) {
-            pickPtr = new std::uniform_int_distribution<std::string::size_type>(
-                0, 61);
+            pickPtr =
+                new std::uniform_int_distribution<std::string::size_type>(0,
+                                                                          61);
         }
         auto& pick = *pickPtr;
 

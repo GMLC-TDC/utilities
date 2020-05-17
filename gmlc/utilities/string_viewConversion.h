@@ -39,8 +39,8 @@ namespace utilities {
     template<typename X>
     X strViewToInteger(string_view input, size_t* rem = nullptr)
     {
-        static_assert(
-            std::is_integral<X>::value, "requested type is not integral");
+        static_assert(std::is_integral<X>::value,
+                      "requested type is not integral");
         X ret = 0;
         bool inProcess = false;
         int sign = 1;
@@ -178,9 +178,8 @@ namespace utilities {
     /** check if the first character of the string is a valid numerical value*/
     inline bool nonNumericFirstOrLastCharacter(string_view V)
     {
-        return (
-            (V.empty()) || (numCheck[V[0]] == false) ||
-            (numCheckEnd[V.back()] == false));
+        return ((V.empty()) || (numCheck[V[0]] == false) ||
+                (numCheckEnd[V.back()] == false));
     }
 
     template<typename X>
@@ -229,10 +228,10 @@ namespace utilities {
 @return a vector of double precision numbers converted from the string
 */
     template<typename X>
-    std::vector<X> str2vector(
-        string_view line,
-        const X defValue,
-        string_view delimiters = string_viewOps::default_delim_chars)
+    std::vector<X>
+        str2vector(string_view line,
+                   const X defValue,
+                   string_view delimiters = string_viewOps::default_delim_chars)
     {
         line = utilities::string_viewOps::removeBrackets(line);
         auto tempVec = utilities::string_viewOps::split(line, delimiters);

@@ -40,9 +40,9 @@ namespace utilities {
         }
         for (ii = 1; ii < strlen(n2); ii++) {
             for (jj = 1; jj < strlen(n1); jj++) {
-                DV[ii][jj] = (std::max)(
-                    DV[ii - 1][jj - 1] + charcomp[n1[jj]][n2[ii]],
-                    (std::max)(DV[ii][jj - 1], DV[ii - 1][jj]));
+                DV[ii][jj] =
+                    (std::max)(DV[ii - 1][jj - 1] + charcomp[n1[jj]][n2[ii]],
+                               (std::max)(DV[ii][jj - 1], DV[ii - 1][jj]));
                 if ((ii > 1) && (jj > 1)) {
                     if ((DV[ii - 1][jj] == DV[ii][jj - 1]) &&
                         (DV[ii - 1][jj] > DV[ii - 1][jj - 1]) &&

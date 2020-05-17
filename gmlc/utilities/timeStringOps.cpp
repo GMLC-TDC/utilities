@@ -45,8 +45,8 @@ namespace utilities {
         if (fnd != time_unitstrings.end()) {
             return fnd->second;
         }
-        throw(std::invalid_argument(
-            std::string("unit ") + unitString + " not recognized"));
+        throw(std::invalid_argument(std::string("unit ") + unitString +
+                                    " not recognized"));
     }
 
     double getTimeValue(const std::string& timeString, time_units defUnit)
