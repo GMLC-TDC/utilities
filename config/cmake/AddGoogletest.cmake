@@ -61,12 +61,24 @@ else() # cmake <3.11
 
 endif()
 
-set(gtest_force_shared_crt ON CACHE INTERNAL "")
+set(gtest_force_shared_crt
+    ON
+    CACHE INTERNAL ""
+)
 
-set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "")
-set(HAVE_STD_REGEX ON CACHE INTERNAL "" )
+set(BUILD_SHARED_LIBS
+    OFF
+    CACHE INTERNAL ""
+)
+set(HAVE_STD_REGEX
+    ON
+    CACHE INTERNAL ""
+)
 
-set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1 CACHE INTERNAL "")
+set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS
+    1
+    CACHE INTERNAL ""
+)
 add_subdirectory(${${gtName}_SOURCE_DIR} ${${gtName}_BINARY_DIR} EXCLUDE_FROM_ALL)
 
 message(STATUS "loading google-test directory ${${gtName}_SOURCE_DIR}")
@@ -91,22 +103,16 @@ macro(add_gtest TESTNAME)
     if(GOOGLE_TEST_INDIVIDUAL)
         if(CMAKE_VERSION VERSION_LESS 3.10)
             gtest_add_tests(
-                TARGET
-                ${TESTNAME}
-                TEST_PREFIX
-                "${TESTNAME}."
-                TEST_LIST
-                TmpTestList
+                TARGET ${TESTNAME}
+                TEST_PREFIX "${TESTNAME}."
+                TEST_LIST TmpTestList
             )
             set_tests_properties(${TmpTestList} PROPERTIES FOLDER "Tests")
         else()
             gtest_discover_tests(
                 ${TESTNAME}
-                TEST_PREFIX
-                "${TESTNAME}."
-                PROPERTIES
-                FOLDER
-                "Tests"
+                TEST_PREFIX "${TESTNAME}."
+                PROPERTIES FOLDER "Tests"
             )
 
         endif()
@@ -131,13 +137,17 @@ set_target_properties(gtest gtest_main gmock gmock_main PROPERTIES FOLDER "Exter
 if(MSVC)
     # add_compile_options( /wd4459)
     if(MSVC_VERSION GREATER_EQUAL 1900)
-        target_compile_definitions(gtest PUBLIC
-                                   _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-        target_compile_definitions(gtest_main PUBLIC
-                                   _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-        target_compile_definitions(gmock PUBLIC
-                                   _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-        target_compile_definitions(gmock_main PUBLIC
-                                   _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+        target_compile_definitions(
+            gtest PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
+        )
+        target_compile_definitions(
+            gtest_main PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
+        )
+        target_compile_definitions(
+            gmock PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
+        )
+        target_compile_definitions(
+            gmock_main PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING
+        )
     endif()
 endif()

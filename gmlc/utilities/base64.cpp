@@ -48,8 +48,8 @@ namespace utilities {
         std::string ret;
         ret.reserve((in_len * 4) / 3 + 2);
         int ii = 0;
-        std::array<unsigned char, 3> char_array_3{};
-        std::array<unsigned char, 4> char_array_4{};
+        std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
+        std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
 
         while (in_len-- != 0) {
             char_array_3[ii++] = *b2e++;
@@ -98,8 +98,8 @@ namespace utilities {
         auto in_len = encoded_string.size() - offset - 1;
         int i = 0;
         int in_ = static_cast<int>(offset);
-        std::array<unsigned char, 3> char_array_3{};
-        std::array<unsigned char, 4> char_array_4{};
+        std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
+        std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
         std::vector<unsigned char> ret;
         ret.reserve((in_len * 4) / 3 + 2);
 
@@ -159,8 +159,8 @@ namespace utilities {
         auto in_len = encoded_string.size();
         int i = 0;
         int in_ = static_cast<int>(offset);
-        std::array<unsigned char, 3> char_array_3{};
-        std::array<unsigned char, 4> char_array_4{};
+        std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
+        std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
         std::string ret;
         ret.reserve(in_len);
 
@@ -222,8 +222,8 @@ namespace utilities {
         auto in_len = encoded_string.size();
         int i = 0;
         int in_ = 0;
-        std::array<unsigned char, 3> char_array_3{'\0', '\0', '\0'};
-        std::array<unsigned char, 4> char_array_4{'\0', '\0', '\0', '\0'};
+        std::array<unsigned char, 3> char_array_3{{'\0', '\0', '\0'}};
+        std::array<unsigned char, 4> char_array_4{{'\0', '\0', '\0', '\0'}};
         auto outData = static_cast<unsigned char*>(data);
         size_t dataIndex = 0U;
         while (((in_len--) != 0U) && (encoded_string[in_] != '=') &&

@@ -554,7 +554,7 @@ than a given value
         return locs;
     }
 
-    /** generate a vector of indices where the values of a vector are greate or
+    /** generate a vector of indices where the values of a vector are greater or
 equal to a given value
 @tparam X the type of the values
 @param a the vector of value to compare
@@ -733,7 +733,7 @@ than or equal to a given value
 
     /** sum a vector elements where an indicator function matches a defined
 value
-@param[in] a vector to sum specif elements of
+@param[in] a vector to sum specific elements of
 @param[in] b an indicator vector
 @param match if an element of b == match then add the corresponding value of a
 to the sum
