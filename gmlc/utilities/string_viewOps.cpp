@@ -25,10 +25,11 @@ namespace utilities {
         {
             input.remove_suffix(
                 input.length() -
-                std::min(
-                    input.find_last_not_of(trimCharacters) + 1, input.size()));
-            input.remove_prefix(std::min(
-                input.find_first_not_of(trimCharacters), input.size()));
+                std::min(input.find_last_not_of(trimCharacters) + 1,
+                         input.size()));
+            input.remove_prefix(
+                std::min(input.find_first_not_of(trimCharacters),
+                         input.size()));
         }
 
         string_view trim(string_view input, string_view trimCharacters)
@@ -50,8 +51,8 @@ namespace utilities {
             }
         }
 
-        string_view
-            getTailString(string_view input, char separationCharacter) noexcept
+        string_view getTailString(string_view input,
+                                  char separationCharacter) noexcept
         {
             auto tc = input.find_last_of(separationCharacter);
             if (tc != string_view::npos) {
@@ -69,9 +70,8 @@ namespace utilities {
             return input;
         }
 
-        string_view getTailString_any(
-            string_view input,
-            string_view separationCharacters) noexcept
+        string_view getTailString_any(string_view input,
+                                      string_view separationCharacters) noexcept
         {
             auto tc = input.find_last_of(separationCharacters);
             if (tc != string_view::npos) {
@@ -117,8 +117,8 @@ namespace utilities {
             if ((diff >= 0) &&
                 (diff < 24))  // maximum of 23 characters between the strings
             {
-                return string_view(
-                    string1.data(), diff + string1.length() + string2.length());
+                return string_view(string1.data(),
+                                   diff + string1.length() + string2.length());
             }
             if (string1.empty()) {
                 return string2;
@@ -129,31 +129,28 @@ namespace utilities {
             throw(std::out_of_range("unable to merge string_views"));
         }
 
-        string_viewVector split(
-            string_view str,
-            string_view delimiters,
-            delimiter_compression compression)
+        string_viewVector split(string_view str,
+                                string_view delimiters,
+                                delimiter_compression compression)
         {
             return generalized_string_split(
                 str, delimiters, (compression == delimiter_compression::on));
         }
 
-        string_viewVector splitlineQuotes(
-            string_view line,
-            string_view delimiters,
-            string_view quoteChars,
-            delimiter_compression compression)
+        string_viewVector splitlineQuotes(string_view line,
+                                          string_view delimiters,
+                                          string_view quoteChars,
+                                          delimiter_compression compression)
         {
             bool compress = (compression == delimiter_compression::on);
             return generalized_section_splitting(
                 line, delimiters, quoteChars, pmap, compress);
         }
 
-        string_viewVector splitlineBracket(
-            string_view line,
-            string_view delimiters,
-            string_view bracketChars,
-            delimiter_compression compression)
+        string_viewVector splitlineBracket(string_view line,
+                                           string_view delimiters,
+                                           string_view bracketChars,
+                                           delimiter_compression compression)
         {
             bool compress = (compression == delimiter_compression::on);
             return generalized_section_splitting(
@@ -172,10 +169,9 @@ namespace utilities {
         }
 
         static const string_view digits("0123456789");
-        int trailingStringInt(
-            string_view input,
-            string_view& output,
-            int defNum)
+        int trailingStringInt(string_view input,
+                              string_view& output,
+                              int defNum)
         {
             if (input.empty() || (input.back() < '0' || input.back() > '9')) {
                 output = input;

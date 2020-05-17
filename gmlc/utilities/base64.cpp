@@ -92,8 +92,8 @@ namespace utilities {
         return ret;
     }
 
-    std::vector<unsigned char>
-        base64_decode(std::string const& encoded_string, size_t offset)
+    std::vector<unsigned char> base64_decode(std::string const& encoded_string,
+                                             size_t offset)
     {
         auto in_len = encoded_string.size() - offset - 1;
         int i = 0;
@@ -152,9 +152,8 @@ namespace utilities {
         return ret;
     }
 
-    std::string base64_decode_to_string(
-        std::string const& encoded_string,
-        size_t offset)
+    std::string base64_decode_to_string(std::string const& encoded_string,
+                                        size_t offset)
     {
         auto in_len = encoded_string.size();
         int i = 0;
@@ -214,10 +213,9 @@ namespace utilities {
     }
 
     /** decode a string to the specified memory location*/
-    size_t base64_decode(
-        std::string const& encoded_string,
-        void* data,
-        size_t max_size)
+    size_t base64_decode(std::string const& encoded_string,
+                         void* data,
+                         size_t max_size)
     {
         auto in_len = encoded_string.size();
         int i = 0;

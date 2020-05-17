@@ -24,9 +24,8 @@ TEST(stringconversion, simple_integer_conversions_test)
     EXPECT_EQ(a, 457);
     auto b = numeric_conversion<int64_t>("-457", -1);
     EXPECT_EQ(b, -457);
-    static_assert(
-        std::is_same<decltype(b), int64_t>::value,
-        "conversion types do not match");
+    static_assert(std::is_same<decltype(b), int64_t>::value,
+                  "conversion types do not match");
     auto c = numeric_conversion<unsigned char>("25", 0xFF);
     EXPECT_EQ(c, 25);
     auto d = numeric_conversion<int16_t>("-7629", 0xFF);
@@ -56,9 +55,8 @@ TEST(stringconversion, simple_floating_point_conversions_test)
     EXPECT_EQ(a, 457);
     auto b = numeric_conversion<double>("234.123131", -1);
     EXPECT_NEAR(b, 234.123131, closeDef);
-    static_assert(
-        std::is_same<decltype(b), double>::value,
-        "conversion types do not match");
+    static_assert(std::is_same<decltype(b), double>::value,
+                  "conversion types do not match");
     auto c = numeric_conversion<double>(".456", 0xFF);
     EXPECT_NEAR(c, .456, closeDef);
     auto d = numeric_conversion<long double>("45.456e27", 0xFF);
@@ -81,9 +79,8 @@ TEST(stringconversion, simple_integer_conversion_complete_test)
     EXPECT_EQ(a, 457);
     auto b = numeric_conversionComplete<int64_t>("-457", -1);
     EXPECT_EQ(b, -457);
-    static_assert(
-        std::is_same<decltype(b), int64_t>::value,
-        "conversion types do not match");
+    static_assert(std::is_same<decltype(b), int64_t>::value,
+                  "conversion types do not match");
     auto c = numeric_conversionComplete<unsigned char>("25", 0xFF);
     EXPECT_EQ(c, 25);
     auto d = numeric_conversionComplete<int16_t>("-7629", 0xFF);
@@ -157,9 +154,8 @@ TEST(stringconversion, simple_floating_point_conversionsComplete_test)
     EXPECT_EQ(a, 457);
     auto b = numeric_conversionComplete<double>("234.123131", -1);
     EXPECT_NEAR(b, 234.123131, closeDef);
-    static_assert(
-        std::is_same<decltype(b), double>::value,
-        "conversion types do not match");
+    static_assert(std::is_same<decltype(b), double>::value,
+                  "conversion types do not match");
     auto c = numeric_conversionComplete<double>(".456", 0xFF);
     EXPECT_NEAR(c, .456, closeDef);
     auto d = numeric_conversionComplete<long double>("45.456e27", 0xFF);

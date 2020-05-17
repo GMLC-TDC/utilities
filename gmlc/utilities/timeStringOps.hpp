@@ -25,9 +25,8 @@ units are assumed to be defUnit
 @param defUnit the default units to use if none are given
 @return a double representing the time
 */
-    double getTimeValue(
-        const std::string& timeString,
-        time_units defUnit = time_units::sec);
+    double getTimeValue(const std::string& timeString,
+                        time_units defUnit = time_units::sec);
 
     /** generate a time from a string
 @details the string can be a double or with units
