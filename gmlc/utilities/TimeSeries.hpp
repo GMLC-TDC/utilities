@@ -93,9 +93,8 @@ namespace utilities {
     @param[in] tm the time
     @param[in] val the value
     */
-        void addData(
-            const std::vector<timeType>& tm,
-            const std::vector<dataType>& val)
+        void addData(const std::vector<timeType>& tm,
+                     const std::vector<dataType>& val)
         {
             if (tm.size() == val.size()) {
                 m_time.resize(count + tm.size());
@@ -175,11 +174,11 @@ namespace utilities {
     @param[in] column  the column of data in the file to load into the time
     series
     */
-        void
-            loadBinaryFile(const std::string& fileName, unsigned int column = 0)
+        void loadBinaryFile(const std::string& fileName,
+                            unsigned int column = 0)
         {
-            std::ifstream fio(
-                fileName.c_str(), std::ios::in | std::ios::binary);
+            std::ifstream fio(fileName.c_str(),
+                              std::ios::in | std::ios::binary);
             if (!fio) {
                 throw(fileNotFoundError());
             }
@@ -234,12 +233,11 @@ namespace utilities {
             }
             for (fsize_t cc = 0; cc < cols; cc++) {
                 if (cc == column) {
-                    fio.read(
-                        reinterpret_cast<char*>(m_data.data()),
-                        nc * sizeof(dataType));
+                    fio.read(reinterpret_cast<char*>(m_data.data()),
+                             nc * sizeof(dataType));
                 } else {
-                    fio.seekg(
-                        nc * sizeof(dataType), std::ifstream::ios_base::cur);
+                    fio.seekg(nc * sizeof(dataType),
+                              std::ifstream::ios_base::cur);
                 }
             }
             fio.read(reinterpret_cast<char*>(&nc), sizeof(fsize_t));
@@ -251,18 +249,16 @@ namespace utilities {
                 }
                 resize(nc + ocount);
                 buf.resize(nc + ocount);
-                fio.read(
-                    reinterpret_cast<char*>(buf.data() + ocount),
-                    nc * sizeof(double));
+                fio.read(reinterpret_cast<char*>(buf.data() + ocount),
+                         nc * sizeof(double));
                 for (fsize_t cc = 0; cc < cols; cc++) {
                     if (cc == column) {
-                        fio.read(
-                            reinterpret_cast<char*>(m_data.data() + ocount),
-                            nc * sizeof(dataType));
+                        fio.read(reinterpret_cast<char*>(m_data.data() +
+                                                         ocount),
+                                 nc * sizeof(dataType));
                     } else {
-                        fio.seekg(
-                            nc * sizeof(dataType),
-                            std::ifstream::ios_base::cur);
+                        fio.seekg(nc * sizeof(dataType),
+                                  std::ifstream::ios_base::cur);
                     }
                 }
                 ocount += nc;
@@ -318,10 +314,10 @@ namespace utilities {
         void writeBinaryFile(const std::string& fileName, bool append = false)
         {
             int temp;
-            std::ofstream fio(
-                fileName.c_str(),
-                std::ios::out | std::ios::binary |
-                    ((append) ? (std::ios::app) : (std::ios::trunc)));
+            std::ofstream fio(fileName.c_str(),
+                              std::ios::out | std::ios::binary |
+                                  ((append) ? (std::ios::app) :
+                                              (std::ios::trunc)));
             if (!fio) {
                 throw(fileNotFoundError());
             }
@@ -359,12 +355,11 @@ namespace utilities {
             if (count > 0) {
                 for (auto& t : m_time) {
                     auto tr = static_cast<double>(t);
-                    fio.write(
-                        reinterpret_cast<const char*>(&tr), sizeof(double));
+                    fio.write(reinterpret_cast<const char*>(&tr),
+                              sizeof(double));
                 }
-                fio.write(
-                    reinterpret_cast<const char*>(m_data.data()),
-                    count * sizeof(dataType));
+                fio.write(reinterpret_cast<const char*>(m_data.data()),
+                          count * sizeof(dataType));
             }
 
             fio.close();
@@ -376,15 +371,14 @@ namespace utilities {
     @param[in] append  flag indicating that if the file exists it should be
     appended rather than overwritten
     */
-        void writeTextFile(
-            const std::string& fileName,
-            int precision = 8,
-            bool append = false)
+        void writeTextFile(const std::string& fileName,
+                           int precision = 8,
+                           bool append = false)
         {
-            std::ofstream fio(
-                fileName.c_str(),
-                std::ios::out |
-                    ((append) ? (std::ios::app) : (std::ios::trunc)));
+            std::ofstream fio(fileName.c_str(),
+                              std::ios::out |
+                                  ((append) ? (std::ios::app) :
+                                              (std::ios::trunc)));
             if (!fio) {
                 throw(fileNotFoundError());
             }

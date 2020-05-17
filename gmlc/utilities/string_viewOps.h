@@ -30,26 +30,23 @@ end of the string
 @param[in,out] input  the string to convert
 @param[in] trimCharacters the characters to potentially tr
 */
-        void trimString(
-            string_view& input,
-            string_view trimCharacters = whiteSpaceCharacters);
+        void trimString(string_view& input,
+                        string_view trimCharacters = whiteSpaceCharacters);
 
         /** @brief trim whitespace characters from a string
 @param[in] input the string to trim;
 @param[in] trimCharacters  the definition of characters defaults to \t\n\r\0\v\f
 @return the trimmed string
 */
-        string_view trim(
-            string_view input,
-            string_view trimCharacters = whiteSpaceCharacters);
+        string_view trim(string_view input,
+                         string_view trimCharacters = whiteSpaceCharacters);
 
         /** @brief trim the whitespace from a vector of string_views
 @param[in] input the vector of strings to trim;
 @param[in] trimCharacters  the definition of characters defaults to \t\n\r\0\v\f
 */
-        void trim(
-            string_viewVector& input,
-            string_view trimCharacters = whiteSpaceCharacters);
+        void trim(string_viewVector& input,
+                  string_view trimCharacters = whiteSpaceCharacters);
 
         /** @brief remove outer quotes from a string
 only quotes around the edges are removed along with whitespace outside the
@@ -73,8 +70,8 @@ separator
 @return  the tail string or the string that comes after the last separation
 character if not found returns the entire string
 */
-        string_view
-            getTailString(string_view input, char separationCharacter) noexcept;
+        string_view getTailString(string_view input,
+                                  char separationCharacter) noexcept;
 
         /** @brief get a stringView that comes after the last of any of the
 specified separator
@@ -83,9 +80,9 @@ specified separator
 @return  the tail string or the string that comes after the last separation
 character if not found returns the entire string
 */
-        string_view getTailString_any(
-            string_view input,
-            string_view separationCharacters) noexcept;
+        string_view
+            getTailString_any(string_view input,
+                              string_view separationCharacters) noexcept;
 
         /** @brief get a string that comes after the last of the specified
 separator
@@ -168,10 +165,9 @@ the string without the number
 @param[out] output the leading string with the numbers removed
 @param[in] defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
-        int trailingStringInt(
-            string_view input,
-            string_view& output,
-            int defNum = -1);
+        int trailingStringInt(string_view input,
+                              string_view& output,
+                              int defNum = -1);
 
         /** @brief extract a trailing number from a string
 @param[in] input the string to extract the information from

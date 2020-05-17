@@ -23,7 +23,7 @@ namespace utilities {
         char s2_loc[25];
 
         /*do a null check*/
-        /*this test is not relevent in C*/
+        /*this test is not relevant in C*/
 
         /*first check if we have an exact match*/
         if (strIeq(n1, n2)) {
@@ -33,7 +33,7 @@ namespace utilities {
         len_s1 = static_cast<int>(strlen(n1));
         len_s2 = static_cast<int>(strlen(n2));
         /*more null checks if one string is a null*/
-        /*also not relevent to C*/
+        /*also not relevant to C*/
         for (ii = 0; ii < (std::min)(25, len_s1); ii++) {
             s1_loc[ii] = static_cast<char>(toupper(n1[ii]));
         }
@@ -52,13 +52,13 @@ namespace utilities {
         for (ii = 1; ii <= len_s1; ii++) {
             for (jj = 1; jj <= len_s2; jj++) {
                 if (s1_loc[ii - 1] == s2_loc[jj - 1]) {
-                    edit[ii][jj] = (std::min)(
-                        (std::min)(edit[ii - 1][jj] + 1, edit[ii][jj - 1] + 1),
-                        edit[ii - 1][jj - 1]);
+                    edit[ii][jj] = (std::min)((std::min)(edit[ii - 1][jj] + 1,
+                                                         edit[ii][jj - 1] + 1),
+                                              edit[ii - 1][jj - 1]);
                 } else {
-                    edit[ii][jj] = (std::min)(
-                        (std::min)(edit[ii - 1][jj] + 1, edit[ii][jj - 1] + 1),
-                        edit[ii - 1][jj - 1] + 1);
+                    edit[ii][jj] = (std::min)((std::min)(edit[ii - 1][jj] + 1,
+                                                         edit[ii][jj - 1] + 1),
+                                              edit[ii - 1][jj - 1] + 1);
                 }
             }
         }

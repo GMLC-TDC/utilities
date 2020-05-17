@@ -79,12 +79,12 @@ namespace utilities {
 
         for (ii = 1; ii <= l2; ii++) {
             for (jj = 1; jj <= l1; jj++) {
-                DV[ii][jj] = (std::max)(
-                    DV[ii - 1][jj - 1] + charcomp[c1[jj - 1]][c2[ii - 1]],
-                    (std::max)(
-                        0.0F,
-                        (std::max)(
-                            DV[ii][jj - 1] - gap, DV[ii - 1][jj] - gap)));
+                DV[ii][jj] =
+                    (std::max)(DV[ii - 1][jj - 1] +
+                                   charcomp[c1[jj - 1]][c2[ii - 1]],
+                               (std::max)(0.0F,
+                                          (std::max)(DV[ii][jj - 1] - gap,
+                                                     DV[ii - 1][jj] - gap)));
                 if ((ii > 1) && (jj > 1)) {
                     if ((DV[ii][jj - 1] > DV[ii - 1][jj - 1]) &&
                         (DV[ii - 1][jj] > DV[ii - 1][jj - 1])) {

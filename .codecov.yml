@@ -6,7 +6,7 @@ codecov:
 coverage:
   precision: 2
   round: down
-  range: "70...100"
+  range: '70...100'
 
   status:
     project: yes
@@ -22,10 +22,10 @@ parsers:
       macro: no
 
 comment:
-  layout: "header, diff"
+  layout: 'header, diff'
   behavior: default
   require_changes: no
 
 ignore:
-  - "tests"
-  - "gmlc/utilities/extra"
+  - 'tests'
+  - 'gmlc/utilities/extra'
