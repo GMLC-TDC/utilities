@@ -113,10 +113,9 @@ namespace utilities {
     default
     @throw invalidDataSize if the data is not sized correctly
     */
-        void addData(
-            timeType t,
-            const std::vector<dataType>& ndata,
-            unsigned int column = 0)
+        void addData(timeType t,
+                     const std::vector<dataType>& ndata,
+                     unsigned int column = 0)
         {
             if (ndata.size() + column > cols) {
                 throw(invalidDataSize());
@@ -176,10 +175,9 @@ namespace utilities {
     default
     @throw invalidDataSize if the sizes of the time and data are not equal
     */
-        void addData(
-            const std::vector<timeType>& ntime,
-            const std::vector<dataType>& ndata,
-            unsigned int column = 0)
+        void addData(const std::vector<timeType>& ntime,
+                     const std::vector<dataType>& ndata,
+                     unsigned int column = 0)
         {
             if (ntime.size() != ndata.size()) {
                 throw(invalidDataSize());
@@ -199,10 +197,9 @@ namespace utilities {
     default
     @throw invalidDataSize if the sizes of the time and data are not equal
     */
-        void addData(
-            std::vector<timeType>&& ntime,
-            std::vector<dataType>&& ndata,
-            unsigned int column = 0)
+        void addData(std::vector<timeType>&& ntime,
+                     std::vector<dataType>&& ndata,
+                     unsigned int column = 0)
         {
             if (ntime.size() != ndata.size()) {
                 throw(invalidDataSize());
@@ -301,11 +298,10 @@ namespace utilities {
         void scaleData(fsize_t col, dataType factor)
         {
             if (col < cols) {
-                std::transform(
-                    m_data[col].begin(),
-                    m_data[col].end(),
-                    m_data[col].begin(),
-                    [factor](dataType val) { return val * factor; });
+                std::transform(m_data[col].begin(),
+                               m_data[col].end(),
+                               m_data[col].begin(),
+                               [factor](dataType val) { return val * factor; });
             } else {
                 throw(std::out_of_range("invalid column specification"));
             }
@@ -314,10 +310,10 @@ namespace utilities {
         void scaleData(dataType factor)
         {
             for (auto& dc : m_data) {
-                std::transform(
-                    dc.begin(), dc.end(), dc.begin(), [factor](dataType val) {
-                        return val * factor;
-                    });
+                std::transform(dc.begin(),
+                               dc.end(),
+                               dc.begin(),
+                               [factor](dataType val) { return val * factor; });
             }
         }
         /** @brief load a file into the time series
@@ -342,8 +338,8 @@ namespace utilities {
 
         void loadBinaryFile(const std::string& fileName)
         {
-            std::ifstream fio(
-                fileName.c_str(), std::ios::in | std::ios::binary);
+            std::ifstream fio(fileName.c_str(),
+                              std::ios::in | std::ios::binary);
             if (!fio) {
                 throw(fileNotFoundError());
             }
@@ -365,8 +361,8 @@ namespace utilities {
             fio.read(reinterpret_cast<char*>(&nc), sizeof(fsize_t));
             fio.read(reinterpret_cast<char*>(&rcount), sizeof(fsize_t));
 
-            setCols(
-                rcount - 1);  // update the number of columns the file contains
+            setCols(rcount -
+                    1);  // update the number of columns the file contains
             // the time, then the m_data columns
             resize(nc);  // update the size
 
@@ -389,9 +385,8 @@ namespace utilities {
                 throw(fileIncomplete());
             }
             for (fsize_t cc = 0; cc < cols; cc++) {
-                fio.read(
-                    reinterpret_cast<char*>(m_data[cc].data()),
-                    nc * sizeof(dataType));
+                fio.read(reinterpret_cast<char*>(m_data[cc].data()),
+                         nc * sizeof(dataType));
                 // m_data[cc] = std::vector<double>(buf, buf + nc);
             }
             fio.read(reinterpret_cast<char*>(&nc), sizeof(fsize_t));
@@ -403,13 +398,12 @@ namespace utilities {
                 }
                 resize(nc + ocount);
                 buf.resize(nc + ocount);
-                fio.read(
-                    reinterpret_cast<char*>(buf.data() + ocount),
-                    nc * sizeof(double));
+                fio.read(reinterpret_cast<char*>(buf.data() + ocount),
+                         nc * sizeof(double));
                 for (fsize_t cc = 0; cc < cols; cc++) {
-                    fio.read(
-                        reinterpret_cast<char*>(m_data[cc].data() + ocount),
-                        nc * sizeof(dataType));
+                    fio.read(reinterpret_cast<char*>(m_data[cc].data() +
+                                                     ocount),
+                             nc * sizeof(dataType));
                     // m_data[cc] = std::vector<double>(buf, buf + nc);
                 }
                 ocount += nc;
@@ -460,10 +454,10 @@ namespace utilities {
         }
         void writeBinaryFile(const std::string& fileName, bool append = false)
         {
-            std::ofstream fio(
-                fileName.c_str(),
-                std::ios::out | std::ios::binary |
-                    ((append) ? (std::ios::app) : (std::ios::trunc)));
+            std::ofstream fio(fileName.c_str(),
+                              std::ios::out | std::ios::binary |
+                                  ((append) ? (std::ios::app) :
+                                              (std::ios::trunc)));
             if (!fio) {
                 throw(openFileError());
             }
@@ -478,11 +472,11 @@ namespace utilities {
 
                 // now write the size of the m_data
                 temp = count;
-                fio.write(
-                    reinterpret_cast<const char*>(&temp), sizeof(fsize_t));
+                fio.write(reinterpret_cast<const char*>(&temp),
+                          sizeof(fsize_t));
                 temp = cols + 1;
-                fio.write(
-                    reinterpret_cast<const char*>(&temp), sizeof(fsize_t));
+                fio.write(reinterpret_cast<const char*>(&temp),
+                          sizeof(fsize_t));
                 // now write the column names
                 unsigned char ccnt = 0;
                 for (fsize_t cc = 0; cc < cols; cc++) {
@@ -498,37 +492,35 @@ namespace utilities {
                 }
             } else {
                 fsize_t temp = count;
-                fio.write(
-                    reinterpret_cast<const char*>(&temp), sizeof(fsize_t));
+                fio.write(reinterpret_cast<const char*>(&temp),
+                          sizeof(fsize_t));
                 temp = cols + 1;
-                fio.write(
-                    reinterpret_cast<const char*>(&temp), sizeof(fsize_t));
+                fio.write(reinterpret_cast<const char*>(&temp),
+                          sizeof(fsize_t));
             }
             // now write the data
             if (count > 0) {
                 for (auto& t : m_time) {
                     auto tr = static_cast<double>(t);
-                    fio.write(
-                        reinterpret_cast<const char*>(&tr), sizeof(double));
+                    fio.write(reinterpret_cast<const char*>(&tr),
+                              sizeof(double));
                 }
                 for (fsize_t cc = 0; cc < cols; cc++) {
-                    fio.write(
-                        reinterpret_cast<const char*>(m_data[cc].data()),
-                        count * sizeof(dataType));
+                    fio.write(reinterpret_cast<const char*>(m_data[cc].data()),
+                              count * sizeof(dataType));
                 }
             }
 
             fio.close();
         }
-        void writeTextFile(
-            const std::string& fileName,
-            int precision = 8,
-            bool append = false)
+        void writeTextFile(const std::string& fileName,
+                           int precision = 8,
+                           bool append = false)
         {
-            std::ofstream fio(
-                fileName.c_str(),
-                std::ios::out |
-                    ((append) ? (std::ios::app) : (std::ios::trunc)));
+            std::ofstream fio(fileName.c_str(),
+                              std::ios::out |
+                                  ((append) ? (std::ios::app) :
+                                              (std::ios::trunc)));
             if (!fio) {
                 throw(openFileError());
             }
@@ -561,45 +553,40 @@ namespace utilities {
 
     // comparison functions
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeries<dataType, timeType>& ts1,
-        const TimeSeries<dataType, timeType>& ts2)
+    dataType compare(const TimeSeries<dataType, timeType>& ts1,
+                     const TimeSeries<dataType, timeType>& ts2)
     {
         return compareVec(ts1.data(), ts2.data());
     }
 
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeries<dataType, timeType>& ts1,
-        const TimeSeries<dataType, timeType>& ts2,
-        int cnt)
+    dataType compare(const TimeSeries<dataType, timeType>& ts1,
+                     const TimeSeries<dataType, timeType>& ts2,
+                     int cnt)
     {
         return compareVec(ts1.data(), ts2.data(), cnt);
     }
 
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeriesMulti<dataType, timeType>& ts1,
-        const TimeSeries<dataType, timeType>& ts2,
-        int stream)
+    dataType compare(const TimeSeriesMulti<dataType, timeType>& ts1,
+                     const TimeSeries<dataType, timeType>& ts2,
+                     int stream)
     {
         return compareVec(ts1[stream], ts2.data());
     }
 
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeriesMulti<dataType, timeType>& ts1,
-        const TimeSeries<dataType, timeType>& ts2,
-        int stream,
-        int cnt)
+    dataType compare(const TimeSeriesMulti<dataType, timeType>& ts1,
+                     const TimeSeries<dataType, timeType>& ts2,
+                     int stream,
+                     int cnt)
     {
         return compareVec(ts1[stream], ts2.data(), cnt);
     }
 
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeriesMulti<dataType, timeType>& ts1,
-        const TimeSeriesMulti<dataType, timeType>& ts2)
+    dataType compare(const TimeSeriesMulti<dataType, timeType>& ts1,
+                     const TimeSeriesMulti<dataType, timeType>& ts2)
     {
         dataType diff(0);
         auto cnt = std::min(ts1.columns(), ts2.columns());
@@ -612,31 +599,28 @@ namespace utilities {
     }
 
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeriesMulti<dataType, timeType>& ts1,
-        const TimeSeriesMulti<dataType, timeType>& ts2,
-        int stream)
+    dataType compare(const TimeSeriesMulti<dataType, timeType>& ts1,
+                     const TimeSeriesMulti<dataType, timeType>& ts2,
+                     int stream)
     {
         return compareVec(ts1[stream], ts2[stream]);
     }
 
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeriesMulti<dataType, timeType>& ts1,
-        const TimeSeriesMulti<dataType, timeType>& ts2,
-        int stream1,
-        int stream2)
+    dataType compare(const TimeSeriesMulti<dataType, timeType>& ts1,
+                     const TimeSeriesMulti<dataType, timeType>& ts2,
+                     int stream1,
+                     int stream2)
     {
         return compareVec(ts1[stream1], ts2[stream2]);
     }
 
     template<typename dataType, typename timeType>
-    dataType compare(
-        const TimeSeriesMulti<dataType, timeType>& ts1,
-        const TimeSeriesMulti<dataType, timeType>& ts2,
-        int stream1,
-        int stream2,
-        int cnt)
+    dataType compare(const TimeSeriesMulti<dataType, timeType>& ts1,
+                     const TimeSeriesMulti<dataType, timeType>& ts2,
+                     int stream1,
+                     int stream2,
+                     int cnt)
     {
         return compareVec(ts1[stream1], ts2[stream2], cnt);
     }

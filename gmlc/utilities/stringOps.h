@@ -97,16 +97,15 @@ namespace utilities {
             }
         }
 
-        const std::string whiteSpaceCharacters(
-            std::string(" \t\n\r\a\v\f") + std::string(1, '\0'));
+        const std::string whiteSpaceCharacters(std::string(" \t\n\r\a\v\f") +
+                                               std::string(1, '\0'));
 
         /** @brief trim whitespace characters from a string at the beginning and
 end of the string
 @param[in,out] input  the string to convert
 */
-        void trimString(
-            std::string& input,
-            const std::string& whitespace = whiteSpaceCharacters);
+        void trimString(std::string& input,
+                        const std::string& whitespace = whiteSpaceCharacters);
 
         /** @brief trim whitespace characters from a string
 @param input the string to trim;
@@ -114,18 +113,16 @@ end of the string
 @return the trimmed string
 */
 
-        std::string trim(
-            const std::string& input,
-            const std::string& whitespace = whiteSpaceCharacters);
+        std::string trim(const std::string& input,
+                         const std::string& whitespace = whiteSpaceCharacters);
 
         /** @brief trim whitespace from a vector of strings
 @param input the vector of strings to trim;
 @param whitespace  the definition of whitespace characters defaults to " \t\n"
 */
 
-        void trim(
-            stringVector& input,
-            const std::string& whitespace = whiteSpaceCharacters);
+        void trim(stringVector& input,
+                  const std::string& whitespace = whiteSpaceCharacters);
 
         /** @brief get a string that comes after the last of a specified
 separator
@@ -142,9 +139,8 @@ separator
 @return  the tail string or the string that comes after the last of the
 separation strings if not found returns the entire string
 */
-        std::string getTailString(
-            const std::string& input,
-            const std::string& sep) noexcept;
+        std::string getTailString(const std::string& input,
+                                  const std::string& sep) noexcept;
 
         /** @brief get a string that comes after the last of any specified
 separator
@@ -153,9 +149,8 @@ separator
 @return  the tail string or the string that comes after the last of the
 separation strings if not found returns the entire string
 */
-        std::string getTailString_any(
-            const std::string& input,
-            const std::string& sep) noexcept;
+        std::string getTailString_any(const std::string& input,
+                                      const std::string& sep) noexcept;
 
         const std::string default_delim_chars(",;");
         const std::string default_quote_chars(R"raw('"`)raw");
@@ -250,10 +245,9 @@ strange case
 @param[out] output the leading string with the numbers removed
 @param defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
-        int trailingStringInt(
-            const std::string& input,
-            std::string& output,
-            int defNum = -1) noexcept;
+        int trailingStringInt(const std::string& input,
+                              std::string& output,
+                              int defNum = -1) noexcept;
 
         /** @brief extract a trailing number from a string
 @details will convert up to the last 9 digits so there is no overload there is
@@ -262,9 +256,8 @@ strange case
 @param input the string to extract the information from
 @param defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
-        int trailingStringInt(
-            const std::string& input,
-            int defNum = -1) noexcept;
+        int trailingStringInt(const std::string& input,
+                              int defNum = -1) noexcept;
 
         /**@brief enumeration for string close matches
          */
@@ -293,8 +286,8 @@ the matchType parameter and returns the index into the testStrings vector
 @param remchars the characters to remove
 @return  the string with the specified characters removed
 */
-        std::string
-            removeChars(const std::string& source, const std::string& remchars);
+        std::string removeChars(const std::string& source,
+                                const std::string& remchars);
 
         /** @brief remove a particular character from a string
 @param source  the original string
@@ -324,10 +317,9 @@ Bracket characters include [({<
 @param repStr the string to replace the key with
 @return  the string after the specified replacement
 */
-        std::string characterReplace(
-            const std::string& source,
-            char key,
-            const std::string& repStr);
+        std::string characterReplace(const std::string& source,
+                                     char key,
+                                     const std::string& repStr);
 
         /** @brief replace XML character codes with the appropriate character
 @param str  the string to do the replacement on

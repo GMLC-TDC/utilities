@@ -34,7 +34,7 @@ SPDX-License-Identifier: BSD-3-Clause
 
 #if defined(DEMANGLE_HAS_CXXABI_H)
 #include <cxxabi.h>
-// For some archtectures (mips, mips64, x86, x86_64) cxxabi.h in Android NDK is
+// For some architectures (mips, mips64, x86, x86_64) cxxabi.h in Android NDK is
 // implemented by gabi++ library
 // (https://android.googlesource.com/platform/ndk/+/master/sources/cxx-stl/gabi++/),
 // which does not implement abi::__cxa_demangle(). We detect this implementation

@@ -40,23 +40,22 @@ v21*x1+v22*x2=y2
 @param[out] x2 the computed second result
 @return the value of the determinant
 */
-    double solve2x2(
-        double v11,
-        double v12,
-        double v21,
-        double v22,
-        double y1,
-        double y2,
-        double& x1,
-        double& x2);
+    double solve2x2(double v11,
+                    double v12,
+                    double v21,
+                    double v22,
+                    double y1,
+                    double y2,
+                    double& x1,
+                    double& x2);
 
     /** solve Ax=b where A is a [3x3] matrix
 @param[in] input a 3x3 array
 @param[in] vals b in the equation Ax=b
 @return a 3x1 array of the results*/
-    std::array<double, 3> solve3x3(
-        const std::array<std::array<double, 3>, 3>& input,
-        const std::array<double, 3>& vals);
+    std::array<double, 3>
+        solve3x3(const std::array<std::array<double, 3>, 3>& input,
+                 const std::array<double, 3>& vals);
 
     /** perform a linear interpolation
 @param[in] timeIn a vector of time values
@@ -64,10 +63,9 @@ v21*x1+v22*x2=y2
 @param[in] timeOut  the desired times in the output vector
 @return the computed values corresponding to timeOut
 */
-    std::vector<double> interpolateLinear(
-        const std::vector<double>& timeIn,
-        const std::vector<double>& valIn,
-        const std::vector<double>& timeOut);
+    std::vector<double> interpolateLinear(const std::vector<double>& timeIn,
+                                          const std::vector<double>& valIn,
+                                          const std::vector<double>& timeOut);
 
 #ifdef _MSC_VER
 #if _MSC_VER < 1900
@@ -156,10 +154,9 @@ take and integer argument and a less than operator and != operator
     /** check that a vector has the requested number of elements if not resize
      * it with all new elements having value = defArg*/
     template<class X>
-    void ensureSizeAtLeast(
-        std::vector<X>& a,
-        size_t minRequiredSize,
-        const X& defArg)
+    void ensureSizeAtLeast(std::vector<X>& a,
+                           size_t minRequiredSize,
+                           const X& defArg)
     {
         if (a.size() < minRequiredSize) {
             a.resize(minRequiredSize, defArg);
@@ -431,9 +428,8 @@ given value
 @return a vector of indices into a with the matching condition
 */
     template<class X>
-    auto vecFindeq(
-        const std::vector<X>& a,
-        X match)  //->std::vector<decltype (a.size ())>
+    auto vecFindeq(const std::vector<X>& a,
+                   X match)  //->std::vector<decltype (a.size ())>
     {
         auto cnt = a.size();
         std::vector<decltype(cnt)> locs;
@@ -496,9 +492,8 @@ a given value
 @return a vector of indices into a with the matching condition
 */
     template<class X>
-    auto vecFindlt(
-        const std::vector<X>& a,
-        X val)  //->std::vector<decltype (a.size ())>
+    auto vecFindlt(const std::vector<X>& a,
+                   X val)  //->std::vector<decltype (a.size ())>
     {
         auto cnt = a.size();
         std::vector<decltype(cnt)> locs;
@@ -518,9 +513,8 @@ or equal to a given value
 @return a vector of indices into a with the matching condition
 */
     template<class X>
-    auto vecFindlte(
-        const std::vector<X>& a,
-        X val)  //->std::vector<decltype (a.size ())>
+    auto vecFindlte(const std::vector<X>& a,
+                    X val)  //->std::vector<decltype (a.size ())>
     {
         auto cnt = a.size();
         std::vector<decltype(cnt)> locs;
@@ -798,10 +792,9 @@ vector
 @param[out] M the location to store the result
 */
     template<class X>
-    void vectorMult(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        std::vector<X>& M)
+    void vectorMult(const std::vector<X>& a,
+                    const std::vector<X>& b,
+                    std::vector<X>& M)
     {
         auto cnt = (std::min)(a.size(), b.size());
         M.resize(cnt);
@@ -817,11 +810,10 @@ result
 @param[out] res the location to store the result
 */
     template<class X>
-    void vectorMultAdd(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        const X Multiplier,
-        std::vector<X>& res)
+    void vectorMultAdd(const std::vector<X>& a,
+                       const std::vector<X>& b,
+                       const X Multiplier,
+                       std::vector<X>& res)
     {
         auto cnt = (std::min)(a.size(), b.size());
         for (typename std::vector<X>::size_type ii = 0; ii < cnt; ++ii) {
@@ -837,11 +829,10 @@ result
 @return the sum of the absolute values of the differences
 */
     template<class X>
-    X compareVec(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        std::vector<X>& diff,
-        typename std::vector<X>::size_type cnt = 0)
+    X compareVec(const std::vector<X>& a,
+                 const std::vector<X>& b,
+                 std::vector<X>& diff,
+                 typename std::vector<X>::size_type cnt = 0)
     {
         X sum_of_diff = 0;
         cnt = (cnt == 0) ? (a.size()) : (std::min)(a.size(), cnt);
@@ -860,10 +851,9 @@ result
 @return the sum of the absolute values of the differences
 */
     template<class X>
-    X compareVec(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        typename std::vector<X>::size_type cnt = 0)
+    X compareVec(const std::vector<X>& a,
+                 const std::vector<X>& b,
+                 typename std::vector<X>::size_type cnt = 0)
     {
         X sum_of_diff = 0;
 
@@ -882,10 +872,9 @@ than a tolerance
 @param maxAllowableDiff the tolerable difference between two values
 @return the number of differences*/
     template<class X>
-    auto countDiffs(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        X maxAllowableDiff)
+    auto countDiffs(const std::vector<X>& a,
+                    const std::vector<X>& b,
+                    X maxAllowableDiff)
     {
         using stype_t = typename std::vector<X>::size_type;
         stype_t cnt = (std::min)(a.size(), b.size());
@@ -905,10 +894,9 @@ than a tolerance, ignore a common mode difference between the two
 @param maxAllowableDiff the tolerable difference between two values
 @return the number of differences*/
     template<class X>
-    auto countDiffsIgnoreCommon(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        X maxAllowableDiff)
+    auto countDiffsIgnoreCommon(const std::vector<X>& a,
+                                const std::vector<X>& b,
+                                X maxAllowableDiff)
     {
         using stype_t = typename std::vector<X>::size_type;
         stype_t cnt = (std::min)(a.size(), b.size());
@@ -939,11 +927,10 @@ than a tolerance
 @param  maxFracDiff the difference must be greater than maxFracDiff*|a[ii]|
 @return the number of differences*/
     template<class X>
-    auto countDiffs(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        X maxAllowableDiff,
-        X maxFracDiff)
+    auto countDiffs(const std::vector<X>& a,
+                    const std::vector<X>& b,
+                    X maxAllowableDiff,
+                    X maxFracDiff)
     {
         using stype_t = typename std::vector<X>::size_type;
         stype_t cnt = (std::min)(a.size(), b.size());
@@ -964,10 +951,9 @@ than a tolerance and the a value is valid (ie !=0)
 @param maxAllowableDiff the tolerable difference between two values
 @return the number of differences*/
     template<class X>
-    auto countDiffsIfValid(
-        const std::vector<X>& a,
-        const std::vector<X>& b,
-        X maxAllowableDiff)
+    auto countDiffsIfValid(const std::vector<X>& a,
+                           const std::vector<X>& b,
+                           X maxAllowableDiff)
     {
         using stype_t = typename std::vector<X>::size_type;
         stype_t cnt = (std::min)(a.size(), b.size());
@@ -1049,9 +1035,8 @@ the same this function handles the case where they are not and is an lvalue
 reference
 */
         template<typename X, typename Y>
-        std::vector<X> vectorConvertActual(
-            const std::vector<Y>& dvec,
-            std::false_type /*unused*/)
+        std::vector<X> vectorConvertActual(const std::vector<Y>& dvec,
+                                           std::false_type /*unused*/)
         {
             std::vector<X> ret(dvec.size());
             std::transform(dvec.begin(), dvec.end(), ret.begin(), [](Y val) {
@@ -1065,9 +1050,8 @@ the same this function handles the case where they are the same and is an rvalue
 reference
 */
         template<typename X, typename Y>
-        std::vector<X> vectorConvertActual(
-            std::vector<Y>&& dvec,
-            std::true_type /*unused*/)
+        std::vector<X> vectorConvertActual(std::vector<Y>&& dvec,
+                                           std::true_type /*unused*/)
         {
             std::vector<X> ret(std::move(dvec));
             return ret;
@@ -1079,9 +1063,8 @@ the same this function handles the case where they are the same and is an lvalue
 reference
 */
         template<typename X, typename Y>
-        std::vector<X> vectorConvertActual(
-            const std::vector<Y>& dvec,
-            std::true_type /*unused*/)
+        std::vector<X> vectorConvertActual(const std::vector<Y>& dvec,
+                                           std::true_type /*unused*/)
         {
             std::vector<X> ret = dvec;
             return ret;
