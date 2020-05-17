@@ -731,13 +731,12 @@ than or equal to a given value
         return locs;
     }
 
-    /** sum a vector elements where an indicator function matches a defined
-value
-@param[in] a vector to sum specific elements of
-@param[in] b an indicator vector
-@param match if an element of b == match then add the corresponding value of a
-to the sum
-@return the summed value where the indicators match
+    /** sum a vector elements where an indicator function matches a defined value
+* @param[in] a vector to sum specific elements of
+* @param[in] b an indicator vector
+* @param match if an element of b == match then add the corresponding value of a
+* to the sum
+* @return the summed value where the indicators match
 */
     template<class X, class Y>
     X ind_sum(const std::vector<X>& a, const std::vector<Y>& b, Y match)
@@ -753,8 +752,8 @@ to the sum
     }
 
     /** multiply two vectors and sum the result
-@param[in] a vector 1
-@param[in] b vector 2
+* @param[in] a vector 1
+* @param[in] b vector 2
 */
     template<class X>
     X mult_sum(const std::vector<X>& a, const std::vector<X>& b)
