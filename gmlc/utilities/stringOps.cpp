@@ -428,8 +428,9 @@ namespace utilities {
 #ifndef __apple_build_version__
         thread_local static std::mt19937 rg{
             std::random_device{}() +
-            static_cast<uint32_t>(reinterpret_cast<uint64_t>(&length) &  // NOLINT
-                                  0xFFFFFFFFU)}; 
+            static_cast<uint32_t>(
+                reinterpret_cast<uint64_t>(&length) &  // NOLINT
+                0xFFFFFFFFU)};
         thread_local static std::uniform_int_distribution<
             std::string::size_type>
             pick(0, 61);
