@@ -83,8 +83,8 @@ if(GMLC_UTILITIES_STATIC_LIB)
     install(FILES ${utilities_header_files} DESTINATION include)
 
     if (GMLC_UTILITIES_CLANG_TIDY)
-			set_property(TARGET gmlc_utilities PROPERTY CXX_CLANG_TIDY "${DO_CLANG_TIDY}")
-		endif()
+            set_property(TARGET gmlc_utilities PROPERTY CXX_CLANG_TIDY "${DO_CLANG_TIDY}")
+        endif()
   endif()
 
 endif()

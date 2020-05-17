@@ -1,6 +1,5 @@
 version: 2
 aliases:
-
   - &run_utilities
     name: run_utilities
     environment:
@@ -12,7 +11,6 @@ aliases:
       ctest --verbose
 
 jobs:
-
   utilitiesTSan:
     docker:
       - image: helics/buildenv:sanitizers
@@ -53,5 +51,3 @@ workflows:
       - utilitiesMSan
       - utilitiesASan
       - utilitiesTSan
-
-
