@@ -140,7 +140,7 @@ namespace utilities {
     template<>
     inline long double numConv(string_view V)
     {
-        return std::stold(V.to_string());
+        return std::stold(std::string(V.data(),V.length()));
     }
 
     // template for numeric conversion returning the position
@@ -154,19 +154,19 @@ namespace utilities {
     template<>
     inline float numConvComp(string_view V, size_t& rem)
     {
-        return std::stof(V.to_string(), &rem);
+        return std::stof(std::string(V.data(), V.length()), &rem);
     }
 
     template<>
     inline double numConvComp(string_view V, size_t& rem)
     {
-        return std::stod(V.to_string(), &rem);
+        return std::stod(std::string(V.data(), V.length()), &rem);
     }
 
     template<>
     inline long double numConvComp(string_view V, size_t& rem)
     {
-        return std::stold(V.to_string(), &rem);
+        return std::stold(std::string(V.data(), V.length()), &rem);
     }
 
     /** check if the first character of the string is a valid numerical value*/
