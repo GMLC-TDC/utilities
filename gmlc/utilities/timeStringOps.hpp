@@ -49,7 +49,7 @@ for example "1.234"  or "1032ms"
 @throws invalid_argument if the string is not a valid time
 */
     template<class timeX>
-    timeX loadTimeFromString(std::string timeString, time_units defUnit)
+    timeX loadTimeFromString(const std::string& timeString, time_units defUnit)
     {
         return timeX(getTimeValue(timeString, defUnit));
     }
