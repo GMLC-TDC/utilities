@@ -27,6 +27,7 @@
 #endif
 
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace gmlc {
@@ -140,7 +141,7 @@ namespace utilities {
     template<>
     inline long double numConv(string_view V)
     {
-        return std::stold(std::string(V.data(),V.length()));
+        return std::stold(std::string(V.data(), V.length()));
     }
 
     // template for numeric conversion returning the position
@@ -191,7 +192,7 @@ namespace utilities {
         try {
             return numConv<X>(V);
         }
-        catch (const std::invalid_argument &) {
+        catch (const std::invalid_argument&) {
             return defValue;
         }
     }
@@ -216,7 +217,7 @@ namespace utilities {
             }
             return res;
         }
-        catch (const std::invalid_argument &) {
+        catch (const std::invalid_argument&) {
             return defValue;
         }
     }
