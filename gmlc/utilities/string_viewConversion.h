@@ -191,7 +191,7 @@ namespace utilities {
         try {
             return numConv<X>(V);
         }
-        catch (std::invalid_argument) {
+        catch (const std::invalid_argument &) {
             return defValue;
         }
     }
@@ -216,7 +216,7 @@ namespace utilities {
             }
             return res;
         }
-        catch (std::invalid_argument) {
+        catch (const std::invalid_argument &) {
             return defValue;
         }
     }
