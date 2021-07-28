@@ -120,7 +120,7 @@ namespace utilities {
         x3::parse(V.cbegin(), V.cend(), x3::double_, retVal);
         return retVal;
 #else
-        return std::stod(V.to_string());
+        return std::stod(std::string(V.data(), V.length()));
 #endif
     }
 
@@ -133,7 +133,7 @@ namespace utilities {
         x3::parse(V.cbegin(), V.cend(), x3::float_, retVal);
         return retVal;
 #else
-        return std::stof(V.to_string());
+        return std::stof(std::string(V.data(), V.length()));
 #endif
     }
 
