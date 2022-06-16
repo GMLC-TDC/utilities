@@ -18,30 +18,29 @@
 #include "charMapper.h"
 
 #include <vector>
-namespace gmlc {
-namespace utilities {
-    template<class X>
-    std::vector<X> generalized_string_split(const X& str,
+namespace gmlc::utilities {
+    template<class X, class XO=X>
+    std::vector<XO> generalized_string_split(const X& str,
                                             const X& delimiterCharacters,
                                             bool compress)
     {
-        std::vector<X> ret;
+        std::vector<XO> ret;
 
         auto pos = str.find_first_of(delimiterCharacters);
         decltype(pos) start = 0;
         while (pos != X::npos) {
             if (pos != start) {
-                ret.push_back(str.substr(start, pos - start));
+                ret.emplace_back(str.substr(start, pos - start));
             } else if (!compress) {
-                ret.push_back(X());
+                ret.push_back(XO());
             }
             start = pos + 1;
             pos = str.find_first_of(delimiterCharacters, start);
         }
         if (start < str.length()) {
-            ret.push_back(str.substr(start));
+            ret.emplace_back(str.substr(start));
         } else if (!compress) {
-            ret.push_back(X());
+            ret.push_back(XO());
         }
         return ret;
     }
@@ -71,8 +70,8 @@ namespace utilities {
         return rlc;
     }
 
-    template<class X>
-    std::vector<X> generalized_section_splitting(
+    template<class X, class XO=X>
+    std::vector<XO> generalized_section_splitting(
         const X& line,
         const X& delimiterCharacters,
         const X& sectionStartCharacters,
@@ -82,26 +81,28 @@ namespace utilities {
         auto sectionLoc = line.find_first_of(sectionStartCharacters);
 
         if (sectionLoc == X::npos) {
-            return generalized_string_split(line,
+            return generalized_string_split<X,XO>(line,
                                             delimiterCharacters,
                                             compress);
         }
+        std::vector<XO> strVec;
 
         auto d1 = line.find_first_of(delimiterCharacters);
         if (d1 == X::npos)  // there are no delimiters
         {
-            return {line};
+            strVec.emplace_back(line);
+            return strVec;
         }
         decltype(sectionLoc) start = 0;
-        std::vector<X> strVec;
+       
         while (start < line.length()) {
             if (sectionLoc > d1) {
                 if (start == d1) {
                     if (!compress) {
-                        strVec.push_back(X());
+                        strVec.push_back(XO{});
                     }
                 } else {
-                    strVec.push_back(line.substr(start, d1 - start));
+                    strVec.emplace_back(line.substr(start, d1 - start));
                 }
                 start = d1 + 1;
                 d1 = line.find_first_of(delimiterCharacters, start);
@@ -114,18 +115,18 @@ namespace utilities {
                 if (endLoc != X::npos) {
                     d1 = line.find_first_of(delimiterCharacters, endLoc + 1);
                     if (d1 == X::npos) {
-                        strVec.push_back(line.substr(start));
+                        strVec.emplace_back(line.substr(start));
                         sectionLoc = d1;
                         start = d1;
                     } else {
-                        strVec.push_back(line.substr(start, d1 - start));
+                        strVec.emplace_back(line.substr(start, d1 - start));
                         sectionLoc =
                             line.find_first_of(sectionStartCharacters, d1 + 1);
                         start = d1 + 1;
                     }
                     d1 = line.find_first_of(delimiterCharacters, start);
                 } else {
-                    strVec.push_back(line.substr(start));
+                    strVec.emplace_back(line.substr(start));
                     start = line.length();
                 }
             }
@@ -133,7 +134,7 @@ namespace utilities {
             if (d1 == X::npos) {
                 if (start != X::npos) {
                     if ((start < line.length()) || (!compress)) {
-                        strVec.push_back(line.substr(start));
+                        strVec.emplace_back(line.substr(start));
                     }
                     start = d1;
                 }
@@ -143,4 +144,3 @@ namespace utilities {
     }
 
 }  // namespace utilities
-}  // namespace gmlc

@@ -10,10 +10,10 @@ SPDX-License-Identifier: BSD-3-Clause
 #include "stringOps.h"
 
 #include <map>
+#include <string_view>
 
-namespace gmlc {
-namespace utilities {
-    const std::map<std::string, time_units> time_unitstrings{
+namespace gmlc::utilities {
+    const std::map<std::string_view, time_units> time_unitstrings{
         {"ps", time_units::ps},
         {"ns", time_units::ns},
         {"us", time_units::us},
@@ -34,18 +34,18 @@ namespace utilities {
         {"week", time_units::week},
         {"wk", time_units::week}};
 
-    time_units timeUnitsFromString(const std::string& unitString)
+    time_units timeUnitsFromString(std::string_view unitString)
     {
         auto fnd = time_unitstrings.find(unitString);
         if (fnd != time_unitstrings.end()) {
             return fnd->second;
         }
-        auto lcUstring = convertToLowerCase(stringOps::trim(unitString));
+        auto lcUstring = convertToLowerCase(stringOps::trim(std::string(unitString)));
         fnd = time_unitstrings.find(lcUstring);
         if (fnd != time_unitstrings.end()) {
             return fnd->second;
         }
-        throw(std::invalid_argument(std::string("unit ") + unitString +
+        throw(std::invalid_argument(std::string("unit ") + std::string(unitString) +
                                     " not recognized"));
     }
 
@@ -61,4 +61,3 @@ namespace utilities {
     }
 
 }  // namespace utilities
-}  // namespace gmlc

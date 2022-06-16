@@ -12,8 +12,7 @@
 #pragma once
 
 #include <array>
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
     /** small helper class to map characters to values*/
     template<typename V>
     class CharMapper {
@@ -63,4 +62,3 @@ namespace utilities {
     CharMapper<unsigned char> pairMapper();
 
 }  // namespace utilities
-}  // namespace gmlc

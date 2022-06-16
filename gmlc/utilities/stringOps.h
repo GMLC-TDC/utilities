@@ -9,15 +9,23 @@
  * For details, see the LICENSE file.
  * LLNS Copyright End
  */
+
+/*
+Copyright (c) 2017-2022,
+Battelle Memorial Institute; Lawrence Livermore National Security, LLC; Alliance
+for Sustainable Energy, LLC.  See the top-level NOTICE for additional details.
+All rights reserved. SPDX-License-Identifier: BSD-3-Clause
+*/
+
 #pragma once
 
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
     //!< alias for convenience
     using stringVector = std::vector<std::string>;
 
@@ -27,12 +35,12 @@ namespace utilities {
 @param input  the string to convert
 @return the string with all upper case converted to lower case
 */
-    std::string convertToLowerCase(const std::string& input);
+    std::string convertToLowerCase(std::string_view input);
     /** @brief convert a string to upper case as a new string
 @param input  the string to convert
 @return the string with all lower case letters converted to upper case
 */
-    std::string convertToUpperCase(const std::string& input);
+    std::string convertToUpperCase(std::string_view input);
     /** @brief make a string lower case
 @param[in,out] input  the string to convert
 */
@@ -105,7 +113,7 @@ end of the string
 @param[in,out] input  the string to convert
 */
         void trimString(std::string& input,
-                        const std::string& whitespace = whiteSpaceCharacters);
+                        std::string_view whitespace = whiteSpaceCharacters);
 
         /** @brief trim whitespace characters from a string
 @param input the string to trim;
@@ -113,8 +121,8 @@ end of the string
 @return the trimmed string
 */
 
-        std::string trim(const std::string& input,
-                         const std::string& whitespace = whiteSpaceCharacters);
+        std::string trim(std::string_view input,
+                         std::string_view whitespace = whiteSpaceCharacters);
 
         /** @brief trim whitespace from a vector of strings
 @param input the vector of strings to trim;
@@ -122,7 +130,7 @@ end of the string
 */
 
         void trim(stringVector& input,
-                  const std::string& whitespace = whiteSpaceCharacters);
+                  std::string_view whitespace = whiteSpaceCharacters);
 
         /** @brief get a string that comes after the last of a specified
 separator
@@ -131,7 +139,7 @@ separator
 @return  the tail string or the string that comes after the last sep character
 if not found returns the entire string
 */
-        std::string getTailString(const std::string& input, char sep) noexcept;
+        std::string getTailString(std::string_view input, char sep) noexcept;
         /** @brief get a string that comes after the last of a specified
 separator
 @param input  the string to separate
@@ -139,8 +147,8 @@ separator
 @return  the tail string or the string that comes after the last of the
 separation strings if not found returns the entire string
 */
-        std::string getTailString(const std::string& input,
-                                  const std::string& sep) noexcept;
+        std::string getTailString(std::string_view input,
+                                  std::string_view sep) noexcept;
 
         /** @brief get a string that comes after the last of any specified
 separator
@@ -149,12 +157,12 @@ separator
 @return  the tail string or the string that comes after the last of the
 separation strings if not found returns the entire string
 */
-        std::string getTailString_any(const std::string& input,
-                                      const std::string& sep) noexcept;
+        std::string getTailString_any(std::string_view input,
+                                      std::string_view sep) noexcept;
 
-        const std::string default_delim_chars(",;");
-        const std::string default_quote_chars(R"raw('"`)raw");
-        const std::string default_bracket_chars(R"raw([{(<'"`)raw");
+        constexpr std::string_view default_delim_chars(",;");
+        constexpr std::string_view default_quote_chars(R"raw('"`)raw");
+        constexpr std::string_view default_bracket_chars(R"raw([{(<'"`)raw");
 
         enum class delimiter_compression {
             on,
@@ -169,8 +177,8 @@ multiple sequential delimiters together
 @return a vector of strings separated by the delimiters characters
 */
         stringVector splitline(
-            const std::string& line,
-            const std::string& delimiters = default_delim_chars,
+            std::string_view line,
+            std::string_view delimiters = default_delim_chars,
             delimiter_compression compression = delimiter_compression::off);
 
         /** @brief split a line into a vector of strings
@@ -178,7 +186,7 @@ multiple sequential delimiters together
 @param del the delimiter character
 @return a vector of strings separated by the delimiters characters
 */
-        stringVector splitline(const std::string& line, char del);
+        stringVector splitline(std::string_view line, char del);
 
         /** @brief split a line into a vector of strings
 @param line  the string to spit
@@ -186,7 +194,7 @@ multiple sequential delimiters together
 @param del the delimiter character
 
 */
-        void splitline(const std::string& line, stringVector& strVec, char del);
+        void splitline(std::string_view line, stringVector& strVec, char del);
 
         /** @brief split a line into a vector of strings
 @param line  the string to spit
@@ -196,9 +204,9 @@ multiple sequential delimiters together
 multiple sequential delimiters together
 */
         void splitline(
-            const std::string& line,
+            std::string_view line,
             stringVector& strVec,
-            const std::string& delimiters = default_delim_chars,
+            std::string_view delimiters = default_delim_chars,
             delimiter_compression compression = delimiter_compression::off);
 
         /** @brief split a line into a vector of strings taking into account
@@ -212,9 +220,9 @@ multiple sequential delimiters together
 for bracketing characters
 */
         stringVector splitlineQuotes(
-            const std::string& line,
-            const std::string& delimiters = default_delim_chars,
-            const std::string& quoteChars = default_quote_chars,
+            std::string_view line,
+            std::string_view delimiters = default_delim_chars,
+            std::string_view quoteChars = default_quote_chars,
             delimiter_compression compression = delimiter_compression::off);
 
         /** @brief split a line into a vector of strings taking into account
@@ -231,9 +239,9 @@ multiple sequential delimiters together
 for bracketing characters
 */
         stringVector splitlineBracket(
-            const std::string& line,
-            const std::string& delimiters = default_delim_chars,
-            const std::string& bracketChars = default_bracket_chars,
+            std::string_view line,
+            std::string_view delimiters = default_delim_chars,
+            std::string_view bracketChars = default_bracket_chars,
             delimiter_compression compression = delimiter_compression::off);
 
         /** @brief extract a trailing number from a string return the number and
@@ -245,7 +253,7 @@ strange case
 @param[out] output the leading string with the numbers removed
 @param defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
-        int trailingStringInt(const std::string& input,
+        int trailingStringInt(std::string_view input,
                               std::string& output,
                               int defNum = -1) noexcept;
 
@@ -256,7 +264,7 @@ strange case
 @param input the string to extract the information from
 @param defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
-        int trailingStringInt(const std::string& input,
+        int trailingStringInt(std::string_view input,
                               int defNum = -1) noexcept;
 
         /**@brief enumeration for string close matches
@@ -286,15 +294,15 @@ the matchType parameter and returns the index into the testStrings vector
 @param remchars the characters to remove
 @return  the string with the specified characters removed
 */
-        std::string removeChars(const std::string& source,
-                                const std::string& remchars);
+        std::string removeChars(std::string_view source,
+                                std::string_view remchars);
 
         /** @brief remove a particular character from a string
 @param source  the original string
 @param remchar the character to remove
 @return  the string with the specified character removed
 */
-        std::string removeChar(const std::string& source, char remchar);
+        std::string removeChar(std::string_view source, char remchar);
 
         /** @brief remove quotes from a string
  only quotes around the edges are removed along with whitespace outside the
@@ -302,14 +310,14 @@ quotes
 @param str the original string
 @return  the string with quotes removed
 */
-        std::string removeQuotes(const std::string& str);
+        std::string removeQuotes(std::string_view str);
 
         /** @brief outer brackets from a string
 Bracket characters include [({<
 @param str  the original string
 @return  the string with brackets removed
 */
-        std::string removeBrackets(const std::string& str);
+        std::string removeBrackets(std::string_view str);
 
         /** @brief replace a particular key character with a different string
 @param source  the original string
@@ -317,9 +325,9 @@ Bracket characters include [({<
 @param repStr the string to replace the key with
 @return  the string after the specified replacement
 */
-        std::string characterReplace(const std::string& source,
+        std::string characterReplace(std::string_view source,
                                      char key,
-                                     const std::string& repStr);
+                                     std::string_view repStr);
 
         /** @brief replace XML character codes with the appropriate character
 @param str  the string to do the replacement on
@@ -334,4 +342,3 @@ appropriate character
     std::string randomString(std::string::size_type length);
 
 }  // namespace utilities
-}  // namespace gmlc

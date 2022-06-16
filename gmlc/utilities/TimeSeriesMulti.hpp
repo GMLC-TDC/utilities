@@ -21,8 +21,7 @@
 #include <utility>
 #include <vector>
 
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
     /** a multidimensional time series object */
     template<typename dataType = double, typename timeType = double>
     class TimeSeriesMulti {
@@ -626,4 +625,3 @@ namespace utilities {
     }
 
 }  // namespace utilities
-}  // namespace gmlc

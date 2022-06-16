@@ -11,8 +11,7 @@ SPDX-License-Identifier: BSD-3-Clause
 
 #include <string>
 
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
     /** generate a time related unit,
 @return a time_units enumeration value
 @throw invalid_argument if the string is not a valid unit
@@ -55,4 +54,3 @@ for example "1.234"  or "1032ms"
     }
 
 }  // namespace utilities
-}  // namespace gmlc

@@ -24,7 +24,6 @@ set(utilities_header_files
     charMapper.h
     generic_string_ops.hpp
     string_viewConversion.h
-    string_viewDef.h
     string_viewOps.h
     stringConversion.h
     stringOps.h

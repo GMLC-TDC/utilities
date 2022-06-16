@@ -14,6 +14,7 @@
 
 #include "gtest/gtest.h"
 #include <iostream>
+#include <algorithm>
 
 using namespace gmlc::utilities;
 using namespace gmlc::utilities::stringOps;

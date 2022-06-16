@@ -20,19 +20,20 @@
    and C++ based overloads
    Modified by Philip Top LLNL 2019: to be in a namespace and further comments
    and test cases
+
+   Modified by Philip Top LLNL 2022: to use std::string_view
 */
 
 #include "base64.h"
-
+#include <string_view>
 #include "charMapper.h"
 
 #include <array>
 #include <iostream>
 #include <vector>
 
-namespace gmlc {
-namespace utilities {
-    static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+namespace gmlc::utilities {
+    static constexpr std::string_view base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                             "abcdefghijklmnopqrstuvwxyz"
                                             "0123456789+/";
 
@@ -92,7 +93,7 @@ namespace utilities {
         return ret;
     }
 
-    std::vector<unsigned char> base64_decode(std::string const& encoded_string,
+    std::vector<unsigned char> base64_decode(std::string_view encoded_string,
                                              size_t offset)
     {
         auto in_len = encoded_string.size() - offset - 1;
@@ -152,7 +153,7 @@ namespace utilities {
         return ret;
     }
 
-    std::string base64_decode_to_string(std::string const& encoded_string,
+    std::string base64_decode_to_string(std::string_view encoded_string,
                                         size_t offset)
     {
         auto in_len = encoded_string.size();
@@ -213,7 +214,7 @@ namespace utilities {
     }
 
     /** decode a string to the specified memory location*/
-    size_t base64_decode(std::string const& encoded_string,
+    size_t base64_decode(std::string_view encoded_string,
                          void* data,
                          size_t max_size)
     {
@@ -282,4 +283,3 @@ namespace utilities {
         return dataIndex;
     }
 }  // namespace utilities
-}  // namespace gmlc

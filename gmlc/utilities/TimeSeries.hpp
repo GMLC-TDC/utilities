@@ -24,8 +24,7 @@
 #include <utility>
 #include <vector>
 
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
     class fileNotFoundError: public std::exception {
       public:
         const char* what() const noexcept override { return "file not found"; }
@@ -399,4 +398,3 @@ namespace utilities {
     };
 
 }  // namespace utilities
-}  // namespace gmlc
