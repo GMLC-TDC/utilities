@@ -7,10 +7,12 @@ SPDX-License-Identifier: BSD-3-Clause
 */
 #include "timeStringOps.hpp"
 
+#include "string_viewOps.h"
+#include "string_viewConversion.h"
 #include "stringOps.h"
 
 #include <map>
-#include <string_view>
+#include <stdexcept>
 
 namespace gmlc::utilities {
     const std::map<std::string_view, time_units> time_unitstrings{
@@ -40,7 +42,7 @@ namespace gmlc::utilities {
         if (fnd != time_unitstrings.end()) {
             return fnd->second;
         }
-        auto lcUstring = convertToLowerCase(stringOps::trim(std::string(unitString)));
+        std::string lcUstring = convertToLowerCase(string_viewOps::trim(unitString));
         fnd = time_unitstrings.find(lcUstring);
         if (fnd != time_unitstrings.end()) {
             return fnd->second;
@@ -49,14 +51,14 @@ namespace gmlc::utilities {
                                     " not recognized"));
     }
 
-    double getTimeValue(const std::string& timeString, time_units defUnit)
+    double getTimeValue(std::string_view timeString, time_units defUnit)
     {
         size_t pos;
-        double val = std::stod(timeString, &pos);
+        double val = numConvComp<double>(timeString, pos);
         if (pos >= timeString.size()) {
             return val * toSecondMultiplier(defUnit);
         }
-        std::string units = stringOps::trim(timeString.substr(pos));
+        auto units = string_viewOps::trim(timeString.substr(pos));
         return val * toSecondMultiplier(timeUnitsFromString(units));
     }
 

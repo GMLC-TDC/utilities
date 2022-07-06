@@ -9,14 +9,14 @@ SPDX-License-Identifier: BSD-3-Clause
 
 #include "timeRepresentation.hpp"
 
-#include <string>
+#include <string_view>
 
 namespace gmlc::utilities {
     /** generate a time related unit,
 @return a time_units enumeration value
 @throw invalid_argument if the string is not a valid unit
 */
-    time_units timeUnitsFromString(const std::string& unitString);
+    time_units timeUnitsFromString(std::string_view unitString);
 
     /** get a double representing the time in seconds of a string
 units are assumed to be defUnit
@@ -24,7 +24,7 @@ units are assumed to be defUnit
 @param defUnit the default units to use if none are given
 @return a double representing the time
 */
-    double getTimeValue(const std::string& timeString,
+    double getTimeValue(std::string_view timeString,
                         time_units defUnit = time_units::sec);
 
     /** generate a time from a string
@@ -34,7 +34,7 @@ for example "1.234",  or "1032ms" or "10423425 ns"
 @throw invalid_argument if the string is not a valid time
 */
     template<class timeX>
-    timeX loadTimeFromString(const std::string& timeString)
+    timeX loadTimeFromString(std::string_view timeString)
     {
         return timeX(getTimeValue(timeString));
     }
@@ -48,7 +48,7 @@ for example "1.234"  or "1032ms"
 @throws invalid_argument if the string is not a valid time
 */
     template<class timeX>
-    timeX loadTimeFromString(const std::string& timeString, time_units defUnit)
+    timeX loadTimeFromString(std::string_view timeString, time_units defUnit)
     {
         return timeX(getTimeValue(timeString, defUnit));
     }

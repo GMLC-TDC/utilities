@@ -10,6 +10,17 @@
  * LLNS Copyright End
  */
 
+ /*
+ Copyright (c) 2017-2022,
+ Battelle Memorial Institute; Lawrence Livermore National Security, LLC; Alliance
+ for Sustainable Energy, LLC.  See the top-level NOTICE for additional details.
+ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
+ */
+
+ /** changelog
+ June 2022 changed to support std::string_view where applicable
+ */
+
 #include "string_viewOps.h"
 
 #include "generic_string_ops.hpp"
@@ -18,6 +29,8 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+
+
 
 namespace gmlc::utilities::string_viewOps {
 

@@ -72,7 +72,7 @@ else()
         endif()
 
     else()
-        message(FATAL_ERROR "HELICS requires C++17 or Higher")
+        message(FATAL_ERROR "{$PROJECT_NAME} requires C++17 or Higher")
     endif()
 
 endif()
