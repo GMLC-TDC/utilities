@@ -188,9 +188,10 @@ namespace utilities {
 @return a vector of double precision numbers converted from the string
 */
     template<typename X>
-    std::vector<X> str2vector(const std::string& line,
-                              const X defValue,
-                              const std::string& delimiters = ",;")
+    std::vector<X> str2vector(
+        const std::string& line,
+        const X defValue,
+        const std::string& delimiters = ",;")
     {
         auto tempVec = stringOps::splitline(line, delimiters);
         std::vector<X> av;

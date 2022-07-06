@@ -24,7 +24,7 @@ jobs:
       utilities.std: 17
       CMAKE_BUILD_PARALLEL_LEVEL: 1
     pool:
-      vmImage: "ubuntu-latest"
+      vmImage: 'ubuntu-latest'
     container: helics/buildenv:clang9-builder
     steps:
       - template: .ci/azure-cmake.yml
@@ -36,7 +36,7 @@ jobs:
     variables:
       utilities.options:
     pool:
-      vmImage: "ubuntu-latest"
+      vmImage: 'ubuntu-latest'
     container: helics/buildenv:cpplint
     steps:
       - bash: cpplint --counting=detailed --recursive gmlc tests benchmarks --exclude optional.hpp
@@ -46,19 +46,19 @@ jobs:
     strategy:
       matrix:
         Linux14:
-          vmImage: "ubuntu-latest"
+          vmImage: 'ubuntu-latest'
         macOS17:
-          vmImage: "macOS-latest"
+          vmImage: 'macOS-latest'
           utilities.std: 17
         macOS11:
-          vmImage: "macOS-latest"
+          vmImage: 'macOS-latest'
         Windows17:
-          vmImage: "windows-2019"
+          vmImage: 'windows-2019'
           utilities.std: 20
         Windows11:
-          vmImage: "windows-2019"
+          vmImage: 'windows-2019'
         Windowslatest:
-          vmImage: "windows-2022"
+          vmImage: 'windows-2022'
           utilities.std: 17
     pool:
       vmImage: $(vmImage)
@@ -68,7 +68,7 @@ jobs:
 
   - job: Docker
     pool:
-      vmImage: "ubuntu-latest"
+      vmImage: 'ubuntu-latest'
     strategy:
       matrix:
         gcc8:

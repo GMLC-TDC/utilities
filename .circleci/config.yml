@@ -16,7 +16,7 @@ jobs:
       - image: helics/buildenv:builder
     environment:
       CMAKE_FLAGS: '-DCMAKE_CXX_FLAGS="-fsanitize=thread -g -O1 "  '
-      TSAN_OPTIONS: "second_deadlock_stack=1 suppressions=/root/project/.circleci/tsan_suppression.txt history_size=4"
+      TSAN_OPTIONS: 'second_deadlock_stack=1 suppressions=/root/project/.circleci/tsan_suppression.txt history_size=4'
 
     steps:
       - checkout
@@ -27,7 +27,7 @@ jobs:
       - image: helics/clang-tsan:latest
     environment:
       CMAKE_FLAGS: '-DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_FLAGS="-fsanitize=thread -stdlib=libc++ -L/root/develop/libcxx_tsan/lib -lc++abi -I/root/develop/libcxx_tsan/include -I/root/develop/libcxx_tsan/include/c++/v1 -Wno-unused-command-line-argument -g -O1 -Wl,-rpath=/root/develop/libcxx_tsan/lib"  '
-      TSAN_OPTIONS: "second_deadlock_stack=1"
+      TSAN_OPTIONS: 'second_deadlock_stack=1'
 
     steps:
       - checkout

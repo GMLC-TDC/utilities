@@ -23,21 +23,19 @@ namespace utilities {
         if (str1.size() != str2.size()) {
             return false;
         }
-        return std::equal(str1.begin(),
-                          str1.end(),
-                          str2.begin(),
-                          [](char c1, char c2) {
-                              if (c1 == c2) {
-                                  return true;
-                              }
-                              if (c1 - c2 == 'A' - 'a') {
-                                  return (c1 >= 'A' && c1 <= 'Z');
-                              }
-                              if (c2 - c1 == 'A' - 'a') {
-                                  return (c2 >= 'A' && c2 <= 'Z');
-                              }
-                              return false;
-                          });
+        return std::equal(
+            str1.begin(), str1.end(), str2.begin(), [](char c1, char c2) {
+                if (c1 == c2) {
+                    return true;
+                }
+                if (c1 - c2 == 'A' - 'a') {
+                    return (c1 >= 'A' && c1 <= 'Z');
+                }
+                if (c2 - c1 == 'A' - 'a') {
+                    return (c2 >= 'A' && c2 <= 'Z');
+                }
+                return false;
+            });
     }
 
     float jaro_winkler_comp(string_view s1, string_view s2)
