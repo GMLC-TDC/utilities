@@ -52,13 +52,13 @@ namespace utilities {
         for (ii = 1; ii <= len_s1; ii++) {
             for (jj = 1; jj <= len_s2; jj++) {
                 if (s1_loc[ii - 1] == s2_loc[jj - 1]) {
-                    edit[ii][jj] = (std::min)((std::min)(edit[ii - 1][jj] + 1,
-                                                         edit[ii][jj - 1] + 1),
-                                              edit[ii - 1][jj - 1]);
+                    edit[ii][jj] = (std::min)(
+                        (std::min)(edit[ii - 1][jj] + 1, edit[ii][jj - 1] + 1),
+                        edit[ii - 1][jj - 1]);
                 } else {
-                    edit[ii][jj] = (std::min)((std::min)(edit[ii - 1][jj] + 1,
-                                                         edit[ii][jj - 1] + 1),
-                                              edit[ii - 1][jj - 1] + 1);
+                    edit[ii][jj] = (std::min)(
+                        (std::min)(edit[ii - 1][jj] + 1, edit[ii][jj - 1] + 1),
+                        edit[ii - 1][jj - 1] + 1);
                 }
             }
         }

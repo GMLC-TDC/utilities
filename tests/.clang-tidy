@@ -46,4 +46,3 @@ HeaderFilterRegex: 'src/helics/*.hp?p?'
 CheckOptions:
 - key:             google-readability-braces-around-statements.ShortStatementLines
   value:           '3'
-

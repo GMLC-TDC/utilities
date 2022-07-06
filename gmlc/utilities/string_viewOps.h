@@ -35,24 +35,26 @@ end of the string
 @param[in,out] input  the string to convert
 @param[in] trimCharacters the characters to potentially tr
 */
-    void trimString(std::string_view& input,
-                    std::string_view trimCharacters = whiteSpaceCharacters);
+    void trimString(
+        std::string_view& input,
+        std::string_view trimCharacters = whiteSpaceCharacters);
 
     /** @brief trim whitespace characters from a string
 @param[in] input the string to trim;
 @param[in] trimCharacters  the definition of characters defaults to \t\n\r\0\v\f
 @return the trimmed string
 */
-    std::string_view
-        trim(std::string_view input,
-             std::string_view trimCharacters = whiteSpaceCharacters);
+    std::string_view trim(
+        std::string_view input,
+        std::string_view trimCharacters = whiteSpaceCharacters);
 
     /** @brief trim the whitespace from a vector of std::string_views
 @param[in] input the vector of strings to trim;
 @param[in] trimCharacters  the definition of characters defaults to \t\n\r\0\v\f
 */
-    void trim(string_viewVector& input,
-              std::string_view trimCharacters = whiteSpaceCharacters);
+    void trim(
+        string_viewVector& input,
+        std::string_view trimCharacters = whiteSpaceCharacters);
 
     /** @brief remove outer quotes from a string
 only quotes around the edges are removed along with whitespace outside the
@@ -76,8 +78,9 @@ separator
 @return  the tail string or the string that comes after the last separation
 character if not found returns the entire string
 */
-    std::string_view getTailString(std::string_view input,
-                                   char separationCharacter) noexcept;
+    std::string_view getTailString(
+        std::string_view input,
+        char separationCharacter) noexcept;
 
     /** @brief get a stringView that comes after the last of any of the
 specified separator
@@ -86,9 +89,9 @@ specified separator
 @return  the tail string or the string that comes after the last separation
 character if not found returns the entire string
 */
-    std::string_view
-        getTailString_any(std::string_view input,
-                          std::string_view separationCharacters) noexcept;
+    std::string_view getTailString_any(
+        std::string_view input,
+        std::string_view separationCharacters) noexcept;
 
     /** @brief get a string that comes after the last of the specified
 separator
@@ -97,8 +100,8 @@ separator
 @return  the tail string or the string that comes after the last of the
 separation strings if not found returns the entire string
 */
-    std::string_view getTailString(std::string_view input,
-                                   std::string_view sep) noexcept;
+    std::string_view
+        getTailString(std::string_view input, std::string_view sep) noexcept;
 
     constexpr std::string_view default_delim_chars(",;");
     constexpr std::string_view default_quote_chars(R"raw('"`)raw");
@@ -117,10 +120,10 @@ merge multiple sequential delimiters together
 @return a vector of strings separated by the delimiters characters
 */
 
-    string_viewVector
-        split(std::string_view str,
-              std::string_view delimiters = default_delim_chars,
-              delimiter_compression compression = delimiter_compression::off);
+    string_viewVector split(
+        std::string_view str,
+        std::string_view delimiters = default_delim_chars,
+        delimiter_compression compression = delimiter_compression::off);
     /** @brief split a line into a vector of strings taking into account
 quote characters the delimiter characters are allowed inside the brackets and
 the resulting vector will take the brackets into account
@@ -172,9 +175,10 @@ the string without the number
 @param[out] output the leading string with the numbers removed
 @param[in] defNum the default number to return if no trailing number was found
 @return the numerical value of the trailing number*/
-    int trailingStringInt(std::string_view input,
-                          std::string_view& output,
-                          int defNum = -1);
+    int trailingStringInt(
+        std::string_view input,
+        std::string_view& output,
+        int defNum = -1);
 
     /** @brief extract a trailing number from a string
 @param[in] input the string to extract the information from

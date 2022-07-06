@@ -13,8 +13,8 @@
 #include "gmlc/utilities/stringOps.h"
 
 #include "gtest/gtest.h"
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 using namespace gmlc::utilities;
 using namespace gmlc::utilities::stringOps;
@@ -406,10 +406,11 @@ TEST(stringops, splitLineQuotes_tests)
     EXPECT_EQ(testres3[2], "\"charlie\"");
     EXPECT_TRUE(testres3[3].empty());
 
-    testres3 = splitlineQuotes(test3,
-                               default_delim_chars,
-                               default_quote_chars,
-                               delimiter_compression::on);
+    testres3 = splitlineQuotes(
+        test3,
+        default_delim_chars,
+        default_quote_chars,
+        delimiter_compression::on);
     ASSERT_EQ(testres3.size(), 3U);
 
     std::string test4 = R"("'part1' and,; 'part2'","34,45,56")";
@@ -487,10 +488,11 @@ TEST(stringops, splitLineBracket_tests)
     auto testres9 = splitlineBracket(test9);
     EXPECT_EQ(testres9.size(), 3U);
 
-    auto testres10 = splitlineBracket(test9,
-                                      default_delim_chars,
-                                      default_bracket_chars,
-                                      delimiter_compression::on);
+    auto testres10 = splitlineBracket(
+        test9,
+        default_delim_chars,
+        default_bracket_chars,
+        delimiter_compression::on);
     EXPECT_EQ(testres10.size(), 2U);
 }
 
@@ -658,17 +660,14 @@ TEST(stringops, findClosestMatch2)
     stringVector iString{
         "stringabcd", "Abcd2_i", "Abracabcdabra", "n idea", "having 8;idea"};
 
-    int res = findCloseStringMatch({"abcd", "ABcd2_i"},
-                                   iString,
-                                   string_match_type::exact);
+    int res = findCloseStringMatch(
+        {"abcd", "ABcd2_i"}, iString, string_match_type::exact);
     EXPECT_EQ(res, 1);
-    res = findCloseStringMatch({"invalidity", "abcd"},
-                               iString,
-                               string_match_type::exact);
+    res = findCloseStringMatch(
+        {"invalidity", "abcd"}, iString, string_match_type::exact);
     EXPECT_EQ(res, -1);
-    res = findCloseStringMatch({"invalidity", "abcd"},
-                               iString,
-                               string_match_type::end);
+    res = findCloseStringMatch(
+        {"invalidity", "abcd"}, iString, string_match_type::end);
     EXPECT_EQ(res, 0);
     res = findCloseStringMatch({"A"}, iString, string_match_type::close);
     EXPECT_EQ(res, -1);
@@ -680,9 +679,8 @@ TEST(stringops, findClosestMatch2)
     EXPECT_EQ(res, 4);
     res = findCloseStringMatch({"abcd2i"}, iString, string_match_type::close);
     EXPECT_EQ(res, 1);
-    res = findCloseStringMatch({"string_abcd"},
-                               iString,
-                               string_match_type::close);
+    res = findCloseStringMatch(
+        {"string_abcd"}, iString, string_match_type::close);
     EXPECT_EQ(res, 0);
 }
 
