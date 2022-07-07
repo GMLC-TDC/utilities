@@ -22,7 +22,6 @@ jobs:
       - checkout
       - run: *run_utilities
 
-
   utilitiesASan:
     docker:
       - image: helics/buildenv:sanitizers
