@@ -13,6 +13,7 @@ SPDX-License-Identifier: BSD-3-Clause
 
 #include <map>
 #include <stdexcept>
+#include <string>
 
 namespace gmlc::utilities {
 const std::map<std::string_view, time_units> time_unitstrings{
