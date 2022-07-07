@@ -63,9 +63,9 @@ void trim(string_viewVector& input, std::string_view trimCharacters)
 std::string_view
     getTailString(std::string_view input, char separationCharacter) noexcept
 {
-    auto tc = input.find_last_of(separationCharacter);
-    if (tc != std::string_view::npos) {
-        input.remove_prefix(tc + 1);
+    auto sepLoc = input.find_last_of(separationCharacter);
+    if (sepLoc != std::string_view::npos) {
+        input.remove_prefix(sepLoc + 1);
     }
     return input;
 }
@@ -73,9 +73,9 @@ std::string_view
 std::string_view
     getTailString(std::string_view input, std::string_view sep) noexcept
 {
-    auto tc = input.rfind(sep);
-    if (tc != std::string_view::npos) {
-        input.remove_prefix(tc + sep.size());
+    auto sepLoc = input.rfind(sep);
+    if (sepLoc != std::string_view::npos) {
+        input.remove_prefix(sepLoc + sep.size());
     }
     return input;
 }
@@ -84,9 +84,9 @@ std::string_view getTailString_any(
     std::string_view input,
     std::string_view separationCharacters) noexcept
 {
-    auto tc = input.find_last_of(separationCharacters);
-    if (tc != std::string_view::npos) {
-        input.remove_prefix(tc + 1);
+    auto sepLoc = input.find_last_of(separationCharacters);
+    if (sepLoc != std::string_view::npos) {
+        input.remove_prefix(sepLoc + 1);
     }
     return input;
 }
@@ -113,7 +113,7 @@ std::string_view removeBrackets(std::string_view str)
     if (!ret.empty()) {
         if ((ret.front() == '[') || (ret.front() == '(') ||
             (ret.front() == '{') || (ret.front() == '<')) {
-            if (ret.back() == pmap[ret.front()]) {
+            if (static_cast<unsigned char>(ret.back()) == pmap[ret.front()]) {
                 return ret.substr(1, ret.size() - 2);
             }
         }
@@ -128,8 +128,8 @@ std::string_view merge(std::string_view string1, std::string_view string2)
     if ((diff >= 0) &&
         (diff < 24))  // maximum of 23 characters between the strings
     {
-        return std::string_view(
-            string1.data(), diff + string1.length() + string2.length());
+        return {
+            string1.data(), diff + string1.length() + string2.length() };
     }
     if (string1.empty()) {
         return string2;
@@ -174,9 +174,9 @@ string_viewVector splitlineBracket(
 int toIntSimple(std::string_view input)
 {
     int ret = 0;
-    for (auto c : input) {
-        if (c >= '0' && c <= '9') {
-            ret = 10 * ret + (c - '0');
+    for (auto testChar : input) {
+        if (testChar >= '0' && testChar <= '9') {
+            ret = 10 * ret + (testChar - '0');
         }
     }
     return ret;
