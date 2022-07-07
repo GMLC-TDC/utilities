@@ -156,8 +156,8 @@ std::string
     base64_decode_to_string(std::string_view encoded_string, size_t offset)
 {
     auto in_len = encoded_string.size();
-    int indexOut{ 0 };
-    int indexIn{ static_cast<int>(offset) };
+    int indexOut{0};
+    int indexIn{static_cast<int>(offset)};
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::string ret;
