@@ -223,8 +223,6 @@ namespace stringOps {
         return num;
     }
 
-    // static constexpr std::string_view quoteChars(R"raw("'`)raw");
-
     std::string removeQuotes(std::string_view str)
     {
         auto newString = trim(str);
