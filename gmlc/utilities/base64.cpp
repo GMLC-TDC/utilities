@@ -39,9 +39,9 @@ static constexpr std::string_view base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 static const CharMapper<unsigned char> b64Map = base64Mapper();
 
-static inline bool isBase64(unsigned char c)
+static inline bool isBase64(unsigned char testChar)
 {
-    return (b64Map[c] < 0xffU);
+    return (b64Map[ testChar] < 0xffU);
 }
 std::string base64_encode(void const* bytes_to_encode, size_t in_len)
 {
@@ -174,7 +174,7 @@ std::string
             char_array_4[3] = b64Map[char_array_4[3]];
 
             char_array_3[0] =
-                (char_array_4[0] << 2) + ((char_array_4[1] & 0x30U) >> 4U);
+                (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
             char_array_3[1] = ((char_array_4[1] & 0xfU) << 4U) +
                 ((char_array_4[2] & 0x3cU) >> 2U);
             char_array_3[2] =
