@@ -19,12 +19,12 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 
 #pragma once
 
+#include <array>
 #include <stdexcept>
 #include <string>
 #include <string_view>
 #include <type_traits>
 #include <vector>
-#include <array>
 
 namespace gmlc::utilities {
 //!< alias for convenience
@@ -105,8 +105,10 @@ namespace stringOps {
             rem -= factors[dig] * place;
         }
     }
-    constexpr std::array<char,8> whiteChars{' ','\t','\n','\r','\a','\v','\f','\0'};
-    constexpr std::string_view whiteSpaceCharacters(whiteChars.data(),whiteChars.size());
+    constexpr std::array<char, 8>
+        whiteChars{' ', '\t', '\n', '\r', '\a', '\v', '\f', '\0'};
+    constexpr std::string_view
+        whiteSpaceCharacters(whiteChars.data(), whiteChars.size());
 
     /** @brief trim whitespace characters from a string at the beginning and
 end of the string
