@@ -12,89 +12,88 @@
 
 #include "charMapper.h"
 
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
     CharMapper<bool> numericMapper()
     {
-        CharMapper<bool> nm(false);
-        nm.addKey('0', true);
-        nm.addKey('1', true);
-        nm.addKey('2', true);
-        nm.addKey('3', true);
-        nm.addKey('4', true);
-        nm.addKey('5', true);
-        nm.addKey('6', true);
-        nm.addKey('7', true);
-        nm.addKey('8', true);
-        nm.addKey('9', true);
-        nm.addKey('+', true);
-        nm.addKey('-', true);
-        nm.addKey(' ', true);
-        nm.addKey('e', true);
-        nm.addKey('E', true);
-        nm.addKey('.', true);
-        return nm;
+        CharMapper<bool> mapper(false);
+        mapper.addKey('0', true);
+        mapper.addKey('1', true);
+        mapper.addKey('2', true);
+        mapper.addKey('3', true);
+        mapper.addKey('4', true);
+        mapper.addKey('5', true);
+        mapper.addKey('6', true);
+        mapper.addKey('7', true);
+        mapper.addKey('8', true);
+        mapper.addKey('9', true);
+        mapper.addKey('+', true);
+        mapper.addKey('-', true);
+        mapper.addKey(' ', true);
+        mapper.addKey('e', true);
+        mapper.addKey('E', true);
+        mapper.addKey('.', true);
+        return mapper;
     }
 
     CharMapper<bool> numericStartMapper()
     {
-        CharMapper<bool> nm(false);
-        nm.addKey('0', true);
-        nm.addKey('1', true);
-        nm.addKey('2', true);
-        nm.addKey('3', true);
-        nm.addKey('4', true);
-        nm.addKey('5', true);
-        nm.addKey('6', true);
-        nm.addKey('7', true);
-        nm.addKey('8', true);
-        nm.addKey('9', true);
-        nm.addKey('+', true);
-        nm.addKey('-', true);
-        nm.addKey(' ', true);
-        nm.addKey('\t', true);
-        nm.addKey('.', true);
-        nm.addKey('\n', true);
-        nm.addKey('\r', true);
-        nm.addKey('\0', true);
-        return nm;
+        CharMapper<bool> mapper(false);
+        mapper.addKey('0', true);
+        mapper.addKey('1', true);
+        mapper.addKey('2', true);
+        mapper.addKey('3', true);
+        mapper.addKey('4', true);
+        mapper.addKey('5', true);
+        mapper.addKey('6', true);
+        mapper.addKey('7', true);
+        mapper.addKey('8', true);
+        mapper.addKey('9', true);
+        mapper.addKey('+', true);
+        mapper.addKey('-', true);
+        mapper.addKey(' ', true);
+        mapper.addKey('\t', true);
+        mapper.addKey('.', true);
+        mapper.addKey('\n', true);
+        mapper.addKey('\r', true);
+        mapper.addKey('\0', true);
+        return mapper;
     }
 
     CharMapper<bool> numericEndMapper()
     {
-        CharMapper<bool> nm(false);
-        nm.addKey('0', true);
-        nm.addKey('1', true);
-        nm.addKey('2', true);
-        nm.addKey('3', true);
-        nm.addKey('4', true);
-        nm.addKey('5', true);
-        nm.addKey('6', true);
-        nm.addKey('7', true);
-        nm.addKey('8', true);
-        nm.addKey('9', true);
-        nm.addKey(' ', true);
-        nm.addKey('\t', true);
-        nm.addKey('\n', true);
-        nm.addKey('\r', true);
-        nm.addKey('\0', true);
-        return nm;
+        CharMapper<bool> mapper(false);
+        mapper.addKey('0', true);
+        mapper.addKey('1', true);
+        mapper.addKey('2', true);
+        mapper.addKey('3', true);
+        mapper.addKey('4', true);
+        mapper.addKey('5', true);
+        mapper.addKey('6', true);
+        mapper.addKey('7', true);
+        mapper.addKey('8', true);
+        mapper.addKey('9', true);
+        mapper.addKey(' ', true);
+        mapper.addKey('\t', true);
+        mapper.addKey('\n', true);
+        mapper.addKey('\r', true);
+        mapper.addKey('\0', true);
+        return mapper;
     }
 
     CharMapper<unsigned char> base64Mapper()
     {
         CharMapper<unsigned char> b64(0xFF);
-        unsigned char val = 0;
-        for (unsigned char c = 'A'; c <= 'Z'; ++c) {
-            b64.addKey(c, val);
+        unsigned char val{ 0 };
+        for (unsigned char indexChar = 'A'; indexChar <= 'Z'; ++indexChar) {
+            b64.addKey(indexChar, val);
             ++val;
         }
-        for (unsigned char c = 'a'; c <= 'z'; ++c) {
-            b64.addKey(c, val);
+        for (unsigned char indexChar = 'a'; indexChar <= 'z'; ++indexChar) {
+            b64.addKey(indexChar, val);
             ++val;
         }
-        for (unsigned char c = '0'; c <= '9'; ++c) {
-            b64.addKey(c, val);
+        for (unsigned char indexChar = '0'; indexChar <= '9'; ++indexChar) {
+            b64.addKey(indexChar, val);
             ++val;
         }
         b64.addKey('+', val++);
@@ -106,8 +105,8 @@ namespace utilities {
     {
         CharMapper<unsigned char> dMap(0xFF);
         unsigned char val = 0;
-        for (unsigned char c = '0'; c <= '9'; ++c) {
-            dMap.addKey(c, val);
+        for (unsigned char indexChar = '0'; indexChar <= '9'; ++indexChar) {
+            dMap.addKey(indexChar, val);
             ++val;
         }
         return dMap;
@@ -117,17 +116,17 @@ namespace utilities {
     {
         CharMapper<unsigned char> dMap(0xFF);
         unsigned char val = 0;
-        for (unsigned char c = '0'; c <= '9'; ++c) {
-            dMap.addKey(c, val);
+        for (unsigned char indexChar = '0'; indexChar <= '9'; ++indexChar) {
+            dMap.addKey(indexChar, val);
             ++val;
         }
-        for (unsigned char c = 'A'; c <= 'F'; ++c) {
-            dMap.addKey(c, val);
+        for (unsigned char indexChar = 'A'; indexChar <= 'F'; ++indexChar) {
+            dMap.addKey(indexChar, val);
             ++val;
         }
         val = 10;
-        for (unsigned char c = 'a'; c <= 'f'; ++c) {
-            dMap.addKey(c, val);
+        for (unsigned char indexChar = 'a'; indexChar <= 'f'; ++indexChar) {
+            dMap.addKey(indexChar, val);
             ++val;
         }
         return dMap;
@@ -151,4 +150,3 @@ namespace utilities {
     }
 
 }  // namespace utilities
-}  // namespace gmlc
