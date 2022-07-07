@@ -41,7 +41,7 @@ static const CharMapper<unsigned char> b64Map = base64Mapper();
 
 static inline bool isBase64(unsigned char testChar)
 {
-    return (b64Map[ testChar] < 0xffU);
+    return (b64Map[testChar] < 0xffU);
 }
 std::string base64_encode(void const* bytes_to_encode, size_t in_len)
 {
