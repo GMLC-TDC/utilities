@@ -128,8 +128,7 @@ std::string_view merge(std::string_view string1, std::string_view string2)
     if ((diff >= 0) &&
         (diff < 24))  // maximum of 23 characters between the strings
     {
-        return {
-            string1.data(), diff + string1.length() + string2.length() };
+        return {string1.data(), diff + string1.length() + string2.length()};
     }
     if (string1.empty()) {
         return string2;
