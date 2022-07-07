@@ -48,7 +48,7 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
     const auto* b2e = static_cast<const unsigned char*>(bytes_to_encode);
     std::string ret;
     ret.reserve((in_len * 4) / 3 + 2);
-    int index{ 0 };
+    int index{0};
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
 
@@ -75,10 +75,10 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
         }
 
         char_array_4[0] = (char_array_3[0] & 0xfcU) >> 2U;
-        char_array_4[1] =
-            ((char_array_3[0] & 0x03U) << 4U) + ((char_array_3[1] & 0xf0U) >> 4U);
-        char_array_4[2] =
-            ((char_array_3[1] & 0x0fU) << 2U) + ((char_array_3[2] & 0xc0U) >> 6U);
+        char_array_4[1] = ((char_array_3[0] & 0x03U) << 4U) +
+            ((char_array_3[1] & 0xf0U) >> 4U);
+        char_array_4[2] = ((char_array_3[1] & 0x0fU) << 2U) +
+            ((char_array_3[2] & 0xc0U) >> 6U);
         char_array_4[3] = char_array_3[2] & 0x3fU;
 
         for (int jj = 0; (jj < index + 1); ++jj) {
@@ -177,7 +177,8 @@ std::string
                 (char_array_4[0] << 2) + ((char_array_4[1] & 0x30U) >> 4U);
             char_array_3[1] = ((char_array_4[1] & 0xfU) << 4U) +
                 ((char_array_4[2] & 0x3cU) >> 2U);
-            char_array_3[2] = ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
+            char_array_3[2] =
+                ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
             ret.push_back(char_array_3[0]);
             ret.push_back(char_array_3[1]);
@@ -219,7 +220,7 @@ size_t
     int indexIn = 0;
     std::array<unsigned char, 3> char_array_3{{'\0', '\0', '\0'}};
     std::array<unsigned char, 4> char_array_4{{'\0', '\0', '\0', '\0'}};
-    auto * outData = static_cast<unsigned char*>(data);
+    auto* outData = static_cast<unsigned char*>(data);
     size_t dataIndex = 0U;
     while (((in_len--) != 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
