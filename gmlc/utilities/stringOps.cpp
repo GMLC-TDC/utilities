@@ -223,7 +223,7 @@ namespace stringOps {
         return num;
     }
 
-    //static constexpr std::string_view quoteChars(R"raw("'`)raw");
+    // static constexpr std::string_view quoteChars(R"raw("'`)raw");
 
     std::string removeQuotes(std::string_view str)
     {
@@ -434,7 +434,7 @@ namespace stringOps {
             out.replace(tt, 6, "'");
             tt = out.find("&apos;", tt + 1);
         }
-        //&amp; is last so it can't trigger other sequences
+        // &amp; is last so it can't trigger other sequences
         tt = out.find("&amp;");
         while (tt != std::string::npos) {
             out.replace(tt, 5, "&");
