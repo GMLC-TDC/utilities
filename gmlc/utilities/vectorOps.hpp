@@ -421,9 +421,7 @@ given value
 @return a vector of indices into a with the matching condition
 */
 template<class X>
-auto vecFindeq(
-    const std::vector<X>& a,
-    X match)
+auto vecFindeq(const std::vector<X>& a, X match)
 {
     auto cnt = a.size();
     std::vector<decltype(cnt)> locs;
@@ -486,9 +484,7 @@ a given value
 @return a vector of indices into a with the matching condition
 */
 template<class X>
-auto vecFindlt(
-    const std::vector<X>& a,
-    X val)
+auto vecFindlt(const std::vector<X>& a, X val)
 {
     auto cnt = a.size();
     std::vector<decltype(cnt)> locs;
@@ -508,9 +504,7 @@ or equal to a given value
 @return a vector of indices into a with the matching condition
 */
 template<class X>
-auto vecFindlte(
-    const std::vector<X>& a,
-    X val)
+auto vecFindlte(const std::vector<X>& a, X val)
 {
     auto cnt = a.size();
     std::vector<decltype(cnt)> locs;
