@@ -156,8 +156,8 @@ std::string
     base64_decode_to_string(std::string_view encoded_string, size_t offset)
 {
     auto in_len = encoded_string.size();
-    int indexOut = 0;
-    int indexIn = static_cast<int>(offset);
+    int indexOut{ 0 };
+    int indexIn{ static_cast<int>(offset) };
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::string ret;
@@ -165,7 +165,7 @@ std::string
 
     while (((in_len--) != 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
-        char_array_4[indexIn++] = encoded_string[indexIn];
+        char_array_4[indexOut++] = encoded_string[indexIn];
         indexIn++;
         if (indexOut == 4) {
             char_array_4[0] = b64Map[char_array_4[0]];
