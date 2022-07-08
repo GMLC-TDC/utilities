@@ -59,6 +59,7 @@ WarningsAsErrors: "
   clang-analyzer-*,
   -clang-analyzer-optin.cplusplus.VirtualCall,
   bugprone-*,
+  -bugprone-easily-swappable-parameters
   -bugprone-narrowing-conversions,
   misc-*,
   -misc-non-private-member-variables-in-classes,
