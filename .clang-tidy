@@ -72,8 +72,8 @@ WarningsAsErrors: "
   performance-*
   -performance-unnecessary-value-param
   "
-
-HeaderFilterRegex: "src/helics/*.hp?p?"
+  
+HeaderFilterRegex: "gmlc/utilities/*.hp?p?"
 
 AnalyzeTemporaryDtors: false
 CheckOptions:
