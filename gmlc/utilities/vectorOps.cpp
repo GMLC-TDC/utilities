@@ -73,35 +73,35 @@ namespace gmlc::utilities {
     {
         size_t minSize = (std::min)(valIn.size(), timeIn.size());
         std::vector<double> out(timeOut.size(), 0);
-        size_t index1 = 0;
-        size_t kk = 0;
-        while (timeOut[index1] <= timeIn[0]) {
-            out[index1] = valIn[0] -
+        size_t indexOut = 0;
+        size_t indexIn = 0;
+        while (timeOut[indexOut] <= timeIn[0]) {
+            out[indexOut] = valIn[0] -
                 (valIn[1] - valIn[0]) / (timeIn[1] - timeIn[0]) *
-                    (timeIn[0] - timeOut[index1]);
-            ++index1;
+                    (timeIn[0] - timeOut[indexOut]);
+            ++indexOut;
         }
-        while (index1 < timeOut.size()) {
-            while (timeIn[kk + 1] < timeOut[index1]) {
-                ++kk;
-                if (kk + 1 == minSize) {
+        while (indexOut < timeOut.size()) {
+            while (timeIn[indexIn + 1] < timeOut[indexOut]) {
+                ++indexIn;
+                if (indexIn + 1 == minSize) {
                     goto breakLoop;  // break out of a double loop
                 }
             }
-            out[index1] = valIn[kk] +
-                (valIn[kk + 1] - valIn[kk]) / (timeIn[kk + 1] - timeIn[kk]) *
-                    (timeOut[index1] - timeIn[kk]);
+            out[indexOut] = valIn[indexIn] +
+                (valIn[indexIn + 1] - valIn[indexIn]) / (timeIn[indexIn + 1] - timeIn[indexIn]) *
+                    (timeOut[indexOut] - timeIn[indexIn]);
             // out[jj] = std::fma((valIn[kk + 1] - valIn[kk]) / (timeIn[kk + 1]
             // - timeIn[kk]), (timeOut[jj] - timeIn[kk]), valIn[kk]);
-            ++index1;
+            ++indexOut;
         }
     breakLoop:
-        while (index1 < timeOut.size()) {
-            out[index1] = valIn[minSize - 1] +
+        while (indexOut < timeOut.size()) {
+            out[indexOut] = valIn[minSize - 1] +
                 (valIn[minSize - 1] - valIn[minSize - 2]) /
                     (timeIn[minSize - 1] - timeIn[minSize - 2]) *
-                    (timeOut[index1] - timeIn[minSize - 1]);
-            ++index1;
+                    (timeOut[indexOut] - timeIn[minSize - 1]);
+            ++indexOut;
         }
         return out;
     }
