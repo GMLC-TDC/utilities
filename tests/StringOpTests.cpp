@@ -20,7 +20,7 @@ using namespace gmlc::utilities;
 using namespace gmlc::utilities::stringOps;
 
 /** test conversion to lower case*/
-TEST(stringops, convert_to_lower_case_test)
+TEST(stringops, convert_to_lower_case)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = convertToLowerCase(test1);
@@ -30,7 +30,7 @@ TEST(stringops, convert_to_lower_case_test)
 }
 
 /** test make lower case*/
-TEST(stringops, make_lower_case_test)
+TEST(stringops, make_lower_case)
 {
     std::string test1 = "AbCd: *Ty; ";
     makeLowerCase(test1);
@@ -41,7 +41,7 @@ TEST(stringops, make_lower_case_test)
 }
 
 /** test conversion to upper case*/
-TEST(stringops, convert_to_upper_case_test)
+TEST(stringops, convert_to_upper_case)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = convertToUpperCase(test1);
@@ -51,7 +51,7 @@ TEST(stringops, convert_to_upper_case_test)
 }
 
 /** test make upper case*/
-TEST(stringops, make_upper_case_test)
+TEST(stringops, make_upper_case)
 {
     std::string test1 = "AbCd: *Ty; ";
     makeUpperCase(test1);
@@ -62,7 +62,7 @@ TEST(stringops, make_upper_case_test)
 }
 
 /** test trim*/
-TEST(stringops, trimString_tests)
+TEST(stringops, trimString)
 {
     std::string test1 = "AbCd: *Ty; ";
     trimString(test1);
@@ -77,7 +77,7 @@ TEST(stringops, trimString_tests)
 }
 
 /** test trim*/
-TEST(stringops, trim_tests)
+TEST(stringops, trim)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = trim(test1);
@@ -96,7 +96,7 @@ TEST(stringops, trim_tests)
     EXPECT_TRUE(testres.empty());
 }
 
-TEST(stringops, tailString_tests)
+TEST(stringops, tailString)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = getTailString(test1, '*');
@@ -124,7 +124,7 @@ TEST(stringops, tailString_tests)
 }
 
 /** test trim*/
-TEST(stringops, tailString_tests_word)
+TEST(stringops, tailString_word)
 {
     std::string test1 = "AbCd: *Ty; ";
     auto testres = getTailString(test1, "*");
@@ -192,7 +192,7 @@ TEST(stringops, tailString_any)
 }
 
 /** simple split line test*/
-TEST(stringops, splitline_test1)
+TEST(stringops, splitline1)
 {
     std::string test1 = "alpha, bravo, charlie";
     auto testres = splitline(test1);
@@ -211,7 +211,7 @@ TEST(stringops, splitline_test1)
 }
 
 /** simple split line test for multiple tokens*/
-TEST(stringops, splitline_test2)
+TEST(stringops, splitline2)
 {
     std::string test1 = "alpha, bravo,;, charlie,";
     auto testres = splitline(test1);
@@ -233,7 +233,7 @@ TEST(stringops, splitline_test2)
 }
 
 /** simple split line test*/
-TEST(stringops, splitline_test3)
+TEST(stringops, splitline3)
 {
     std::string test1 = " alpha,   bravo ; charlie ";
     auto testres = splitline(test1);
@@ -263,7 +263,7 @@ TEST(stringops, splitline_char)
 }
 
 /**remove quotes test test*/
-TEST(stringops, removeQuotes_test)
+TEST(stringops, removeQuotes)
 {
     std::string test1 = "\'remove quotes\'";
     auto testres = removeQuotes(test1);
@@ -291,7 +291,7 @@ TEST(stringops, removeQuotes_test)
 }
 
 /**remove quotes test test*/
-TEST(stringops, removeBrackets_test)
+TEST(stringops, removeBrackets)
 {
     std::string test1 = "remove bracket";
     auto testres = removeBrackets(test1);
@@ -342,7 +342,7 @@ TEST(stringops, removeBrackets_test)
     EXPECT_TRUE(testres.empty());
 }
 
-TEST(stringops, appendInteger_tests)
+TEST(stringops, appendInteger)
 {
     std::string str1 = "tail_";
     appendInteger(str1, 456U);
@@ -380,7 +380,7 @@ TEST(stringops, appendInteger_tests)
     EXPECT_EQ(str8, "long num_-1234567890123");
 }
 
-TEST(stringops, splitLineQuotes_tests)
+TEST(stringops, splitLineQuotes)
 {
     std::string test1 = "454, 345, happy; frog";
     auto testres = splitlineQuotes(test1);
@@ -436,7 +436,7 @@ TEST(stringops, splitLineQuotes_tests)
     EXPECT_EQ(testres7[2], "--arg3=`string1 string2`");
 }
 
-TEST(stringops, splitLineBracket_tests)
+TEST(stringops, splitLineBracket)
 {
     std::string test1 = "(454, 345), happy; frog";
     auto testres = splitlineBracket(test1);
