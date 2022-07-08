@@ -35,11 +35,15 @@ June 2022 changed to support string view where applicable
 
 namespace gmlc::utilities {
 static auto lower = [](char charToMakerLowerCase) -> char {
-    return (charToMakerLowerCase >= 'A' && charToMakerLowerCase <= 'Z') ? (charToMakerLowerCase - ('Z' - 'z')) : charToMakerLowerCase;
+    return (charToMakerLowerCase >= 'A' && charToMakerLowerCase <= 'Z') ?
+        (charToMakerLowerCase - ('Z' - 'z')) :
+        charToMakerLowerCase;
 };
 
 static auto upper = [](char charToMakeUpperCase) -> char {
-    return (charToMakeUpperCase >= 'a' && charToMakeUpperCase <= 'z') ? (charToMakeUpperCase + ('Z' - 'z')) : charToMakeUpperCase;
+    return (charToMakeUpperCase >= 'a' && charToMakeUpperCase <= 'z') ?
+        (charToMakeUpperCase + ('Z' - 'z')) :
+        charToMakeUpperCase;
 };
 
 std::string convertToLowerCase(std::string_view input)
@@ -244,7 +248,8 @@ namespace stringOps {
         if (!newString.empty()) {
             if ((newString.front() == '[') || (newString.front() == '(') ||
                 (newString.front() == '{') || (newString.front() == '<')) {
-                if (static_cast<unsigned char>(newString.back()) == pmap[newString.front()]) {
+                if (static_cast<unsigned char>(newString.back()) ==
+                    pmap[newString.front()]) {
                     newString.pop_back();
                     newString.erase(0, 1);
                 }
@@ -282,8 +287,7 @@ namespace stringOps {
 
     static inline bool isIsolatingChar(char testChar)
     {
-        return ((isspace(testChar) != 0) ||
-            (ispunct(testChar) != 0));
+        return ((isspace(testChar) != 0) || (ispunct(testChar) != 0));
     }
 
     static bool hasIsolatedChar(const std::string& testString, char testChar)
@@ -308,59 +312,61 @@ namespace stringOps {
         }
         return false;
     }
-    
-    static bool checkForMatch(const std::string& string1, const std::string& string2, string_match_type matchType)
+
+    static bool checkForMatch(
+        const std::string& string1,
+        const std::string& string2,
+        string_match_type matchType)
     {
         switch (matchType) {
-        case string_match_type::exact:
-            if (string1 == string2) {
-                return true;
-            }
-            break;
-        case string_match_type::begin:
-            if (string2.compare(0, string1.length(), string1) == 0) {
-                return true;
-            }
-            break;
-        case string_match_type::end:
-            if (string1.length() > string2.length()) {
-                return false;
-            }
-            if (string2.compare(
-                string2.length() - string1.length(),
-                string1.length(),
-                string1) == 0) {
-                return true;
-            }
-            break;
-        case string_match_type::close:
-            if (string1.length() == 1)  // special case
-            {  // we are checking if the single character is
-               // isolated from other other alphanumeric characters
-                if (hasIsolatedChar(string2, string1.front()))
-                {
-                    return true;
-               }
-            } else {
-                auto findLoc = string2.find(string1);
-                if (findLoc != std::string::npos) {
+            case string_match_type::exact:
+                if (string1 == string2) {
                     return true;
                 }
-                auto nstr = removeChar(string1, '_');
-                if (string2 == nstr) {
+                break;
+            case string_match_type::begin:
+                if (string2.compare(0, string1.length(), string1) == 0) {
                     return true;
                 }
-                auto nstr2 = removeChar(string2, '_');
-                if ((string1 == nstr2) || (nstr == nstr2)) {
+                break;
+            case string_match_type::end:
+                if (string1.length() > string2.length()) {
+                    return false;
+                }
+                if (string2.compare(
+                        string2.length() - string1.length(),
+                        string1.length(),
+                        string1) == 0) {
                     return true;
                 }
-            }
-            break;
+                break;
+            case string_match_type::close:
+                if (string1.length() == 1)  // special case
+                {  // we are checking if the single character is
+                   // isolated from other other alphanumeric characters
+                    if (hasIsolatedChar(string2, string1.front())) {
+                        return true;
+                    }
+                } else {
+                    auto findLoc = string2.find(string1);
+                    if (findLoc != std::string::npos) {
+                        return true;
+                    }
+                    auto nstr = removeChar(string1, '_');
+                    if (string2 == nstr) {
+                        return true;
+                    }
+                    auto nstr2 = removeChar(string2, '_');
+                    if ((string1 == nstr2) || (nstr == nstr2)) {
+                        return true;
+                    }
+                }
+                break;
         }
         return false;
     }
 
-    //NOLINTNEXTLINE
+    // NOLINTNEXTLINE
     int findCloseStringMatch(
         const stringVector& testStrings,
         const stringVector& inputStrings,
@@ -377,8 +383,7 @@ namespace stringOps {
             lct = convertToLowerCase(testStr);
             for (int kk = 0; kk < static_cast<int>(lciStrings.size()); ++kk) {
                 lcis = lciStrings[kk];
-                if (checkForMatch(lct, lcis, matchType))
-                {
+                if (checkForMatch(lct, lcis, matchType)) {
                     return kk;
                 }
             }
