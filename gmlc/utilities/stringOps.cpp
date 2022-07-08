@@ -280,6 +280,11 @@ namespace stringOps {
         return ret;
     }
 
+    static inline bool isIsolatingChar(char testChar)
+    {
+        return ((isspace(testChar) != 0) ||
+            (ispunct(testChar) != 0));
+    }
     static bool checkForMatch(const std::string& string1, const std::string& string2, string_match_type matchType)
     {
         switch (matchType) {
@@ -312,24 +317,19 @@ namespace stringOps {
                 auto findLoc = string2.find(string1);
                 while (findLoc != std::string::npos) {
                     if (findLoc == 0) {
-                        if ((isspace(string2[findLoc + 1]) != 0) ||
-                            (ispunct(string2[findLoc + 1]) != 0)) {
+                        if (isIsolatingChar(string2[findLoc + 1])) {
                             return true;
                         }
                     } else if (findLoc == string2.length() - 1) {
-                        if ((isspace(string2[findLoc - 1]) != 0) ||
-                            (ispunct(string2[findLoc - 1]) != 0)) {
+                        if (isIsolatingChar(string2[findLoc - 1])) {
                             return true;
                         }
-                    } else {
-                        if ((isspace(string2[findLoc - 1]) != 0) ||
-                            (ispunct(string2[findLoc - 1]) != 0)) {
-                            if ((isspace(string2[findLoc + 1]) != 0) ||
-                                (ispunct(string2[findLoc + 1]) != 0)) {
-                                return true;
-                            }
-                        }
+                    } else if (
+                        isIsolatingChar(string2[findLoc - 1]) &&
+                        isIsolatingChar(string2[findLoc + 1])) {
+                        return true;
                     }
+
                     findLoc = string2.find(string1, findLoc + 1);
                 }
             } else {
@@ -353,12 +353,12 @@ namespace stringOps {
 
     int findCloseStringMatch(
         const stringVector& testStrings,
-        const stringVector& iStrings,
+        const stringVector& inputStrings,
         string_match_type matchType)
     {
         std::string lct;  // lower case test string
         std::string lcis;  // lower case input string
-        stringVector lciStrings = iStrings;
+        stringVector lciStrings = inputStrings;
         // make all the input strings lower case
         for (auto& str : lciStrings) {
             makeLowerCase(str);
@@ -408,11 +408,11 @@ namespace stringOps {
     {
         std::string result;
         result.reserve(source.length());
-        for (auto sc : source) {
-            if (sc == key) {
+        for (auto sourceChar : source) {
+            if (sourceChar == key) {
                 result += repStr;
             } else {
-                result.push_back(sc);
+                result.push_back(sourceChar);
             }
         }
         return result;
@@ -421,31 +421,31 @@ namespace stringOps {
     std::string xmlCharacterCodeReplace(std::string str)
     {
         std::string out = std::move(str);
-        auto tt = out.find("&gt;");
-        while (tt != std::string::npos) {
-            out.replace(tt, 4, ">");
-            tt = out.find("&gt;", tt + 1);
+        auto codeLoc = out.find("&gt;");
+        while (codeLoc != std::string::npos) {
+            out.replace(codeLoc, 4, ">");
+            codeLoc = out.find("&gt;", codeLoc + 1);
         }
-        tt = out.find("&lt;");
-        while (tt != std::string::npos) {
-            out.replace(tt, 4, "<");
-            tt = out.find("&lt;", tt + 1);
+        codeLoc = out.find("&lt;");
+        while (codeLoc != std::string::npos) {
+            out.replace(codeLoc, 4, "<");
+            codeLoc = out.find("&lt;", codeLoc + 1);
         }
-        tt = out.find("&quot;");
-        while (tt != std::string::npos) {
-            out.replace(tt, 6, "\"");
-            tt = out.find("&quot;", tt + 1);
+        codeLoc = out.find("&quot;");
+        while (codeLoc != std::string::npos) {
+            out.replace(codeLoc, 6, "\"");
+            codeLoc = out.find("&quot;", codeLoc + 1);
         }
-        tt = out.find("&apos;");
-        while (tt != std::string::npos) {
-            out.replace(tt, 6, "'");
-            tt = out.find("&apos;", tt + 1);
+        codeLoc = out.find("&apos;");
+        while (codeLoc != std::string::npos) {
+            out.replace(codeLoc, 6, "'");
+            codeLoc = out.find("&apos;", codeLoc + 1);
         }
         // &amp; is last so it can't trigger other sequences
-        tt = out.find("&amp;");
-        while (tt != std::string::npos) {
-            out.replace(tt, 5, "&");
-            tt = out.find("&amp;", tt + 1);
+        codeLoc = out.find("&amp;");
+        while (codeLoc != std::string::npos) {
+            out.replace(codeLoc, 5, "&");
+            codeLoc = out.find("&amp;", codeLoc + 1);
         }
         return out;
     }
