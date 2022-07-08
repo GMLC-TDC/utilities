@@ -14,6 +14,6 @@
 
 namespace gmlc::utilities {
 
-    extern const CharMapper<bool> numCheck = numericStartMapper();
-    extern const CharMapper<bool> numCheckEnd = numericEndMapper();
-}  // namespace gmlc
+extern const CharMapper<bool> numCheck = numericStartMapper();
+extern const CharMapper<bool> numCheckEnd = numericEndMapper();
+}  // namespace gmlc::utilities
