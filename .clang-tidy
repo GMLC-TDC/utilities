@@ -72,7 +72,7 @@ WarningsAsErrors: "
   performance-*
   -performance-unnecessary-value-param
   "
-  
+
 HeaderFilterRegex: "gmlc/utilities/*.hp?p?"
 
 AnalyzeTemporaryDtors: false
