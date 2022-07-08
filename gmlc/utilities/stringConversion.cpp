@@ -12,9 +12,8 @@
 
 #include "stringConversion.h"
 
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
+
     extern const CharMapper<bool> numCheck = numericStartMapper();
     extern const CharMapper<bool> numCheckEnd = numericEndMapper();
-}  // namespace utilities
 }  // namespace gmlc

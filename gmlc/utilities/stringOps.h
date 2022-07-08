@@ -286,7 +286,7 @@ strange case
 function searches for any of the testStrings in the testStrings vector based on
 the matchType parameter and returns the index into the testStrings vector
 @param testStrings the vector of strings to search for
-@param iStrings the string library to search through
+@param inputStrings the string library to search through
 @param matchType the matching type
 @return the index of the match or -1 if no match is found
 */
