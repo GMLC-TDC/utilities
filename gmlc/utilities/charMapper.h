@@ -25,19 +25,19 @@ class CharMapper {
 @details this is purposely distinct from the [] operator to make it an error
 to try to assign something that way
 */
-    void addKey(unsigned char x, V val) { key[x] = val; }
+    void addKey(unsigned char keyChar, V val) { key[keyChar] = val; }
     /** get the value assigned to a character
-     * @param x the character to test or convert
+     * @param keyChar the character to test or convert
      * @return the resulting value,  0 if nothing in particular is specified
      * in a given map
      */
-    V at(unsigned char x) const { return key[x]; }
+    [[nodiscard]] V at(unsigned char keyChar) const { return key[keyChar]; }
     /** get the value assigned to a character by bracket notation
-     * @param x the character to test or convert
+     * @param keyChar the character to test or convert
      * @return the resulting value,  0 if nothing in particular is specified
      * in a given map
      */
-    V operator[](unsigned char x) const { return key[x]; }
+    V operator[](unsigned char keyChar) const { return key[keyChar]; }
 };
 /** map that translates all characters that could be in numbers to true all
  * others to false*/
