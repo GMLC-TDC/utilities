@@ -285,6 +285,30 @@ namespace stringOps {
         return ((isspace(testChar) != 0) ||
             (ispunct(testChar) != 0));
     }
+
+    static bool hasIsolatedChar(const std::string& testString, char testChar)
+    {
+        auto findLoc = testString.find(testChar);
+        while (findLoc != std::string::npos) {
+            if (findLoc == 0) {
+                if (isIsolatingChar(testString[findLoc + 1])) {
+                    return true;
+                }
+            } else if (findLoc == testString.length() - 1) {
+                if (isIsolatingChar(testString[findLoc - 1])) {
+                    return true;
+                }
+            } else if (
+                isIsolatingChar(testString[findLoc - 1]) &&
+                isIsolatingChar(testString[findLoc + 1])) {
+                return true;
+            }
+
+            findLoc = testString.find(testChar, findLoc + 1);
+        }
+        return false;
+    }
+    
     static bool checkForMatch(const std::string& string1, const std::string& string2, string_match_type matchType)
     {
         switch (matchType) {
@@ -312,26 +336,11 @@ namespace stringOps {
         case string_match_type::close:
             if (string1.length() == 1)  // special case
             {  // we are checking if the single character is
-               // isolated from
-               // other other alphanumeric characters
-                auto findLoc = string2.find(string1);
-                while (findLoc != std::string::npos) {
-                    if (findLoc == 0) {
-                        if (isIsolatingChar(string2[findLoc + 1])) {
-                            return true;
-                        }
-                    } else if (findLoc == string2.length() - 1) {
-                        if (isIsolatingChar(string2[findLoc - 1])) {
-                            return true;
-                        }
-                    } else if (
-                        isIsolatingChar(string2[findLoc - 1]) &&
-                        isIsolatingChar(string2[findLoc + 1])) {
-                        return true;
-                    }
-
-                    findLoc = string2.find(string1, findLoc + 1);
-                }
+               // isolated from other other alphanumeric characters
+                if (hasIsolatedChar(string2, string1.front()))
+                {
+                    return true;
+               }
             } else {
                 auto findLoc = string2.find(string1);
                 if (findLoc != std::string::npos) {
@@ -351,6 +360,7 @@ namespace stringOps {
         return false;
     }
 
+    //NOLINTNEXTLINE
     int findCloseStringMatch(
         const stringVector& testStrings,
         const stringVector& inputStrings,

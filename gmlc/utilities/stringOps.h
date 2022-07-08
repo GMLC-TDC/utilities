@@ -292,7 +292,7 @@ the matchType parameter and returns the index into the testStrings vector
 */
     int findCloseStringMatch(
         const stringVector& testStrings,
-        const stringVector& iStrings,
+        const stringVector& inputStrings,
         string_match_type matchType = string_match_type::close);
 
     /** @brief remove a set of characters from a string
