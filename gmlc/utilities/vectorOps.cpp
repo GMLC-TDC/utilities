@@ -18,14 +18,14 @@ namespace gmlc::utilities {
         double v12,
         double v21,
         double v22,
-        double input1,
-        double input2,
-        double& output1,
-        double& output2)
+        double result1,
+        double result2,
+        double& value1,
+        double& value2)
     {
         double det = 1.0 / (v11 * v22 - v12 * v21);
-        output1 = det * (v22 * input1 - v12 * input2);
-        output2 = det * (-v21 * input1 + v11 * input2);
+        value1 = det * (v22 * result1 - v12 * result2);
+        value2 = det * (-v21 * result1 + v11 * result2);
         return det;
     }
 
@@ -74,7 +74,7 @@ namespace gmlc::utilities {
         size_t minSize = (std::min)(valIn.size(), timeIn.size());
         std::vector<double> out(timeOut.size(), 0);
         size_t index1 = 0;
-        size_t index2 = 0;
+        size_t kk = 0;
         while (timeOut[index1] <= timeIn[0]) {
             out[index1] = valIn[0] -
                 (valIn[1] - valIn[0]) / (timeIn[1] - timeIn[0]) *
@@ -82,15 +82,15 @@ namespace gmlc::utilities {
             ++index1;
         }
         while (index1 < timeOut.size()) {
-            while (timeIn[index2 + 1] < timeOut[index1]) {
-                ++index2;
-                if (index2 + 1 == minSize) {
+            while (timeIn[kk + 1] < timeOut[index1]) {
+                ++kk;
+                if (kk + 1 == minSize) {
                     goto breakLoop;  // break out of a double loop
                 }
             }
-            out[index1] = valIn[index2] +
-                (valIn[index2 + 1] - valIn[index2]) / (timeIn[index2 + 1] - timeIn[index2]) *
-                    (timeOut[index1] - timeIn[index2]);
+            out[index1] = valIn[kk] +
+                (valIn[kk + 1] - valIn[kk]) / (timeIn[kk + 1] - timeIn[kk]) *
+                    (timeOut[index1] - timeIn[kk]);
             // out[jj] = std::fma((valIn[kk + 1] - valIn[kk]) / (timeIn[kk + 1]
             // - timeIn[kk]), (timeOut[jj] - timeIn[kk]), valIn[kk]);
             ++index1;

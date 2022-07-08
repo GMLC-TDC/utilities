@@ -27,16 +27,16 @@
 namespace gmlc::utilities {
 /** solve a 2x2 matrix problem
 @details solve a 2 variable set of equations Vx=y solve for x
-v11*x1+v12*x2=y1
-v21*x1+v22*x2=y2
+v11*value1+v12*value2=result1
+v21*value1+v22*value2=result2
 @param[in] v11 v(1,1)
 @param[in] v12 v(1,2)
 @param[in] v21 v(2,1)
 @param[in] v22 v(2,2)
-@param[in] y1  the result of the first equation
-@param[in] y2 the result of the second equation
-@param[out] x1 the computed first element
-@param[out] x2 the computed second result
+@param[in] result1  the result of the first equation
+@param[in] result2 the result of the second equation
+@param[out] value1 the computed first value
+@param[out] value2 the computed second value
 @return the value of the determinant
 */
 double solve2x2(
@@ -44,10 +44,10 @@ double solve2x2(
     double v12,
     double v21,
     double v22,
-    double y1,
-    double y2,
-    double& x1,
-    double& x2);
+    double result1,
+    double result2,
+    double& value1,
+    double& value2);
 
 /** solve Ax=b where A is a [3x3] matrix
 @param[in] input a 3x3 array
