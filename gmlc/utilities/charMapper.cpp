@@ -146,11 +146,11 @@ CharMapper<unsigned char> pairMapper()
     dMap.addKey('>', '<');
     dMap.addKey(']', '[');
     dMap.addKey('}', '{');
-    dMap.addKey(0x02, 0x03); //start of text, end of text
+    dMap.addKey(0x02, 0x03);  // start of text, end of text
     dMap.addKey(0x03, 0x02);
-    dMap.addKey(0x0E, 0x0F); //XON, XOFF
+    dMap.addKey(0x0E, 0x0F);  // XON, XOFF
     dMap.addKey(0x0F, 0x0E);
-    dMap.addKey(0x11, 0x13); //XON, XOFF
+    dMap.addKey(0x11, 0x13);  // XON, XOFF
     dMap.addKey(0x13, 0x11);
     return dMap;
 }
