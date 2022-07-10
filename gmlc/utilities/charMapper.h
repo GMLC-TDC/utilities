@@ -21,7 +21,7 @@ class CharMapper {
   public:
     /** default constructor*/
     explicit CharMapper(V defVal = V{0}) { key.fill(defVal); }
-    /** update a the value returned from a key query
+    /** update the value returned from a key query
 @details this is purposely distinct from the [] operator to make it an error
 to try to assign something that way
 */
@@ -42,10 +42,10 @@ to try to assign something that way
 /** map that translates all characters that could be in numbers to true all
  * others to false*/
 CharMapper<bool> numericMapper();
-/** map that translates all characters that could start a number to true all
+/** map that translates all characters that could start a number to true, all
  * others to false*/
 CharMapper<bool> numericStartMapper();
-/** map that translates all characters that could end a number to true all
+/** map that translates all characters that could end a number to true, all
  * others to false*/
 CharMapper<bool> numericEndMapper();
 /** map that translates all base 64 characters to the appropriate numerical

@@ -30,27 +30,27 @@ namespace string_viewOps {
     /** a set of white space characters*/
     constexpr std::string_view whiteSpaceCharacters(" \t\n\r\0\v\f");
 
-    /** @brief trim whitespace characters from a string at the beginning and
-end of the string
+    /** @brief trim specified (default=whitespace) characters from the beginning and
+end of the input string
 @param[in,out] input  the string to convert
-@param[in] trimCharacters the characters to potentially tr
+@param[in] trimCharacters the characters to potentially trim
 */
     void trimString(
         std::string_view& input,
         std::string_view trimCharacters = whiteSpaceCharacters);
 
-    /** @brief trim whitespace characters from a string
-@param[in] input the string to trim;
-@param[in] trimCharacters  the definition of characters defaults to \t\n\r\0\v\f
+    /** @brief trim characters (default=whitespace) from a string
+@param[in] input the string to trim
+@param[in] trimCharacters  the set of characters to trim; defaults to \t\n\r\0\v\f
 @return the trimmed string
 */
     std::string_view trim(
         std::string_view input,
         std::string_view trimCharacters = whiteSpaceCharacters);
 
-    /** @brief trim the whitespace from a vector of std::string_views
+    /** @brief trim the specified characters from a vector of std::string_views
 @param[in] input the vector of strings to trim;
-@param[in] trimCharacters  the definition of characters defaults to \t\n\r\0\v\f
+@param[in] trimCharacters  the set of characters to trim; defaults to \t\n\r\0\v\f
 */
     void trim(
         string_viewVector& input,
@@ -58,14 +58,14 @@ end of the string
 
     /** @brief remove outer quotes from a string
 only quotes around the edges are removed along with whitespace outside the
-quotes whitespace is also trimmed
+quotes; whitespace is also trimmed
 @param[in] str  the original string
 @return  the string with quotes removed
 */
     std::string_view removeQuotes(std::string_view str);
 
     /** @brief remove outer brackets from a string
-outer brackets include [({<  and their matching pair whitespace is also trimmmed
+outer brackets include [({<  and their matching pair; whitespace is also trimmmed
 @param[in] str  the original string
 @return  the string with outer brackets removed
 */
@@ -76,7 +76,7 @@ separator
 @param[in] input  the string to separate
 @param[in] separationCharacter the separation character
 @return  the tail string or the string that comes after the last separation
-character if not found returns the entire string
+character; if not found returns the entire string
 */
     std::string_view getTailString(
         std::string_view input,
@@ -87,7 +87,7 @@ specified separator
 @param[in] input  the string to separate
 @param[in] separationCharacters the separation characters
 @return  the tail string or the string that comes after the last separation
-character if not found returns the entire string
+character; if not found returns the entire string
 */
     std::string_view getTailString_any(
         std::string_view input,
@@ -98,7 +98,7 @@ separator
 @param input  the string to separate
 @param sep a character sequence indicating the tail
 @return  the tail string or the string that comes after the last of the
-separation strings if not found returns the entire string
+separation strings; if not found returns the entire string
 */
     std::string_view
         getTailString(std::string_view input, std::string_view sep) noexcept;

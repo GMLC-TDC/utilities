@@ -343,7 +343,7 @@ namespace stringOps {
             case string_match_type::close:
                 if (string1.length() == 1)  // special case
                 {  // we are checking if the single character is
-                   // isolated from other other alphanumeric characters
+                   // isolated from other alphanumeric characters
                     if (hasIsolatedChar(string2, string1.front())) {
                         return true;
                     }

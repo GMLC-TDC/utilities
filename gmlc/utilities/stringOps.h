@@ -30,7 +30,7 @@ namespace gmlc::utilities {
 //!< alias for convenience
 using stringVector = std::vector<std::string>;
 
-/* some common functions that don't need to be the namespace*/
+/* some common functions that don't need to be in the namespace*/
 
 /** @brief convert a string to lower case as a new string
 @param input  the string to convert
@@ -110,7 +110,7 @@ namespace stringOps {
     constexpr std::string_view
         whiteSpaceCharacters(whiteChars.data(), whiteChars.size());
 
-    /** @brief trim whitespace characters from a string at the beginning and
+    /** @brief trim characters (default=whitespace) from a string at the beginning and
 end of the string
 @param[in,out] input  the string to convert
 */
@@ -118,9 +118,9 @@ end of the string
         std::string& input,
         std::string_view whitespace = whiteSpaceCharacters);
 
-    /** @brief trim whitespace characters from a string
+    /** @brief trim characters (default=whitespace) from a string
 @param input the string to trim;
-@param whitespace  the definition of whitespace characters defaults to " \t\n"
+@param whitespace  the set of characters to trim"
 @return the trimmed string
 */
 
@@ -128,9 +128,9 @@ end of the string
         std::string_view input,
         std::string_view whitespace = whiteSpaceCharacters);
 
-    /** @brief trim whitespace from a vector of strings
+    /** @brief trim characters (default=whitespace) from a vector of strings
 @param input the vector of strings to trim;
-@param whitespace  the definition of whitespace characters defaults to " \t\n"
+@param whitespace  the definition of characters to trim
 */
 
     void trim(
@@ -150,7 +150,7 @@ separator
 @param input  the string to separate
 @param sep the separation string (single character or sequence of characters
 @return  the tail string or the string that comes after the last of the
-separation strings if not found returns the entire string
+separation strings; if not found returns the entire string
 */
     std::string
         getTailString(std::string_view input, std::string_view sep) noexcept;
@@ -160,7 +160,7 @@ separator
 @param input  the string to separate
 @param sep the set of separation characters
 @return  the tail string or the string that comes after the last of the
-separation strings if not found returns the entire string
+separation strings; if not found returns the entire string
 */
     std::string getTailString_any(
         std::string_view input,
