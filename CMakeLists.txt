@@ -1,5 +1,5 @@
 # ~~~
-# Copyright (c) 2017-2020, Battelle Memorial Institute; Lawrence Livermore
+# Copyright (c) 2017-2022, Battelle Memorial Institute; Lawrence Livermore
 # National Security, LLC; Alliance for Sustainable Energy, LLC.
 # See the top-level NOTICE for additional details.
 # All rights reserved.
@@ -7,29 +7,19 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-# Make sure users don't get warnings on a tested (3.0 to 3.17) version of CMake. For
-# most of the policies, the new version is better (hence the change). We don't use the
-# 3.0...3.16 syntax because of a bug in an older MSVC's built-in and modified CMake 3.11
-
-cmake_minimum_required(VERSION 3.4)
-
-if(${CMAKE_VERSION} VERSION_LESS 3.17)
-    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
-else()
-    cmake_policy(VERSION 3.17)
-endif()
+cmake_minimum_required(VERSION 3.11...3.23)
 
 project(
     GMLC_UTILITIES
     LANGUAGES CXX
-    VERSION 0.3.0
+    VERSION 0.4.0
 )
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "05-01-20")
+set(GMLC_UTILITIES_DATE "2022-07-04")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
@@ -40,7 +30,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 endif()
 
 if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD 17)
 endif()
 # -----------------------------------------------------------------------------
 # set the module path and include some common macros
@@ -116,7 +106,7 @@ mark_as_advanced(GMLC_UTILITIES_USE_BOOST_SPIRIT)
 
 # Add boost to test boost::optional if available
 if(GMLC_UTILITIES_INCLUDE_BOOST)
-    find_package(Boost 1.61)
+    find_package(Boost 1.69)
     if(Boost_FOUND)
         message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
         target_include_directories(

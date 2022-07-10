@@ -30,235 +30,231 @@
 #include <string>
 #include <vector>
 
-namespace gmlc {
-namespace utilities {
-    extern const CharMapper<bool> numCheck;
-    extern const CharMapper<bool> numCheckEnd;
+namespace gmlc::utilities {
+extern const CharMapper<bool> numCheck;
+extern const CharMapper<bool> numCheckEnd;
 
-    using gmlc::utilities::string_view;
-
-    template<typename X>
-    X strViewToInteger(string_view input, size_t* rem = nullptr)
-    {
-        static_assert(std::is_integral<X>::value,
-                      "requested type is not integral");
-        X ret = 0;
-        bool inProcess = false;
-        int sign = 1;
-        if (rem) {
-            *rem = input.length();
+template<typename X>
+X strViewToInteger(std::string_view input, size_t* rem = nullptr)
+{
+    static_assert(std::is_integral<X>::value, "requested type is not integral");
+    X ret = 0;
+    bool inProcess = false;
+    int sign = 1;
+    if (rem) {
+        *rem = input.length();
+    }
+    auto v1 = input.cbegin();
+    auto vend = input.cend();
+    while ((!inProcess) && (v1 != vend)) {
+        switch (*v1) {
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                ret = (static_cast<X>(*v1) - '0');
+                inProcess = true;
+                break;
+            case '-':
+                sign *= -1;
+                break;
+            case '0':
+                inProcess = true;
+                break;
+            case '+':
+            case ' ':
+            case '\t':
+            case '\r':
+            case '\0':
+            case '\n':
+                break;
+            default:
+                throw(std::invalid_argument("unable to convert string"));
         }
-        auto v1 = input.cbegin();
-        auto vend = input.cend();
-        while ((!inProcess) && (v1 != vend)) {
-            switch (*v1) {
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    ret = (static_cast<X>(*v1) - '0');
-                    inProcess = true;
-                    break;
-                case '-':
-                    sign *= -1;
-                    break;
-                case '0':
-                    inProcess = true;
-                    break;
-                case '+':
-                case ' ':
-                case '\t':
-                case '\r':
-                case '\0':
-                case '\n':
-                    break;
-                default:
-                    throw(std::invalid_argument("unable to convert string"));
+        ++v1;
+    }
+    if (!inProcess) {
+        throw(std::invalid_argument("unable to convert string"));
+    }
+
+    while (v1 != vend) {
+        if ((*v1) >= '0' && (*v1) <= '9') {
+            ret *= 10;
+            ret += (static_cast<X>(*v1) - '0');
+        } else {
+            if (rem) {
+                *rem = (v1 - input.cbegin());
             }
-            ++v1;
+            break;
         }
-        if (!inProcess) {
-            throw(std::invalid_argument("unable to convert string"));
-        }
+        ++v1;
+    }
 
-        while (v1 != vend) {
-            if ((*v1) >= '0' && (*v1) <= '9') {
-                ret *= 10;
-                ret += (static_cast<X>(*v1) - '0');
-            } else {
-                if (rem) {
-                    *rem = (v1 - input.cbegin());
-                }
+    return static_cast<X>(ret * sign);
+}
+
+// templates for single numerical conversion
+template<typename X>
+inline X numConv(std::string_view V)
+{
+    return (std::is_integral<X>::value) ? strViewToInteger<X>(V) :
+                                          X(numConv<double>(V));
+}
+
+// template definition for double conversion
+template<>
+inline double numConv(std::string_view V)
+{
+#if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
+    namespace x3 = boost::spirit::x3;
+    double retVal = -1e49;
+    x3::parse(V.cbegin(), V.cend(), x3::double_, retVal);
+    return retVal;
+#else
+    return std::stod(std::string(V.data(), V.length()));
+#endif
+}
+
+template<>
+inline float numConv(std::string_view V)
+{
+#if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
+    namespace x3 = boost::spirit::x3;
+    float retVal = -1e25f;
+    x3::parse(V.cbegin(), V.cend(), x3::float_, retVal);
+    return retVal;
+#else
+    return std::stof(std::string(V.data(), V.length()));
+#endif
+}
+
+// template definition for long double conversion
+template<>
+inline long double numConv(std::string_view V)
+{
+    return std::stold(std::string(V.data(), V.length()));
+}
+
+// template for numeric conversion returning the position
+template<class X>
+inline X numConvComp(std::string_view V, size_t& rem)
+{
+    return (std::is_integral<X>::value) ? strViewToInteger<X>(V, &rem) :
+                                          X(numConvComp<double>(V, rem));
+}
+
+template<>
+inline float numConvComp(std::string_view V, size_t& rem)
+{
+    return std::stof(std::string(V.data(), V.length()), &rem);
+}
+
+template<>
+inline double numConvComp(std::string_view V, size_t& rem)
+{
+    return std::stod(std::string(V.data(), V.length()), &rem);
+}
+
+template<>
+inline long double numConvComp(std::string_view V, size_t& rem)
+{
+    return std::stold(std::string(V.data(), V.length()), &rem);
+}
+
+/** check if the first character of the string is a valid numerical value*/
+inline bool nonNumericFirstCharacter(std::string_view V)
+{
+    return ((V.empty()) || (numCheck[V[0]] == false));
+}
+
+/** check if the first character of the string is a valid numerical value*/
+inline bool nonNumericFirstOrLastCharacter(std::string_view V)
+{
+    return (
+        (V.empty()) || (numCheck[V[0]] == false) ||
+        (numCheckEnd[V.back()] == false));
+}
+
+template<typename X>
+X numeric_conversion(std::string_view V, const X defValue)
+{
+    if (nonNumericFirstCharacter(V)) {
+        return defValue;
+    }
+    try {
+        return numConv<X>(V);
+    }
+    catch (const std::invalid_argument&) {
+        return defValue;
+    }
+}
+
+/** do a numeric conversion of the complete string
+ */
+template<typename X>
+X numeric_conversionComplete(std::string_view V, const X defValue)
+{
+    if (nonNumericFirstOrLastCharacter(V)) {
+        return defValue;
+    }
+    try {
+        size_t rem;
+        X res = numConvComp<X>(V, rem);
+        while (rem < V.length()) {
+            if (!(isspace(V[rem]))) {
+                res = defValue;
                 break;
             }
-            ++v1;
+            ++rem;
         }
-
-        return static_cast<X>(ret * sign);
+        return res;
     }
-
-    // templates for single numerical conversion
-    template<typename X>
-    inline X numConv(string_view V)
-    {
-        return (std::is_integral<X>::value) ? strViewToInteger<X>(V) :
-                                              X(numConv<double>(V));
+    catch (const std::invalid_argument&) {
+        return defValue;
     }
+}
 
-    // template definition for double conversion
-    template<>
-    inline double numConv(string_view V)
-    {
-#if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
-        namespace x3 = boost::spirit::x3;
-        double retVal = -1e49;
-        x3::parse(V.cbegin(), V.cend(), x3::double_, retVal);
-        return retVal;
-#else
-        return std::stod(std::string(V.data(), V.length()));
-#endif
-    }
-
-    template<>
-    inline float numConv(utilities::string_view V)
-    {
-#if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
-        namespace x3 = boost::spirit::x3;
-        float retVal = -1e25f;
-        x3::parse(V.cbegin(), V.cend(), x3::float_, retVal);
-        return retVal;
-#else
-        return std::stof(std::string(V.data(), V.length()));
-#endif
-    }
-
-    // template definition for long double conversion
-    template<>
-    inline long double numConv(string_view V)
-    {
-        return std::stold(std::string(V.data(), V.length()));
-    }
-
-    // template for numeric conversion returning the position
-    template<class X>
-    inline X numConvComp(string_view V, size_t& rem)
-    {
-        return (std::is_integral<X>::value) ? strViewToInteger<X>(V, &rem) :
-                                              X(numConvComp<double>(V, rem));
-    }
-
-    template<>
-    inline float numConvComp(string_view V, size_t& rem)
-    {
-        return std::stof(std::string(V.data(), V.length()), &rem);
-    }
-
-    template<>
-    inline double numConvComp(string_view V, size_t& rem)
-    {
-        return std::stod(std::string(V.data(), V.length()), &rem);
-    }
-
-    template<>
-    inline long double numConvComp(string_view V, size_t& rem)
-    {
-        return std::stold(std::string(V.data(), V.length()), &rem);
-    }
-
-    /** check if the first character of the string is a valid numerical value*/
-    inline bool nonNumericFirstCharacter(string_view V)
-    {
-        return ((V.empty()) || (numCheck[V[0]] == false));
-    }
-
-    /** check if the first character of the string is a valid numerical value*/
-    inline bool nonNumericFirstOrLastCharacter(string_view V)
-    {
-        return ((V.empty()) || (numCheck[V[0]] == false) ||
-                (numCheckEnd[V.back()] == false));
-    }
-
-    template<typename X>
-    X numeric_conversion(string_view V, const X defValue)
-    {
-        if (nonNumericFirstCharacter(V)) {
-            return defValue;
-        }
-        try {
-            return numConv<X>(V);
-        }
-        catch (const std::invalid_argument&) {
-            return defValue;
-        }
-    }
-
-    /** do a numeric conversion of the complete string
-     */
-    template<typename X>
-    X numeric_conversionComplete(string_view V, const X defValue)
-    {
-        if (nonNumericFirstOrLastCharacter(V)) {
-            return defValue;
-        }
-        try {
-            size_t rem;
-            X res = numConvComp<X>(V, rem);
-            while (rem < V.length()) {
-                if (!(isspace(V[rem]))) {
-                    res = defValue;
-                    break;
-                }
-                ++rem;
-            }
-            return res;
-        }
-        catch (const std::invalid_argument&) {
-            return defValue;
-        }
-    }
-
-    /** @brief  convert a string into a vector of double precision numbers
+/** @brief  convert a string into a vector of double precision numbers
 @param[in] line the string to convert
 @param[in] defValue  the default numerical return value if conversion fails
 @param[in] delimiters  the delimiters to use to separate the numbers
 @return a vector of double precision numbers converted from the string
 */
-    template<typename X>
-    std::vector<X>
-        str2vector(string_view line,
-                   const X defValue,
-                   string_view delimiters = string_viewOps::default_delim_chars)
-    {
-        line = utilities::string_viewOps::removeBrackets(line);
-        auto tempVec = utilities::string_viewOps::split(line, delimiters);
-        std::vector<X> av;
-        av.reserve(tempVec.size());
-        for (const auto& str : tempVec) {
-            av.push_back(numeric_conversion<X>(str, defValue));
-        }
-        return av;
+template<typename X>
+std::vector<X> str2vector(
+    std::string_view line,
+    const X defValue,
+    std::string_view delimiters = string_viewOps::default_delim_chars)
+{
+    line = utilities::string_viewOps::removeBrackets(line);
+    auto tempVec = utilities::string_viewOps::split(line, delimiters);
+    std::vector<X> av;
+    av.reserve(tempVec.size());
+    for (const auto& str : tempVec) {
+        av.push_back(numeric_conversion<X>(str, defValue));
     }
+    return av;
+}
 
-    /** @brief  convert a vector of strViews into doubles
+/** @brief  convert a vector of strViews into doubles
 @param[in] tokens the vector of strViews to convert
 @param[in] defValue  the default numerical return value if conversion fails
 @return a vector of double precision numbers converted from the string
 */
-    template<typename X>
-    std::vector<X> str2vector(const string_viewVector& tokens, const X defValue)
-    {
-        std::vector<X> av;
-        av.reserve(tokens.size());
-        for (const auto& str : tokens) {
-            av.push_back(numeric_conversion<X>(str, defValue));
-        }
-        return av;
+template<typename X>
+std::vector<X> str2vector(const string_viewVector& tokens, const X defValue)
+{
+    std::vector<X> av;
+    av.reserve(tokens.size());
+    for (const auto& str : tokens) {
+        av.push_back(numeric_conversion<X>(str, defValue));
     }
+    return av;
+}
 
-}  // namespace utilities
-}  // namespace gmlc
+}  // namespace gmlc::utilities

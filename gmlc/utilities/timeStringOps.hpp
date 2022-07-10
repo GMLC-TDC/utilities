@@ -9,38 +9,38 @@ SPDX-License-Identifier: BSD-3-Clause
 
 #include "timeRepresentation.hpp"
 
-#include <string>
+#include <string_view>
 
-namespace gmlc {
-namespace utilities {
-    /** generate a time related unit,
+namespace gmlc::utilities {
+/** generate a time related unit,
 @return a time_units enumeration value
 @throw invalid_argument if the string is not a valid unit
 */
-    time_units timeUnitsFromString(const std::string& unitString);
+time_units timeUnitsFromString(std::string_view unitString);
 
-    /** get a double representing the time in seconds of a string
+/** get a double representing the time in seconds of a string
 units are assumed to be defUnit
 @param timeString a string containing a time value
 @param defUnit the default units to use if none are given
 @return a double representing the time
 */
-    double getTimeValue(const std::string& timeString,
-                        time_units defUnit = time_units::sec);
+double getTimeValue(
+    std::string_view timeString,
+    time_units defUnit = time_units::sec);
 
-    /** generate a time from a string
+/** generate a time from a string
 @details the string can be a double or with units
 for example "1.234",  or "1032ms" or "10423425 ns"
 @return a helics time generated from the string
 @throw invalid_argument if the string is not a valid time
 */
-    template<class timeX>
-    timeX loadTimeFromString(const std::string& timeString)
-    {
-        return timeX(getTimeValue(timeString));
-    }
+template<class timeX>
+timeX loadTimeFromString(std::string_view timeString)
+{
+    return timeX(getTimeValue(timeString));
+}
 
-    /** generate a time from a string
+/** generate a time from a string
 @details the string can be a double or with units
 for example "1.234"  or "1032ms"
 @param timeString the string containing the time
@@ -48,11 +48,10 @@ for example "1.234"  or "1032ms"
 @return a helics time generated from the string
 @throws invalid_argument if the string is not a valid time
 */
-    template<class timeX>
-    timeX loadTimeFromString(const std::string& timeString, time_units defUnit)
-    {
-        return timeX(getTimeValue(timeString, defUnit));
-    }
+template<class timeX>
+timeX loadTimeFromString(std::string_view timeString, time_units defUnit)
+{
+    return timeX(getTimeValue(timeString, defUnit));
+}
 
-}  // namespace utilities
-}  // namespace gmlc
+}  // namespace gmlc::utilities

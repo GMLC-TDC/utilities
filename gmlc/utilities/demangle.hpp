@@ -56,7 +56,7 @@ class scoped_demangled_name {
     char const* m_p;
 
   public:
-    explicit scoped_demangled_name(char const* name) noexcept:
+    explicit scoped_demangled_name(char const* name) noexcept :
         m_p(demangle_alloc(name))
     {
     }

@@ -41,7 +41,7 @@ TEST(base64, decode_vector)
 TEST(base64, decode_raw)
 {
     auto encoded = base64_encode(encodeSeq, sizeof(encodeSeq) - 1);
-    std::array<char, 100> result;
+    std::array<char, 100> result{};
     auto size = base64_decode(encoded, result.data(), 100);
 
     EXPECT_EQ(strlen(encodeSeq), size);

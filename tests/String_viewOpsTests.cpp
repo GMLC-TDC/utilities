@@ -16,67 +16,66 @@
 #include <iostream>
 
 using namespace gmlc::utilities::string_viewOps;
-using gmlc::utilities::string_view;
 
 /** test trim*/
 TEST(stringViewOps, trimString_tests)
 {
-    string_view test1 = "AbCd: *Ty; ";
+    std::string_view test1 = "AbCd: *Ty; ";
     test1 = trim(test1);
     EXPECT_EQ(test1, "AbCd: *Ty;");
-    string_view test2 = "  \t1234:AbC\n\t RTrt\n ";
+    std::string_view test2 = "  \t1234:AbC\n\t RTrt\n ";
     test2 = trim(test2);
     EXPECT_EQ(test2, "1234:AbC\n\t RTrt");
     // test for an empty results
-    string_view test3 = "  \t\n \t\t \n ";
+    std::string_view test3 = "  \t\n \t\t \n ";
     test3 = trim(test3);
     EXPECT_TRUE(test3.empty());
 
     // test for other characters
-    string_view test4 = "%%**Bill45 *%*%";
+    std::string_view test4 = "%%**Bill45 *%*%";
     test4 = trim(test4, "*%");
     EXPECT_EQ(test4, "Bill45 ");
 
-    string_view test5 = "AbCd: *Ty; ";
+    std::string_view test5 = "AbCd: *Ty; ";
     trimString(test5);
     EXPECT_EQ(test5, "AbCd: *Ty;");
-    string_view test6 = "  \t1234:AbC\n\t RTrt\n ";
+    std::string_view test6 = "  \t1234:AbC\n\t RTrt\n ";
     trimString(test6);
     EXPECT_EQ(test6, "1234:AbC\n\t RTrt");
     // test for an empty results
-    string_view test7 = "  \t\n \t\t \n ";
+    std::string_view test7 = "  \t\n \t\t \n ";
     trimString(test7);
     EXPECT_TRUE(test7.empty());
 
     // test for other characters
-    string_view test8 = "%%**Bill45 *%*%";
+    std::string_view test8 = "%%**Bill45 *%*%";
     trimString(test8, "*%");
     EXPECT_EQ(test8, "Bill45 ");
 }
 
 TEST(stringViewOps, tailString_tests)
 {
-    string_view test1 = "AbCd: *Ty; ";
+    std::string_view test1 = "AbCd: *Ty; ";
     auto testres = getTailString(test1, '*');
     EXPECT_EQ(testres, "Ty; ");
-    string_view test2 = "bob::test1:test2:4";
+    std::string_view test2 = "bob::test1:test2:4";
     testres = getTailString(test2, ':');
     EXPECT_EQ(testres, "4");
 
-    string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
+    std::string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
     // test with ':' also as a space
     testres = getTailString(test3, ':');
     EXPECT_TRUE(testres.empty());
 
-    string_view test4 = "bob::test1:test2:4";
+    std::string_view test4 = "bob::test1:test2:4";
     testres = getTailString(test4, '-');
     EXPECT_EQ(testres, test4);
 
-    string_view test5 = "4testingBeginning";
+    std::string_view test5 = "4testingBeginning";
     testres = getTailString(test5, '4');
     EXPECT_EQ(testres, "testingBeginning");
 
-    string_view test6 = "4testingBeginning";
+    std::string_view test6 = "4testingBeginning";
     testres = getTailString(test6, 'g');
     EXPECT_TRUE(testres.empty());
 }
@@ -84,75 +83,75 @@ TEST(stringViewOps, tailString_tests)
 /** test trim*/
 TEST(stringViewOps, tailString_tests_word)
 {
-    string_view test1 = "AbCd: *Ty; ";
+    std::string_view test1 = "AbCd: *Ty; ";
     auto testres = getTailString(test1, "*");
     EXPECT_EQ(testres, "Ty; ");
-    string_view test2 = "bob::test1:test2:4";
+    std::string_view test2 = "bob::test1:test2:4";
     testres = getTailString(test2, ":");
     EXPECT_EQ(testres, "4");
 
-    string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
+    std::string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
     // test with ':' also as a space
     testres = getTailString(test3, "::");
     EXPECT_TRUE(testres.empty());
 
-    string_view test4 = "bob::test1:test2:4";
+    std::string_view test4 = "bob::test1:test2:4";
     testres = getTailString(test4, "-");
     EXPECT_EQ(testres, test4);
 
-    string_view test5 = "4testingBeginning";
+    std::string_view test5 = "4testingBeginning";
     testres = getTailString(test5, "4");
     EXPECT_EQ(testres, "testingBeginning");
 
-    string_view test6 = "4testingBeginning";
+    std::string_view test6 = "4testingBeginning";
     testres = getTailString(test6, "ng");
     EXPECT_TRUE(testres.empty());
 
-    string_view test7 = "aba::aba::sharpaba";
+    std::string_view test7 = "aba::aba::sharpaba";
     testres = getTailString(test7, "sharp");
     EXPECT_EQ(testres, "aba");
 
     testres = getTailString(test7, "ab");
     EXPECT_EQ(testres, "a");
 
-    testres = getTailString(test7, string_view{});
+    testres = getTailString(test7, std::string_view{});
     EXPECT_TRUE(testres.empty());
 }
 
 TEST(stringViewOps, tailString_any)
 {
-    string_view test1 = "AbCd: *Ty; ";
+    std::string_view test1 = "AbCd: *Ty; ";
     auto testres = getTailString_any(test1, ":*");
     EXPECT_EQ(testres, "Ty; ");
-    string_view test2 = "bob::test1:test2:4";
+    std::string_view test2 = "bob::test1:test2:4";
     testres = getTailString_any(test2, ":");
     EXPECT_EQ(testres, "4");
 
-    string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
+    std::string_view test3 = "::  \t1234:AbC\n\t RTrt\n ::";
     // test with ':' also as a space
     testres = getTailString_any(test3, " ::");
     EXPECT_TRUE(testres.empty());
 
-    string_view test4 = "bob::test1:test2:4";
+    std::string_view test4 = "bob::test1:test2:4";
     testres = getTailString_any(test4, "-");
     EXPECT_EQ(testres, test4);
 
-    string_view test5 = "4testingBeginning";
+    std::string_view test5 = "4testingBeginning";
     testres = getTailString_any(test5, "4");
     EXPECT_EQ(testres, "testingBeginning");
 
-    string_view test6 = "4testingBeginning";
+    std::string_view test6 = "4testingBeginning";
     testres = getTailString_any(test6, "ing");
     EXPECT_TRUE(testres.empty());
 
-    testres = getTailString_any(test6, string_view{});
+    testres = getTailString_any(test6, std::string_view{});
     EXPECT_EQ(testres, test6);
 }
 
 /** simple split line test*/
 TEST(stringViewOps, splitline_test1)
 {
-    string_view test1 = "alpha, bravo, charlie";
+    std::string_view test1 = "alpha, bravo, charlie";
     auto testres = split(test1);
 
     ASSERT_EQ(testres.size(), 3);
@@ -171,7 +170,7 @@ TEST(stringViewOps, splitline_test1)
 /** simple split line test for multiple tokens*/
 TEST(stringViewOps, splitline_test2)
 {
-    string_view test1 = "alpha, bravo,;, charlie,";
+    std::string_view test1 = "alpha, bravo,;, charlie,";
     auto testres = split(test1);
 
     ASSERT_EQ(testres.size(), 6);
@@ -187,7 +186,7 @@ TEST(stringViewOps, splitline_test2)
 /** simple split line and trim test*/
 TEST(stringViewOps, splitline_test3)
 {
-    string_view test1 = " alpha,   bravo ; charlie ";
+    std::string_view test1 = " alpha,   bravo ; charlie ";
     auto testres = split(test1);
     trim(testres);
     ASSERT_EQ(testres.size(), 3);
@@ -199,26 +198,26 @@ TEST(stringViewOps, splitline_test3)
 /**remove quotes test*/
 TEST(stringViewOps, removeQuotes_test)
 {
-    string_view test1 = "\'remove quotes\'";
+    std::string_view test1 = "\'remove quotes\'";
     auto testres = removeQuotes(test1);
 
     EXPECT_EQ(testres, "remove quotes");
-    string_view test2 = "\"remove quotes \"";
+    std::string_view test2 = "\"remove quotes \"";
     testres = removeQuotes(test2);
 
     EXPECT_EQ(testres, "remove quotes ");
 
-    string_view test3 = "\"remove quotes \'";
+    std::string_view test3 = "\"remove quotes \'";
     testres = removeQuotes(test3);
 
     EXPECT_EQ(testres, "\"remove quotes \'");
 
-    string_view test4 = "   \" remove quotas \"  ";
+    std::string_view test4 = "   \" remove quotas \"  ";
     testres = removeQuotes(test4);
 
     EXPECT_EQ(testres, " remove quotas ");
 
-    string_view test5 = "   ` remove quotes `  ";
+    std::string_view test5 = "   ` remove quotes `  ";
     testres = removeQuotes(test5);
 
     EXPECT_EQ(testres, " remove quotes ");
@@ -227,47 +226,47 @@ TEST(stringViewOps, removeQuotes_test)
 /**remove quotes test test*/
 TEST(stringViewOps, removeBrackets_test)
 {
-    string_view test1 = "remove bracket";
+    std::string_view test1 = "remove bracket";
     auto testres = removeBrackets(test1);
 
     EXPECT_EQ(testres, "remove bracket");
 
-    string_view test2 = "[remove bracket]";
+    std::string_view test2 = "[remove bracket]";
     testres = removeBrackets(test2);
 
     EXPECT_EQ(testres, "remove bracket");
 
-    string_view test3 = "{remove bracket}";
+    std::string_view test3 = "{remove bracket}";
     testres = removeBrackets(test3);
 
     EXPECT_EQ(testres, "remove bracket");
 
-    string_view test4 = "<remove bracket>";
+    std::string_view test4 = "<remove bracket>";
     testres = removeBrackets(test4);
 
     EXPECT_EQ(testres, "remove bracket");
 
-    string_view test5 = "< remove bracket >";
+    std::string_view test5 = "< remove bracket >";
     testres = removeBrackets(test5);
 
     EXPECT_EQ(testres, " remove bracket ");
 
-    string_view test6 = "< remove bracket >";
+    std::string_view test6 = "< remove bracket >";
     testres = removeBrackets(test6);
 
     EXPECT_EQ(testres, " remove bracket ");
 
-    string_view test7 = " <( remove bracket )>  ";
+    std::string_view test7 = " <( remove bracket )>  ";
     testres = removeBrackets(test7);
 
     EXPECT_EQ(testres, "( remove bracket )");
 
-    string_view test8 = " <( remove bracket )}  ";
+    std::string_view test8 = " <( remove bracket )}  ";
     testres = removeBrackets(test8);
 
     EXPECT_EQ(testres, "<( remove bracket )}");
 
-    testres = removeBrackets(string_view{});
+    testres = removeBrackets(std::string_view{});
 
     EXPECT_TRUE(testres.empty());
 
@@ -279,7 +278,7 @@ TEST(stringViewOps, removeBrackets_test)
 
 TEST(stringViewOps, splitLineQuotes_tests)
 {
-    string_view test1 = "454, 345, happy; frog";
+    std::string_view test1 = "454, 345, happy; frog";
     auto testres = splitlineQuotes(test1);
     trim(testres);
     ASSERT_EQ(testres.size(), 4U);
@@ -287,14 +286,14 @@ TEST(stringViewOps, splitLineQuotes_tests)
     EXPECT_EQ(testres[1], "345");
     EXPECT_EQ(testres[2], "happy");
     EXPECT_EQ(testres[3], "frog");
-    string_view test2 = " \'alpha,   bravo\' ; charlie ";
+    std::string_view test2 = " \'alpha,   bravo\' ; charlie ";
     auto testres2 = splitlineQuotes(test2);
     trim(testres2);
     ASSERT_EQ(testres2.size(), 2U);
     EXPECT_EQ(testres2[0], "\'alpha,   bravo\'");
     EXPECT_EQ(testres2[1], "charlie");
 
-    string_view test3 = R"( "test1",'test2' ; "charlie",)";
+    std::string_view test3 = R"( "test1",'test2' ; "charlie",)";
     auto testres3 = splitlineQuotes(test3);
     trim(testres3);
     ASSERT_EQ(testres3.size(), 4U);
@@ -303,18 +302,19 @@ TEST(stringViewOps, splitLineQuotes_tests)
     EXPECT_EQ(testres3[2], "\"charlie\"");
     EXPECT_TRUE(testres3[3].empty());
 
-    testres3 = splitlineQuotes(test3,
-                               default_delim_chars,
-                               default_quote_chars,
-                               delimiter_compression::on);
+    testres3 = splitlineQuotes(
+        test3,
+        default_delim_chars,
+        default_quote_chars,
+        delimiter_compression::on);
     ASSERT_EQ(testres3.size(), 3U);
 
-    string_view test4 = R"("'part1' and,; 'part2'","34,45,56")";
+    std::string_view test4 = R"("'part1' and,; 'part2'","34,45,56")";
     auto testres4 = splitlineQuotes(test4);
     ASSERT_EQ(testres4.size(), 2U);
     EXPECT_EQ(testres4[1], "\"34,45,56\"");
 
-    string_view test5 = R"("part1'" and "part2","34,45,56")";
+    std::string_view test5 = R"("part1'" and "part2","34,45,56")";
     auto testres5 = splitlineQuotes(test5);
     ASSERT_EQ(testres5.size(), 2U);
     EXPECT_EQ(testres5[1], "\"34,45,56\"");
@@ -322,14 +322,14 @@ TEST(stringViewOps, splitLineQuotes_tests)
 
 TEST(stringViewOps, splitLineBracket_tests)
 {
-    string_view test1 = "(454, 345), happy; frog";
+    std::string_view test1 = "(454, 345), happy; frog";
     auto testres = splitlineBracket(test1);
     trim(testres);
     ASSERT_EQ(testres.size(), 3U);
     EXPECT_EQ(testres[0], "(454, 345)");
     EXPECT_EQ(testres[1], "happy");
     EXPECT_EQ(testres[2], "frog");
-    string_view test2 = " \'alpha,   bravo\' ; charlie ";
+    std::string_view test2 = " \'alpha,   bravo\' ; charlie ";
     // the default bracket split should recognize strings as well
     auto testres2 = splitlineBracket(test2);
     trim(testres2);
@@ -337,7 +337,7 @@ TEST(stringViewOps, splitLineBracket_tests)
     EXPECT_EQ(testres2[0], "\'alpha,   bravo\'");
     EXPECT_EQ(testres2[1], "charlie");
 
-    string_view test3 = "$45,34,45$;$23.45,34,23.3$";
+    std::string_view test3 = "$45,34,45$;$23.45,34,23.3$";
     auto testres3 = splitlineBracket(test3, ";,", "$");
     trim(testres3);
     ASSERT_EQ(testres3.size(), 2U);
@@ -347,9 +347,9 @@ TEST(stringViewOps, splitLineBracket_tests)
 
 TEST(stringViewOps, trailingInt)
 {
-    string_view name;
+    std::string_view name;
 
-    string_view input = "bob47";
+    std::string_view input = "bob47";
     auto val = trailingStringInt(input, name);
     EXPECT_EQ(val, 47);
     EXPECT_EQ(name, "bob");
@@ -427,15 +427,15 @@ TEST(stringViewOps, mergeTest)
     alongString.append("sep");
     alongString.append("test2");
 
-    string_view whole(alongString);
-    string_view part1 = whole.substr(0, 5);
+    std::string_view whole(alongString);
+    std::string_view part1 = whole.substr(0, 5);
 
-    string_view part2 = whole.substr(8);
+    std::string_view part2 = whole.substr(8);
 
-    string_view res = merge(part1, part2);
+    std::string_view res = merge(part1, part2);
     EXPECT_EQ(res, whole);
 
-    string_view empty;
+    std::string_view empty;
 
     auto p3 = merge(part1, empty);
     EXPECT_EQ(p3, part1);
@@ -447,7 +447,7 @@ TEST(stringViewOps, mergeTest)
     EXPECT_TRUE(p4.empty());
 
     std::string lstr(100, 'a');
-    string_view aba(lstr.c_str(), 3);
-    string_view bab(lstr.c_str() + 80, 3);
+    std::string_view aba(lstr.c_str(), 3);
+    std::string_view bab(lstr.c_str() + 80, 3);
     EXPECT_THROW(merge(aba, bab), std::out_of_range);
 }

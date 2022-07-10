@@ -5,13 +5,13 @@
 # copied from https://github.com/CLIUtils/CLI11
 
 trigger:
-  - master
+  - main
 
 pr:
-  - master
+  - main
 
 variables:
-  utilities.std: 14
+  utilities.std: 17
   utilities.build_type: Debug
   utilities.options: -DGMLC_UTILITIES_ENABLE_TESTS=ON -DGMLC_UTILITIES_ENABLE_ERROR_ON_WARNINGS=ON
   CMAKE_BUILD_PARALLEL_LEVEL: 4
@@ -19,13 +19,13 @@ variables:
 jobs:
   - job: ClangTidy
     variables:
-      CXX_FLAGS: '-Werror -Wcast-align -Wfloat-equal -Wimplicit-atomic-properties -Wmissing-declarations -Woverlength-strings -Wshadow -Wstrict-selector-match -Wundeclared-selector -Wunreachable-code -std=c++11'
+      CXX_FLAGS: '-Werror -Wcast-align -Wfloat-equal -Wimplicit-atomic-properties -Wmissing-declarations -Woverlength-strings -Wshadow -Wstrict-selector-match -Wundeclared-selector -Wunreachable-code -std=c++17'
       utilities.options: -DGMLC_UTILITIES_CLANG_TIDY=ON -DGMLC_UTILITIES_CLANG_TIDY_OPTIONS="-fix"
-      utilities.std: 14
+      utilities.std: 17
       CMAKE_BUILD_PARALLEL_LEVEL: 1
     pool:
       vmImage: 'ubuntu-latest'
-    container: silkeh/clang:8
+    container: helics/buildenv:clang14-builder
     steps:
       - template: .ci/azure-build.yml
       - script: git diff --exit-code --color
@@ -38,7 +38,7 @@ jobs:
       vmImage: 'ubuntu-latest'
     container: helics/buildenv:cpplint
     steps:
-      - bash: cpplint --counting=detailed --recursive --exclude view.hpp gmlc tests
+      - bash: cpplint --counting=detailed --recursive gmlc tests benchmarks --exclude optional.hpp
         displayName: Checking against google style guide
 
   - job: Native
@@ -52,12 +52,12 @@ jobs:
         macOS11:
           vmImage: 'macOS-latest'
         Windows17:
-          vmImage: 'vs2017-win2016'
-          utilities.std: 17
-        Windows11:
-          vmImage: 'vs2017-win2016'
-        Windowslatest:
           vmImage: 'windows-2019'
+          utilities.std: 20
+        Windows11:
+          vmImage: 'windows-2019'
+        Windowslatest:
+          vmImage: 'windows-2022'
           utilities.std: 17
     pool:
       vmImage: $(vmImage)
@@ -73,10 +73,15 @@ jobs:
         gcc8:
           containerImage: helics/buildenv:gcc8-builder
           utilities.std: 17
-        clang3.6:
-          containerImage: helics/buildenv:clang-3.6_boost-1.58.0
-        clang8:
-          containerImage: helics/buildenv:clang8-builder
+        gcc9:
+          containerImage: helics/buildenv:gcc9-builder
+          utilities.std: 17
+          utilities.options: -DCMAKE_CXX_FLAGS="-Wstrict-overflow=5"
+        gcc11:
+          containerImage: helics/buildenv:gcc11-builder
+          utilities.std: 20
+        clang9:
+          containerImage: helics/buildenv:clang9-builder
     container: $[ variables['containerImage'] ]
     steps:
       - template: .ci/azure-build.yml

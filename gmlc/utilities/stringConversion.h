@@ -9,6 +9,14 @@
  * For details, see the LICENSE file.
  * LLNS Copyright End
  */
+
+/*
+Copyright (c) 2017-2022,
+Battelle Memorial Institute; Lawrence Livermore National Security, LLC; Alliance
+for Sustainable Energy, LLC.  See the top-level NOTICE for additional details.
+All rights reserved. SPDX-License-Identifier: BSD-3-Clause
+*/
+
 #pragma once
 
 #include "charMapper.h"
@@ -180,9 +188,10 @@ namespace utilities {
 @return a vector of double precision numbers converted from the string
 */
     template<typename X>
-    std::vector<X> str2vector(const std::string& line,
-                              const X defValue,
-                              const std::string& delimiters = ",;")
+    std::vector<X> str2vector(
+        const std::string& line,
+        const X defValue,
+        const std::string& delimiters = ",;")
     {
         auto tempVec = stringOps::splitline(line, delimiters);
         std::vector<X> av;
