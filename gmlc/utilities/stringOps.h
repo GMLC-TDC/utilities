@@ -110,8 +110,8 @@ namespace stringOps {
     constexpr std::string_view
         whiteSpaceCharacters(whiteChars.data(), whiteChars.size());
 
-    /** @brief trim characters (default=whitespace) from a string at the beginning and
-end of the string
+    /** @brief trim characters (default=whitespace) from a string at the
+beginning and end of the string
 @param[in,out] input  the string to convert
 */
     void trimString(

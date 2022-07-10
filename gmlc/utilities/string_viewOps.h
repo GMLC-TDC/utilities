@@ -30,8 +30,8 @@ namespace string_viewOps {
     /** a set of white space characters*/
     constexpr std::string_view whiteSpaceCharacters(" \t\n\r\0\v\f");
 
-    /** @brief trim specified (default=whitespace) characters from the beginning and
-end of the input string
+    /** @brief trim specified (default=whitespace) characters from the beginning
+and end of the input string
 @param[in,out] input  the string to convert
 @param[in] trimCharacters the characters to potentially trim
 */
@@ -41,7 +41,8 @@ end of the input string
 
     /** @brief trim characters (default=whitespace) from a string
 @param[in] input the string to trim
-@param[in] trimCharacters  the set of characters to trim; defaults to \t\n\r\0\v\f
+@param[in] trimCharacters  the set of characters to trim; defaults to
+\t\n\r\0\v\f
 @return the trimmed string
 */
     std::string_view trim(
@@ -50,7 +51,8 @@ end of the input string
 
     /** @brief trim the specified characters from a vector of std::string_views
 @param[in] input the vector of strings to trim;
-@param[in] trimCharacters  the set of characters to trim; defaults to \t\n\r\0\v\f
+@param[in] trimCharacters  the set of characters to trim; defaults to
+\t\n\r\0\v\f
 */
     void trim(
         string_viewVector& input,
@@ -65,7 +67,8 @@ quotes; whitespace is also trimmed
     std::string_view removeQuotes(std::string_view str);
 
     /** @brief remove outer brackets from a string
-outer brackets include [({<  and their matching pair; whitespace is also trimmmed
+outer brackets include [({<  and their matching pair; whitespace is also
+trimmmed
 @param[in] str  the original string
 @return  the string with outer brackets removed
 */
