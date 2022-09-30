@@ -33,6 +33,7 @@ set(utilities_header_files
     TimeSeries.hpp
     TimeSeriesMulti.hpp
     demangle.hpp
+    mapOps.hpp
 )
 
 if(GMLC_UTILITIES_OBJECT_LIB)
