@@ -9,22 +9,21 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 
 #include <optional>
 
-namespace gmlc::utilities
+namespace gmlc::utilities {
+template<class MAP, class X1, class X2>
+inline X2 mapFind(const MAP& mapS, const X1& val, const X2& defVal)
 {
-    template<class MAP, class X1, class X2>
-    inline X2 mapFind(const MAP& mapS, const X1& val, const X2& defVal)
-    {
-        auto map_it = mapS.find(val);
-        return (map_it != mapS.end()) ? map_it->second : defVal;
-    }
-
-    template<class MAP, class X1, class X2>
-    std::optional<X2> mapFind(const MAP& mapS, const X1& val)
-    {
-        auto map_it = mapS.find(val);
-        if (map_it != mapS.end()) {
-            return map_it->second;
-        }
-        return std::nullopt;
-    }
+    auto map_it = mapS.find(val);
+    return (map_it != mapS.end()) ? map_it->second : defVal;
 }
+
+template<class MAP, class X1, class X2>
+std::optional<X2> mapFind(const MAP& mapS, const X1& val)
+{
+    auto map_it = mapS.find(val);
+    if (map_it != mapS.end()) {
+        return map_it->second;
+    }
+    return std::nullopt;
+}
+}  // namespace gmlc::utilities

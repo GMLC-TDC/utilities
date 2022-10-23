@@ -180,7 +180,6 @@ TEST(time9, chrono)
     EXPECT_TRUE(b2.to_ns() == tmns);
 }
 
-
 // Time 6 tests
 TEST(time6, simple_times)
 {
@@ -506,7 +505,7 @@ TEST(time12, chrono)
 
     nanoseconds tmns(10026523523);
     Time12 b2(tmns);
-    EXPECT_EQ(b2.getBaseTimeCode(), tmns.count()*1000);
+    EXPECT_EQ(b2.getBaseTimeCode(), tmns.count() * 1000);
 
     EXPECT_TRUE(b2.to_ns() == tmns);
 }
