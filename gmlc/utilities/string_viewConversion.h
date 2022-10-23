@@ -34,7 +34,6 @@
 #include <string>
 #include <vector>
 
-
 namespace gmlc::utilities {
 extern const CharMapper<bool> numCheck;
 extern const CharMapper<bool> numCheckEnd;
@@ -43,107 +42,91 @@ template<typename X>
 X strViewToInteger(std::string_view input, size_t* charactersUsed = nullptr)
 {
     static_assert(std::is_integral_v<X>, "requested type is not integral");
-    X val{ 0 };
-    if (charactersUsed != nullptr)
-    {
-        *charactersUsed=0;
+    X val{0};
+    if (charactersUsed != nullptr) {
+        *charactersUsed = 0;
     }
     std::size_t additionalChars{0};
-    if (input.size() > 1)
-    {
-        while (input[0] == ' ')
-        {
+    if (input.size() > 1) {
+        while (input[0] == ' ') {
             input.remove_prefix(1);
             ++additionalChars;
-            if (input.empty())
-            {
-                if (charactersUsed != nullptr)
-                {
-                    *charactersUsed=additionalChars;
+            if (input.empty()) {
+                if (charactersUsed != nullptr) {
+                    *charactersUsed = additionalChars;
                 }
                 return val;
             }
         }
-        if (input.front() == '0')
-        {
-            if (input[1] != 'X' && input[1] != 'x')
-            {
-                while (input[0] == '0')
-                {
+        if (input.front() == '0') {
+            if (input[1] != 'X' && input[1] != 'x') {
+                while (input[0] == '0') {
                     input.remove_prefix(1);
                     ++additionalChars;
-                    if (input.empty())
-                    {
-                        if (charactersUsed != nullptr)
-                        {
-                            *charactersUsed=additionalChars;
+                    if (input.empty()) {
+                        if (charactersUsed != nullptr) {
+                            *charactersUsed = additionalChars;
                         }
                         return val;
                     }
                 }
-                
             }
         }
     }
-    auto conversionResult=std::from_chars(input.data(),input.data()+input.size(),val);
-    if (conversionResult.ec == std::errc())
-    {
-        if (charactersUsed != nullptr)
-        {
-            *charactersUsed=(conversionResult.ptr-input.data())+additionalChars;
+    auto conversionResult =
+        std::from_chars(input.data(), input.data() + input.size(), val);
+    if (conversionResult.ec == std::errc()) {
+        if (charactersUsed != nullptr) {
+            *charactersUsed =
+                (conversionResult.ptr - input.data()) + additionalChars;
         }
         return val;
     }
-    if (conversionResult.ec == std::errc::result_out_of_range)
-    {
-        if (charactersUsed != nullptr)
-        {
-            *charactersUsed=(conversionResult.ptr-input.data());
+    if (conversionResult.ec == std::errc::result_out_of_range) {
+        if (charactersUsed != nullptr) {
+            *charactersUsed = (conversionResult.ptr - input.data());
         }
-        throw(std::out_of_range("conversion type does not support the string conversion"));
+        throw(std::out_of_range(
+            "conversion type does not support the string conversion"));
     }
-    if constexpr (std::is_unsigned_v<X>)
-    {
-        if (input.size() > 1 && input.front() == '-')
-        {
-            auto signedVal=strViewToInteger<std::make_signed_t<X>>(input,charactersUsed);
-            // additional chars must be 0 in this case otherwise it should have been an error
+    if constexpr (std::is_unsigned_v<X>) {
+        if (input.size() > 1 && input.front() == '-') {
+            auto signedVal =
+                strViewToInteger<std::make_signed_t<X>>(input, charactersUsed);
+            // additional chars must be 0 in this case otherwise it should have
+            // been an error
             return static_cast<X>(signedVal);
         }
     }
     throw(std::invalid_argument("unable to convert string"));
-   
 }
 
 #ifdef __cpp_lib_to_chars
 template<typename X>
 X strViewToFloat(std::string_view input, size_t* charactersUsed = nullptr)
 {
-    static_assert(std::is_floating_point_v<X>, "requested type is not floating point");
-    X val{ 0 };
-    if (charactersUsed != nullptr)
-    {
-        *charactersUsed=0;
+    static_assert(
+        std::is_floating_point_v<X>, "requested type is not floating point");
+    X val{0};
+    if (charactersUsed != nullptr) {
+        *charactersUsed = 0;
     }
-    auto conversionResult=std::from_chars(input.data(),input.data()+input.size(),val);
-    if (conversionResult.ec == std::errc{})
-    {
-        if (charactersUsed != nullptr)
-        {
-            *charactersUsed=(conversionResult.ptr-input.data());
+    auto conversionResult =
+        std::from_chars(input.data(), input.data() + input.size(), val);
+    if (conversionResult.ec == std::errc{}) {
+        if (charactersUsed != nullptr) {
+            *charactersUsed = (conversionResult.ptr - input.data());
         }
         return val;
     }
-    if (conversionResult.ec == std::errc::result_out_of_range)
-    {
-        if (charactersUsed != nullptr)
-        {
-            *charactersUsed=(conversionResult.ptr-input.data());
+    if (conversionResult.ec == std::errc::result_out_of_range) {
+        if (charactersUsed != nullptr) {
+            *charactersUsed = (conversionResult.ptr - input.data());
         }
-        throw(std::out_of_range("conversion type does not support the string conversion"));
+        throw(std::out_of_range(
+            "conversion type does not support the string conversion"));
     }
     throw(std::invalid_argument("unable to convert string"));
-
 }
 #endif
 
@@ -201,15 +184,16 @@ inline long double numConv(std::string_view V)
 template<class X>
 inline X numConvComp(std::string_view V, size_t& charactersUsed)
 {
-    return (std::is_integral<X>::value) ? strViewToInteger<X>(V, &charactersUsed) :
-                                          X(numConvComp<double>(V, charactersUsed));
+    return (std::is_integral<X>::value) ?
+        strViewToInteger<X>(V, &charactersUsed) :
+        X(numConvComp<double>(V, charactersUsed));
 }
 
 template<>
 inline float numConvComp(std::string_view V, size_t& charactersUsed)
 {
 #ifdef __cpp_lib_to_chars
-    return strViewToFloat<float>(V,&charactersUsed);
+    return strViewToFloat<float>(V, &charactersUsed);
 #else
     return std::stof(std::string(V.data(), V.length()), &charactersUsed);
 #endif
@@ -219,18 +203,17 @@ template<>
 inline double numConvComp(std::string_view V, size_t& charactersUsed)
 {
 #ifdef __cpp_lib_to_chars
-    return strViewToFloat<double>(V,&charactersUsed);
+    return strViewToFloat<double>(V, &charactersUsed);
 #else
     return std::stod(std::string(V.data(), V.length()), &charactersUsed);
 #endif
-    
 }
 
 template<>
 inline long double numConvComp(std::string_view V, size_t& charactersUsed)
 {
 #ifdef __cpp_lib_to_chars
-    return strViewToFloat<long double>(V,&charactersUsed);
+    return strViewToFloat<long double>(V, &charactersUsed);
 #else
     return std::stold(std::string(V.data(), V.length()), &charactersUsed);
 #endif
