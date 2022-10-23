@@ -13,7 +13,7 @@ pr:
 variables:
   utilities.std: 17
   utilities.build_type: Debug
-  utilities.options: -DGMLC_UTILITIES_ENABLE_TESTS=ON -DGMLC_UTILITIES_ENABLE_ERROR_ON_WARNINGS=ON
+  utilities.options: -DGMLC_UTILITIES_BUILD_TESTS=ON -DGMLC_UTILITIES_ENABLE_ERROR_ON_WARNINGS=ON
   CMAKE_BUILD_PARALLEL_LEVEL: 4
 
 jobs:
