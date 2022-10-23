@@ -540,7 +540,7 @@ class TimeRepresentation {
         internalTimeCode(Tconv::convert(t))
     {
     }  // NOLINT
-    CHRONO_CONSTEXPR
+    constexpr
     TimeRepresentation(std::chrono::nanoseconds nsTime) noexcept  // NOLINT
         :
         internalTimeCode(Tconv::convert(nsTime))
