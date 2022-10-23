@@ -9,42 +9,22 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 
 #include <optional>
 
-#include <map>
-#include <unordered_map>
-
-template<class X1, class X2>
-inline X2 mapFind(const std::map<X1, X2>& mapS, const X1& val, const X2& defVal)
+namespace gmlc::utilities
 {
-    auto map_it = mapS.find(val);
-    return (map_it != mapS.end()) ? map_it->second : defVal;
-}
-
-template<class X1, class X2>
-std::optional<X2> mapFind(const std::map<X1, X2>& mapS, const X1& val)
-{
-    auto map_it = mapS.find(val);
-    if (map_it != mapS.end()) {
-        return map_it->second;
+    template<class MAP, class X1, class X2>
+    inline X2 mapFind(const MAP& mapS, const X1& val, const X2& defVal)
+    {
+        auto map_it = mapS.find(val);
+        return (map_it != mapS.end()) ? map_it->second : defVal;
     }
-    return {};
-}
 
-template<class X1, class X2>
-inline X2 mapFind(
-    const std::unordered_map<X1, X2>& mapS,
-    const X1& val,
-    const X2& defVal)
-{
-    auto map_it = mapS.find(val);
-    return (map_it != mapS.end()) ? map_it->second : defVal;
-}
-
-template<class X1, class X2>
-std::optional<X2> mapFind(const std::unordered_map<X1, X2>& mapS, const X1& val)
-{
-    auto map_it = mapS.find(val);
-    if (map_it != mapS.end()) {
-        return map_it->second;
+    template<class MAP, class X1, class X2>
+    std::optional<X2> mapFind(const MAP& mapS, const X1& val)
+    {
+        auto map_it = mapS.find(val);
+        if (map_it != mapS.end()) {
+            return map_it->second;
+        }
+        return std::nullopt;
     }
-    return {};
 }
