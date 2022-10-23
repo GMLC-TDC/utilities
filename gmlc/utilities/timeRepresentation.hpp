@@ -16,8 +16,6 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 */
 /* @file  define a representation of time that works well for simulation
  * environments*/
-// the include guards are left in place as this file might be used in multiple
-// places
 
 #pragma once
 #include <chrono>
