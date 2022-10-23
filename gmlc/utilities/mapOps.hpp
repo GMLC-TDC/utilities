@@ -40,8 +40,7 @@ inline X2 mapFind(
 }
 
 template<class X1, class X2>
-std::optional<X2>
-    mapFind(const std::unordered_map<X1, X2>& mapS, const X1& val)
+std::optional<X2> mapFind(const std::unordered_map<X1, X2>& mapS, const X1& val)
 {
     auto map_it = mapS.find(val);
     if (map_it != mapS.end()) {
