@@ -13,6 +13,9 @@
 
 #include "charMapper.h"
 #include "string_viewOps.h"
+
+#include <charconv>
+#ifndef __cpp_lib_to_chars
 #if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -25,78 +28,124 @@
 #endif
 
 #endif
+#endif
 
 #include <stdexcept>
 #include <string>
 #include <vector>
+
 
 namespace gmlc::utilities {
 extern const CharMapper<bool> numCheck;
 extern const CharMapper<bool> numCheckEnd;
 
 template<typename X>
-X strViewToInteger(std::string_view input, size_t* rem = nullptr)
+X strViewToInteger(std::string_view input, size_t* charactersUsed = nullptr)
 {
-    static_assert(std::is_integral<X>::value, "requested type is not integral");
-    X ret = 0;
-    bool inProcess = false;
-    int sign = 1;
-    if (rem) {
-        *rem = input.length();
+    static_assert(std::is_integral_v<X>, "requested type is not integral");
+    X val{ 0 };
+    if (charactersUsed != nullptr)
+    {
+        *charactersUsed=0;
     }
-    auto v1 = input.cbegin();
-    auto vend = input.cend();
-    while ((!inProcess) && (v1 != vend)) {
-        switch (*v1) {
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-                ret = (static_cast<X>(*v1) - '0');
-                inProcess = true;
-                break;
-            case '-':
-                sign *= -1;
-                break;
-            case '0':
-                inProcess = true;
-                break;
-            case '+':
-            case ' ':
-            case '\t':
-            case '\r':
-            case '\0':
-            case '\n':
-                break;
-            default:
-                throw(std::invalid_argument("unable to convert string"));
-        }
-        ++v1;
-    }
-    if (!inProcess) {
-        throw(std::invalid_argument("unable to convert string"));
-    }
-
-    while (v1 != vend) {
-        if ((*v1) >= '0' && (*v1) <= '9') {
-            ret *= 10;
-            ret += (static_cast<X>(*v1) - '0');
-        } else {
-            if (rem) {
-                *rem = (v1 - input.cbegin());
+    std::size_t additionalChars{0};
+    if (input.size() > 1)
+    {
+        while (input[0] == ' ')
+        {
+            input.remove_prefix(1);
+            ++additionalChars;
+            if (input.empty())
+            {
+                if (charactersUsed != nullptr)
+                {
+                    *charactersUsed=additionalChars;
+                }
+                return val;
             }
-            break;
         }
-        ++v1;
+        if (input.front() == '0')
+        {
+            if (input[1] != 'X' && input[1] != 'x')
+            {
+                while (input[0] == '0')
+                {
+                    input.remove_prefix(1);
+                    ++additionalChars;
+                    if (input.empty())
+                    {
+                        if (charactersUsed != nullptr)
+                        {
+                            *charactersUsed=additionalChars;
+                        }
+                        return val;
+                    }
+                }
+                
+            }
+        }
     }
-
-    return static_cast<X>(ret * sign);
+    auto conversionResult=std::from_chars(input.data(),input.data()+input.size(),val);
+    if (conversionResult.ec == std::errc())
+    {
+        if (charactersUsed != nullptr)
+        {
+            *charactersUsed=(conversionResult.ptr-input.data())+additionalChars;
+        }
+        return val;
+    }
+    if (conversionResult.ec == std::errc::result_out_of_range)
+    {
+        if (charactersUsed != nullptr)
+        {
+            *charactersUsed=(conversionResult.ptr-input.data());
+        }
+        throw(std::out_of_range("conversion type does not support the string conversion"));
+    }
+    if constexpr (std::is_unsigned_v<X>)
+    {
+        if (input.size() > 1 && input.front() == '-')
+        {
+            auto signedVal=strViewToInteger<std::make_signed_t<X>>(input,charactersUsed);
+            // additional chars must be 0 in this case otherwise it should have been an error
+            return static_cast<X>(signedVal);
+        }
+    }
+    throw(std::invalid_argument("unable to convert string"));
+   
 }
+
+#ifdef __cpp_lib_to_chars
+template<typename X>
+X strViewToFloat(std::string_view input, size_t* charactersUsed = nullptr)
+{
+    static_assert(std::is_floating_point_v<X>, "requested type is not floating point");
+    X val{ 0 };
+    if (charactersUsed != nullptr)
+    {
+        *charactersUsed=0;
+    }
+    auto conversionResult=std::from_chars(input.data(),input.data()+input.size(),val);
+    if (conversionResult.ec == std::errc{})
+    {
+        if (charactersUsed != nullptr)
+        {
+            *charactersUsed=(conversionResult.ptr-input.data());
+        }
+        return val;
+    }
+    if (conversionResult.ec == std::errc::result_out_of_range)
+    {
+        if (charactersUsed != nullptr)
+        {
+            *charactersUsed=(conversionResult.ptr-input.data());
+        }
+        throw(std::out_of_range("conversion type does not support the string conversion"));
+    }
+    throw(std::invalid_argument("unable to convert string"));
+
+}
+#endif
 
 // templates for single numerical conversion
 template<typename X>
@@ -110,7 +159,9 @@ inline X numConv(std::string_view V)
 template<>
 inline double numConv(std::string_view V)
 {
-#if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
+#ifdef __cpp_lib_to_chars
+    return strViewToFloat<double>(V);
+#elif defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
     namespace x3 = boost::spirit::x3;
     double retVal = -1e49;
     x3::parse(V.cbegin(), V.cend(), x3::double_, retVal);
@@ -123,7 +174,9 @@ inline double numConv(std::string_view V)
 template<>
 inline float numConv(std::string_view V)
 {
-#if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
+#ifdef __cpp_lib_to_chars
+    return strViewToFloat<float>(V);
+#elif defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
     namespace x3 = boost::spirit::x3;
     float retVal = -1e25f;
     x3::parse(V.cbegin(), V.cend(), x3::float_, retVal);
@@ -137,33 +190,50 @@ inline float numConv(std::string_view V)
 template<>
 inline long double numConv(std::string_view V)
 {
+#ifdef __cpp_lib_to_chars
+    return strViewToFloat<long double>(V);
+#else
     return std::stold(std::string(V.data(), V.length()));
+#endif
 }
 
 // template for numeric conversion returning the position
 template<class X>
-inline X numConvComp(std::string_view V, size_t& rem)
+inline X numConvComp(std::string_view V, size_t& charactersUsed)
 {
-    return (std::is_integral<X>::value) ? strViewToInteger<X>(V, &rem) :
-                                          X(numConvComp<double>(V, rem));
+    return (std::is_integral<X>::value) ? strViewToInteger<X>(V, &charactersUsed) :
+                                          X(numConvComp<double>(V, charactersUsed));
 }
 
 template<>
-inline float numConvComp(std::string_view V, size_t& rem)
+inline float numConvComp(std::string_view V, size_t& charactersUsed)
 {
-    return std::stof(std::string(V.data(), V.length()), &rem);
+#ifdef __cpp_lib_to_chars
+    return strViewToFloat<float>(V,&charactersUsed);
+#else
+    return std::stof(std::string(V.data(), V.length()), &charactersUsed);
+#endif
 }
 
 template<>
-inline double numConvComp(std::string_view V, size_t& rem)
+inline double numConvComp(std::string_view V, size_t& charactersUsed)
 {
-    return std::stod(std::string(V.data(), V.length()), &rem);
+#ifdef __cpp_lib_to_chars
+    return strViewToFloat<double>(V,&charactersUsed);
+#else
+    return std::stod(std::string(V.data(), V.length()), &charactersUsed);
+#endif
+    
 }
 
 template<>
-inline long double numConvComp(std::string_view V, size_t& rem)
+inline long double numConvComp(std::string_view V, size_t& charactersUsed)
 {
-    return std::stold(std::string(V.data(), V.length()), &rem);
+#ifdef __cpp_lib_to_chars
+    return strViewToFloat<long double>(V,&charactersUsed);
+#else
+    return std::stold(std::string(V.data(), V.length()), &charactersUsed);
+#endif
 }
 
 /** check if the first character of the string is a valid numerical value*/

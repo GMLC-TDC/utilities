@@ -7,19 +7,19 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-cmake_minimum_required(VERSION 3.11...3.23)
+cmake_minimum_required(VERSION 3.11...3.24)
 
 project(
     GMLC_UTILITIES
     LANGUAGES CXX
-    VERSION 0.4.0
+    VERSION 0.5.0
 )
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "2022-07-04")
+set(GMLC_UTILITIES_DATE "2022-10-23")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 

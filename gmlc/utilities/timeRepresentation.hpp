@@ -18,8 +18,7 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
  * environments*/
 // the include guards are left in place as this file might be used in multiple
 // places
-#ifndef TIME_REPRESENTATION_H_
-#define TIME_REPRESENTATION_H_
+
 #pragma once
 #include <chrono>
 #include <cmath>
@@ -27,11 +26,6 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 #include <iosfwd>
 #include <limits>
 #include <type_traits>
-#ifdef __cpp_lib_chrono
-#define CHRONO_CONSTEXPR constexpr
-#else
-#define CHRONO_CONSTEXPR
-#endif
 
 /** enumeration of different time units
  */
@@ -145,7 +139,7 @@ class integer_time {
             ((t > toDouble(maxVal() - 10000)) ? nseconds : maxVal()) :
             minVal();
     }
-    static CHRONO_CONSTEXPR baseType
+    static constexpr baseType
         convert(std::chrono::nanoseconds nsTime) noexcept
     {
         return static_cast<baseType>(
@@ -249,11 +243,16 @@ class count_time {
     static constexpr baseType zeroVal() noexcept { return baseType(0); }
     static constexpr baseType epsilon() noexcept { return baseType(1); }
 
-    static CHRONO_CONSTEXPR baseType
+    static constexpr baseType
         convert(std::chrono::nanoseconds nsTime) noexcept
     {
-        return (N >= 9) ? static_cast<baseType>(nsTime.count() * fac10[N - 9]) :
-                          static_cast<baseType>(nsTime.count() / fac10[9 - N]);
+        if constexpr (N >= 9) {
+            return static_cast<baseType>(nsTime.count() * fac10[N - 9]);
+        }
+        else {
+            return static_cast<baseType>(nsTime.count() / fac10[9 - N]);
+        }
+                          
     }
     static constexpr double toDouble(baseType val) noexcept
     {
@@ -277,21 +276,37 @@ class count_time {
     {
         switch (units) {
             case time_units::ps:
-                return (N >= 12) ?
-                    static_cast<std::int64_t>(val / fac10[N - 12]) :
-                    static_cast<std::int64_t>(val * fac10[12 - N]);
+                if constexpr (N >= 12) {
+                    return static_cast<std::int64_t>(val / fac10[N - 12]);
+                }
+                else {
+                    return
+                        static_cast<std::int64_t>(val * fac10[12 - N]);
+                }
             case time_units::ns:
-                return (N >= 9) ?
-                    static_cast<std::int64_t>(val / fac10[N - 9]) :
-                    static_cast<std::int64_t>(val * fac10[9 - N]);
+                if constexpr (N >= 9){
+                    return static_cast <std::int64_t>(val / fac10[N - 9]) ;
+                }
+                else {
+                    return
+                        static_cast<std::int64_t>(val * fac10[9 - N]);
+                }
             case time_units::us:
-                return (N >= 6) ?
-                    static_cast<std::int64_t>(val / fac10[N - 6]) :
-                    static_cast<std::int64_t>(val * fac10[6 - N]);
+                if constexpr (N >= 6) {
+                    return static_cast<std::int64_t>(val / fac10[N - 6]) ;
+                }
+                else {
+                    return
+                        static_cast<std::int64_t>(val * fac10[6 - N]);
+                }
             case time_units::ms:
-                return (N >= 3) ?
-                    static_cast<std::int64_t>(val / fac10[N - 3]) :
-                    static_cast<std::int64_t>(val * fac10[3 - N]);
+                if constexpr (N >= 3) {
+                    return static_cast<std::int64_t>(val / fac10[N - 3]) ;
+                }
+                else {
+                    return
+                        static_cast<std::int64_t>(val * fac10[3 - N]);
+                }
             case time_units::s:
             case time_units::sec:
             default:
@@ -308,17 +323,37 @@ class count_time {
     {
         switch (units) {
             case time_units::ps:
-                return (N >= 12) ? static_cast<baseType>(val * fac10[N - 12]) :
-                                   static_cast<baseType>(val / fac10[12 - N]);
+                if constexpr  (N >= 12) {
+                    return static_cast<baseType>(val * fac10[N - 12]) ;
+                }
+                else {
+                    return
+                        static_cast<baseType>(val / fac10[12 - N]);
+                }
             case time_units::ns:
-                return (N >= 9) ? static_cast<baseType>(val * fac10[N - 9]) :
-                                  static_cast<baseType>(val / fac10[9 - N]);
+                if constexpr  (N >= 9) {
+                    return  static_cast<baseType>(val * fac10[N - 9]);
+                }
+                else {
+                    return
+                        static_cast<baseType>(val / fac10[9 - N]);
+                }
             case time_units::us:
-                return (N >= 6) ? static_cast<baseType>(val * fac10[N - 6]) :
-                                  static_cast<baseType>(val / fac10[6 - N]);
+                if constexpr  (N >= 6) {
+                    return  static_cast<baseType>(val * fac10[N - 6]) ;
+                }
+                else {
+                    return
+                        static_cast<baseType>(val / fac10[6 - N]);
+                }
             case time_units::ms:
-                return (N >= 3) ? static_cast<baseType>(val * fac10[N - 3]) :
-                                  static_cast<baseType>(val / fac10[3 - N]);
+                if constexpr  (N >= 3){
+                    return static_cast<baseType>(val * fac10[N - 3]);
+                }
+                else {
+                    return
+                        static_cast<baseType>(val / fac10[3 - N]);
+                }
             case time_units::s:
             case time_units::sec:
             default:
@@ -348,7 +383,7 @@ class float_time {
   public:
     using baseType = base;
     static constexpr baseType convert(double t) noexcept { return t; }
-    static CHRONO_CONSTEXPR baseType
+    static constexpr baseType
         convert(std::chrono::nanoseconds nsTime) noexcept
     {
         return static_cast<baseType>(nsTime.count() * timeCountReverse[1]);
@@ -919,5 +954,3 @@ inline bool operator<=(double lhs, TimeRepresentation<Tconv> t1)
 {
     return (TimeRepresentation<Tconv>(lhs) <= t1);
 }
-
-#endif
