@@ -7,19 +7,19 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-cmake_minimum_required(VERSION 3.11...3.23)
+cmake_minimum_required(VERSION 3.11...3.24)
 
 project(
     GMLC_UTILITIES
     LANGUAGES CXX
-    VERSION 0.4.0
+    VERSION 0.5.0
 )
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "2022-07-04")
+set(GMLC_UTILITIES_DATE "2022-10-25")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
@@ -136,7 +136,7 @@ if(GMLC_UTILITIES_INSTALL)
 endif()
 
 cmake_dependent_option(
-    GMLC_UTILITIES_TEST "Enable tests for the containers library" ON
+    GMLC_UTILITIES_BUILD_TESTS "Enable tests for the containers library" ON
     "CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME" OFF
 )
 
@@ -152,7 +152,7 @@ cmake_dependent_option(
 
 add_subdirectory(gmlc)
 
-if(GMLC_UTILITIES_TEST AND BUILD_TESTING)
+if(GMLC_UTILITIES_BUILD_TESTS AND BUILD_TESTING)
     add_subdirectory(tests)
 endif()
 

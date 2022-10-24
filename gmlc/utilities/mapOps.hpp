@@ -9,42 +9,32 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 
 #include <optional>
 
-#include <map>
-#include <unordered_map>
-
-template<class X1, class X2>
-inline X2 mapFind(const std::map<X1, X2>& mapS, const X1& val, const X2& defVal)
+namespace gmlc::utilities {
+/** get a specific value from a map like structure
+@param mapS the map structure
+@param val the val to use as a key
+@param defVal the default value to return if val was not found
+@return the result value or defVal if the key was not found
+*/
+template<class MAP, class X1, class X2 = typename MAP::mapped_type>
+inline X2 mapFind(const MAP& mapS, const X1& val, const X2& defVal)
 {
     auto map_it = mapS.find(val);
     return (map_it != mapS.end()) ? map_it->second : defVal;
 }
 
-template<class X1, class X2>
-std::optional<X2> mapFind(const std::map<X1, X2>& mapS, const X1& val)
+/** get a specific value from a map like structure
+@param mapS the map structure
+@param val the val to use as a key
+@return on optional which is filled if the key is found
+*/
+template<class MAP, class X1, class X2 = typename MAP::mapped_type>
+std::optional<X2> mapFind(const MAP& mapS, const X1& val)
 {
     auto map_it = mapS.find(val);
     if (map_it != mapS.end()) {
         return map_it->second;
     }
-    return {};
+    return std::nullopt;
 }
-
-template<class X1, class X2>
-inline X2 mapFind(
-    const std::unordered_map<X1, X2>& mapS,
-    const X1& val,
-    const X2& defVal)
-{
-    auto map_it = mapS.find(val);
-    return (map_it != mapS.end()) ? map_it->second : defVal;
-}
-
-template<class X1, class X2>
-std::optional<X2> mapFind(const std::unordered_map<X1, X2>& mapS, const X1& val)
-{
-    auto map_it = mapS.find(val);
-    if (map_it != mapS.end()) {
-        return map_it->second;
-    }
-    return {};
-}
+}  // namespace gmlc::utilities
