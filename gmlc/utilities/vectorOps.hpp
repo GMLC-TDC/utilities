@@ -813,7 +813,7 @@ void vectorMultAdd(
 
 /** sum the absolute differences between two Vectors
 @param a the first vector
-@param b the secon vector
+@param b the second vector
 @param[out] diff a vector the absolute values of the differences
 @param cnt the number of elements in the vector to compare and sum
 @return the sum of the absolute values of the differences
@@ -837,7 +837,7 @@ X compareVec(
 }
 /** sum the absolute differences between two Vectors
 @param a the first vector
-@param b the secon vector
+@param b the second vector
 @param cnt the number of elements in the vector to compare and sum
 @return the sum of the absolute values of the differences
 */
