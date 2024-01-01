@@ -1,5 +1,5 @@
 # ~~~
-# Copyright (c) 2017-2022, Battelle Memorial Institute; Lawrence Livermore
+# Copyright (c) 2017-2024, Battelle Memorial Institute; Lawrence Livermore
 # National Security, LLC; Alliance for Sustainable Energy, LLC.
 # See the top-level NOTICE for additional details.
 # All rights reserved.
@@ -7,19 +7,19 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-cmake_minimum_required(VERSION 3.11...3.24)
+cmake_minimum_required(VERSION 3.11...3.28)
 
 project(
     GMLC_UTILITIES
     LANGUAGES CXX
-    VERSION 0.5.0
+    VERSION 0.6.0
 )
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "2022-10-25")
+set(GMLC_UTILITIES_DATE "2024-01-02")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
