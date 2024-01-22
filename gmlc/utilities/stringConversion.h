@@ -22,10 +22,10 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 #include "charMapper.h"
 #include "stringOps.h"
 
+#include <cstdint>
 #include <string>
 #include <type_traits>
 #include <vector>
-#include <cstdint>
 
 namespace gmlc {
 namespace utilities {
