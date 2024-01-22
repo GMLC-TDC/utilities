@@ -25,6 +25,7 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 #include <string>
 #include <type_traits>
 #include <vector>
+#include <cstdint>
 
 namespace gmlc {
 namespace utilities {
