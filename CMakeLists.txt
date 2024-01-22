@@ -12,14 +12,14 @@ cmake_minimum_required(VERSION 3.11...3.28)
 project(
     GMLC_UTILITIES
     LANGUAGES CXX
-    VERSION 0.6.0
+    VERSION 0.6.1
 )
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "2024-01-02")
+set(GMLC_UTILITIES_DATE "2024-01-22")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
