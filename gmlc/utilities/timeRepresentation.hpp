@@ -435,34 +435,29 @@ class TimeRepresentation {
 #ifdef _DEBUG
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 0> /*unused*/) noexcept :
-        internalTimeCode(Tconv::zeroVal()),
-        doubleTimeValue(0.0)
+        internalTimeCode(Tconv::zeroVal()), doubleTimeValue(0.0)
     {
     }
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, -1> /*unused*/) noexcept :
-        internalTimeCode(Tconv::minVal()),
-        doubleTimeValue(-1.456e47)
+        internalTimeCode(Tconv::minVal()), doubleTimeValue(-1.456e47)
     {
     }
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 1> /*unused*/) noexcept :
-        internalTimeCode(Tconv::maxVal()),
-        doubleTimeValue(1e49)
+        internalTimeCode(Tconv::maxVal()), doubleTimeValue(1e49)
     {
     }
     constexpr explicit TimeRepresentation(
         std::integral_constant<int, 2> /*unused*/) noexcept :
-        internalTimeCode(Tconv::epsilon()),
-        doubleTimeValue(1e-9)
+        internalTimeCode(Tconv::epsilon()), doubleTimeValue(1e-9)
     {
     }
     constexpr TimeRepresentation(
         std::integral_constant<int, 4> /*unused*/,
         baseType initBaseVal,
         double initDoubleTime) noexcept :
-        internalTimeCode(initBaseVal),
-        doubleTimeValue(initDoubleTime)
+        internalTimeCode(initBaseVal), doubleTimeValue(initDoubleTime)
     {
     }
 #else
@@ -488,8 +483,7 @@ class TimeRepresentation {
     }
     constexpr TimeRepresentation(
         std::integral_constant<int, 4> /*unused*/,
-        baseType initBaseVal) noexcept :
-        internalTimeCode(initBaseVal)
+        baseType initBaseVal) noexcept : internalTimeCode(initBaseVal)
     {
     }
 #endif
@@ -519,13 +513,11 @@ class TimeRepresentation {
     }  // NOLINT
     constexpr TimeRepresentation(
         std::chrono::nanoseconds nsTime) noexcept  // NOLINT
-        :
-        internalTimeCode(Tconv::convert(nsTime))
+        : internalTimeCode(Tconv::convert(nsTime))
     {
     }
     constexpr TimeRepresentation(std::int64_t count, time_units units) noexcept
-        :
-        internalTimeCode(Tconv::fromCount(count, units))
+        : internalTimeCode(Tconv::fromCount(count, units))
     {
     }
 #endif
