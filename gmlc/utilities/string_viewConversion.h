@@ -132,7 +132,6 @@ inline double numConv(std::string_view V)
 #else
     return std::stod(std::string(V.data(), V.length()));
 #endif
-    
 }
 
 template<>
