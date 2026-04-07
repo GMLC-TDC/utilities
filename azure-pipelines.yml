@@ -44,26 +44,41 @@ jobs:
   - job: Native
     strategy:
       matrix:
-        Linux17:
+        Linux20:
           vmImage: 'ubuntu-latest'
-        macOS20:
-          vmImage: 'macOS-latest'
-          utilities.std: 20
-        macOS17:
-          vmImage: 'macOS-latest'
-        Windows20:
-          vmImage: 'windows-2019'
-          utilities.std: 20
-        Windows17:
-          vmImage: 'windows-2019'
+        XCode-latest:
+          utilities.std: 23
+          vmImage: "macOS-15"
+        XCode-oldest:
+          test_config: "ci"
+          vmImage: "macOS-14"
         Windowslatest:
-          vmImage: 'windows-2022'
+          vmImage: 'windows-latest'
           utilities.std: 20
     pool:
       vmImage: $(vmImage)
     steps:
       - template: .ci/azure-build.yml
       - template: .ci/azure-test.yml
+
+  - job: Windows
+    strategy:
+      matrix:
+        Windows20:
+          vmImage: 'windows-latest'
+          utilities.std: 23
+          vsArch: "x64"
+        Windows17:
+          vmImage: 'windows-2022'
+          vsArch: "Win32"
+
+    pool:
+      vmImage: $(vmImage)
+      vsArch: $(vsArch)
+    steps:
+      - template: .ci/azure-build.yml
+      - template: .ci/azure-test.yml
+
 
   - job: Docker
     pool:
@@ -75,6 +90,7 @@ jobs:
         gcc15:
           containerImage: helics/buildenv:gcc15-builder
           utilities.options: -DCMAKE_CXX_FLAGS="-Wstrict-overflow=5"
+          utilities.std: 26
         gcc12:
           containerImage: helics/buildenv:gcc12-builder
           utilities.std: 23
