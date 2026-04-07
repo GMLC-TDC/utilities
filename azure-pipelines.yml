@@ -95,8 +95,11 @@ jobs:
           utilities.std: 23
         clang19:
           containerImage: helics/buildenv:clang19-builder
+        clang22:
+          containerImage: helics/buildenv:clang22-builder
+          utilities.std: 26
         clang14:
-          containerImage: helics/buildenv:clang14-builder
+          containerImage: helics/buildenv:clang15-builder
           utilities.std: 23
     container: $[ variables['containerImage'] ]
     steps:
