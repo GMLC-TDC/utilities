@@ -88,27 +88,6 @@ endif()
 target_link_libraries(utilities_base INTERFACE compile_flags_target)
 
 option(GMLC_UTILITIES_INSTALL "Enable GMLC utilities to be installed" ON)
-option(GMLC_UTILITIES_INCLUDE_BOOST "Enable some boost library headers to be used" ON)
-option(GMLC_UTILITIES_USE_BOOST_SPIRIT
-       "Enable the use of the boost::spirit parser for converting strings" ON
-)
-mark_as_advanced(GMLC_UTILITIES_USE_BOOST_SPIRIT)
-
-# Add boost to test boost::optional if available
-if(GMLC_UTILITIES_INCLUDE_BOOST)
-    find_package(Boost 1.69)
-    if(Boost_FOUND)
-        message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
-        target_include_directories(
-            utilities_base SYSTEM INTERFACE $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>
-        )
-
-        if(GMLC_UTILITIES_USE_BOOST_SPIRIT)
-            target_compile_definitions(utilities_base INTERFACE -DUSE_BOOST_SPIRIT=1)
-        endif()
-
-    endif()
-endif()
 
 # Prepare Clang-Tidy
 if(GMLC_UTILITIES_CLANG_TIDY)

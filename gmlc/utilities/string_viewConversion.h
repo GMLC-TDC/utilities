@@ -15,21 +15,6 @@
 #include "string_viewOps.h"
 
 #include <charconv>
-#ifndef __cpp_lib_to_chars
-#if defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4127 4459)
-#endif
-#include "boost/spirit/home/x3.hpp"
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
-
-#endif
-#endif
-
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -142,28 +127,19 @@ inline X numConv(std::string_view V)
 template<>
 inline double numConv(std::string_view V)
 {
-#ifdef __cpp_lib_to_chars
+#if defined(__cpp_lib_to_chars) && (__cpp_lib_to_chars >= 201611L)
     return strViewToFloat<double>(V);
-#elif defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
-    namespace x3 = boost::spirit::x3;
-    double retVal = -1e49;
-    x3::parse(V.cbegin(), V.cend(), x3::double_, retVal);
-    return retVal;
 #else
     return std::stod(std::string(V.data(), V.length()));
 #endif
+    
 }
 
 template<>
 inline float numConv(std::string_view V)
 {
-#ifdef __cpp_lib_to_chars
+#if defined(__cpp_lib_to_chars) && (__cpp_lib_to_chars >= 201611L)
     return strViewToFloat<float>(V);
-#elif defined USE_BOOST_SPIRIT && USE_BOOST_SPIRIT > 0
-    namespace x3 = boost::spirit::x3;
-    float retVal = -1e25f;
-    x3::parse(V.cbegin(), V.cend(), x3::float_, retVal);
-    return retVal;
 #else
     return std::stof(std::string(V.data(), V.length()));
 #endif
@@ -173,7 +149,7 @@ inline float numConv(std::string_view V)
 template<>
 inline long double numConv(std::string_view V)
 {
-#ifdef __cpp_lib_to_chars
+#if defined(__cpp_lib_to_chars) && (__cpp_lib_to_chars >= 201611L)
     return strViewToFloat<long double>(V);
 #else
     return std::stold(std::string(V.data(), V.length()));
@@ -192,7 +168,7 @@ inline X numConvComp(std::string_view V, size_t& charactersUsed)
 template<>
 inline float numConvComp(std::string_view V, size_t& charactersUsed)
 {
-#ifdef __cpp_lib_to_chars
+#if defined(__cpp_lib_to_chars) && (__cpp_lib_to_chars >= 201611L)
     return strViewToFloat<float>(V, &charactersUsed);
 #else
     return std::stof(std::string(V.data(), V.length()), &charactersUsed);
@@ -202,7 +178,7 @@ inline float numConvComp(std::string_view V, size_t& charactersUsed)
 template<>
 inline double numConvComp(std::string_view V, size_t& charactersUsed)
 {
-#ifdef __cpp_lib_to_chars
+#if defined(__cpp_lib_to_chars) && (__cpp_lib_to_chars >= 201611L)
     return strViewToFloat<double>(V, &charactersUsed);
 #else
     return std::stod(std::string(V.data(), V.length()), &charactersUsed);
@@ -212,7 +188,7 @@ inline double numConvComp(std::string_view V, size_t& charactersUsed)
 template<>
 inline long double numConvComp(std::string_view V, size_t& charactersUsed)
 {
-#ifdef __cpp_lib_to_chars
+#if defined(__cpp_lib_to_chars) && (__cpp_lib_to_chars >= 201611L)
     return strViewToFloat<long double>(V, &charactersUsed);
 #else
     return std::stold(std::string(V.data(), V.length()), &charactersUsed);
