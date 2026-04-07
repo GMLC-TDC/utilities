@@ -14,6 +14,7 @@
 
 #include "gtest/gtest.h"
 #include <array>
+#include <string>
 
 using namespace gmlc::utilities;
 constexpr char encodeSeq[] = "test sequence";

@@ -12,6 +12,8 @@
 
 #include "vectorOps.hpp"
 
+#include <vector>
+
 namespace gmlc::utilities {
 double solve2x2(
     double v11,

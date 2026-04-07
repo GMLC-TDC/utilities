@@ -14,6 +14,7 @@
 
 #include "gtest/gtest.h"
 #include <iostream>
+#include <vector>
 
 using namespace gmlc::utilities;
 

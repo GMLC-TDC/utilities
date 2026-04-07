@@ -122,6 +122,11 @@ cmake_dependent_option(
 add_subdirectory(gmlc)
 
 if(GMLC_UTILITIES_BUILD_TESTS AND BUILD_TESTING)
+    
+    if(NOT EXISTS "${PROJECT_SOURCE_DIR}/ThirdParty/googletest/CMakeLists.txt")
+        include(updateGitSubmodules)    
+        submod_update(ThirdParty/googletest)
+    endif()
     add_subdirectory(tests)
 endif()
 

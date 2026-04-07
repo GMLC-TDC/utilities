@@ -26,6 +26,7 @@
 
 #include "base64.h"
 #include "charMapper.h"
+#include <string>
 #include <string_view>
 
 #include <array>

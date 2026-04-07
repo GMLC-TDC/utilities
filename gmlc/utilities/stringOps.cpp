@@ -31,6 +31,7 @@ June 2022 changed to support string view where applicable
 #include <fstream>
 #include <iomanip>
 #include <random>
+#include <string>
 #include <utility>
 
 namespace gmlc::utilities {
