@@ -48,10 +48,10 @@ jobs:
           vmImage: 'ubuntu-latest'
         XCode-latest:
           utilities.std: 23
-          vmImage: "macOS-15"
+          vmImage: 'macOS-15'
         XCode-oldest:
-          test_config: "ci"
-          vmImage: "macOS-14"
+          test_config: 'ci'
+          vmImage: 'macOS-14'
         Windowslatest:
           vmImage: 'windows-latest'
           utilities.std: 20
@@ -67,10 +67,10 @@ jobs:
         Windows20:
           vmImage: 'windows-latest'
           utilities.std: 23
-          vsArch: "x64"
+          vsArch: 'x64'
         Windows17:
           vmImage: 'windows-2022'
-          vsArch: "Win32"
+          vsArch: 'Win32'
 
     pool:
       vmImage: $(vmImage)
@@ -78,7 +78,6 @@ jobs:
     steps:
       - template: .ci/azure-build.yml
       - template: .ci/azure-test.yml
-
 
   - job: Docker
     pool:

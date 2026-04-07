@@ -24,11 +24,7 @@ repos:
     hooks:
       - id: codespell
         exclude: ^(test/|config/)
-        args:
-          [
-            "-w",
-            "--ignore-words=./config/spelling_whitelist.txt",
-          ]
+        args: ["-w", "--ignore-words=./config/spelling_whitelist.txt"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
