@@ -16,14 +16,13 @@ jobs:
     container:
       image: helics/buildenv:sanitizers-19
     env:
-      CMAKE_FLAGS: '-DCMAKE_CXX_FLAGS="-fsanitize=thread -g -O1 -Wno-reserved-macro-identifier"'
       TSAN_OPTIONS: "second_deadlock_stack=1 suppressions=${{ github.workspace }}/.circleci/tsan_suppression.txt history_size=4"
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Configure
-        run: cmake -S . -B build $CMAKE_FLAGS
+        run: cmake -S . -B build -DCMAKE_CXX_FLAGS="-fsanitize=thread -g -O1 -Wno-reserved-macro-identifier"
 
       - name: Build
         run: cmake --build build --parallel 4

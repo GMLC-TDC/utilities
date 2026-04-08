@@ -28,6 +28,36 @@ if(WIN32)
     endmacro(get_WIN32_WINNT)
 endif()
 
+set(COVERAGE_COMPILER_FLAGS
+    "-g -O0 --coverage -fprofile-arcs -ftest-coverage -fno-inline -fno-inline-small-functions -fno-default-inline"
+)
+set(CMAKE_CXX_FLAGS_COVERAGE
+    "${COVERAGE_COMPILER_FLAGS}"
+    CACHE STRING "Flags used by the C++ compiler during coverage builds."
+    FORCE
+)
+set(CMAKE_C_FLAGS_COVERAGE
+    "${COVERAGE_COMPILER_FLAGS}"
+    CACHE STRING "Flags used by the C compiler during coverage builds."
+    FORCE
+)
+set(CMAKE_EXE_LINKER_FLAGS_COVERAGE
+    ""
+    CACHE STRING "Flags used for linking binaries during coverage builds."
+    FORCE
+)
+set(CMAKE_SHARED_LINKER_FLAGS_COVERAGE
+    ""
+    CACHE STRING "Flags used by the shared libraries linker during coverage builds."
+    FORCE
+)
+mark_as_advanced(
+    CMAKE_CXX_FLAGS_COVERAGE
+    CMAKE_C_FLAGS_COVERAGE
+    CMAKE_EXE_LINKER_FLAGS_COVERAGE
+    CMAKE_SHARED_LINKER_FLAGS_COVERAGE
+)
+
 cmake_dependent_option(
     ${PROJECT_NAME}_ENABLE_EXTRA_COMPILER_WARNINGS
     "disable compiler warning for ${CMAKE_PROJECT_NAME} build" ON
