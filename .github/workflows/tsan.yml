@@ -15,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: helics/buildenv:sanitizers-19
-    env:
-      TSAN_OPTIONS: "second_deadlock_stack=1 suppressions=${{ github.workspace }}/.circleci/tsan_suppression.txt history_size=4"
 
     steps:
       - uses: actions/checkout@v6
@@ -34,4 +32,4 @@ jobs:
 
       - name: Test
         working-directory: build
-        run: ctest --verbose
+        run: TSAN_OPTIONS="second_deadlock_stack=1 suppressions=$PWD/../config/tsan_suppression.txt history_size=4" ctest --verbose
