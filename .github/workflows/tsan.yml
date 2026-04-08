@@ -32,6 +32,4 @@ jobs:
 
       - name: Test
         working-directory: build
-        run: |
-          cp ../config/tsan_suppression.txt ./tsan_suppression.txt
-          TSAN_OPTIONS="second_deadlock_stack=1 suppressions=$PWD/tsan_suppression.txt history_size=4" ctest --verbose
+        run: TSAN_OPTIONS="second_deadlock_stack=1 suppressions=$PWD/../config/tsan_suppression.txt history_size=4" ctest --verbose
