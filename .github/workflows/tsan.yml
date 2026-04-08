@@ -1,0 +1,33 @@
+name: Thread Sanitizer
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  tsan:
+    name: TSan
+    runs-on: ubuntu-latest
+    container:
+      image: helics/buildenv:sanitizers-19
+    env:
+      CMAKE_FLAGS: '-DCMAKE_CXX_FLAGS="-fsanitize=thread -g -O1 -Wno-reserved-macro-identifier"'
+      TSAN_OPTIONS: "second_deadlock_stack=1 suppressions=${{ github.workspace }}/.circleci/tsan_suppression.txt history_size=4"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build $CMAKE_FLAGS
+
+      - name: Build
+        run: cmake --build build --parallel 4
+
+      - name: Test
+        working-directory: build
+        run: ctest --verbose
