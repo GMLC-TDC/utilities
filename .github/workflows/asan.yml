@@ -1,4 +1,4 @@
-name: Memory Sanitizer
+name: Address Sanitizer
 
 on:
   workflow_dispatch:
@@ -10,11 +10,15 @@ on:
       - main
 
 jobs:
-  msan:
-    name: MSan
+  asan:
+    name: ASan
     runs-on: ubuntu-latest
     container:
       image: helics/buildenv:sanitizers-19
+    env:
+      LSAN_OPTIONS: "suppressions=${{ github.workspace }}/config/leak_suppression.txt"
+      UBSAN_OPTIONS: "print_stacktrace=1"
+      ASAN_OPTIONS: "alloc_dealloc_mismatch=0"
 
     steps:
       - uses: actions/checkout@v6
@@ -29,7 +33,7 @@ jobs:
           cmake -S . -B build
           -DCMAKE_CXX_COMPILER=clang++
           -DCMAKE_C_COMPILER=clang
-          -DCMAKE_CXX_FLAGS="-fsanitize=memory -fsanitize-ignorelist=$PWD/config/msan_blacklist.txt -nostdinc++ -nostdlib++ -L/root/develop/libcxx_msan/lib -lc++ -lc++abi -I/root/develop/libcxx_msan/include -I/root/develop/libcxx_msan/include/c++/v1 -Wno-unused-command-line-argument -Wno-reserved-identifier -Wno-reserved-macro-identifier -fno-omit-frame-pointer -g -O1 -Wl,-rpath=/root/develop/libcxx_msan/lib"
+          -DCMAKE_CXX_FLAGS="-fsanitize=undefined,address -lc++ -lc++abi -fsanitize-address-use-after-scope -Wno-unused-command-line-argument -Wno-reserved-macro-identifier -fno-omit-frame-pointer -g -O1 -fsanitize-blacklist=$PWD/config/asan_blacklist.txt"
 
       - name: Build
         run: cmake --build build --parallel 4
