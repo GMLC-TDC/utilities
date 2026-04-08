@@ -35,8 +35,8 @@ namespace utilities {
         float words1 = 1.0F;
         int numwords2 = 1;
         float words2 = 1.0F;
-        float ws1[10];
-        float ws2[10];
+        float ws1[10]{};
+        float ws2[10]{};
         float gap = 0.4F;
         float maxdv = 0.0F;
         int l1;
@@ -123,23 +123,25 @@ namespace utilities {
         }
         // printf("maxi=%d,maxj=%d\n",maxi,maxj);
         fp = fopen("outfile.csv", "w");
-        fprintf(fp, "0,0,");
-        for (ii = 0; ii <= l1; ii++) {
-            fprintf(fp, "%c,", n1[ii]);
-        }
-        fprintf(fp, "\n");
-        for (ii = 0; ii <= l2; ii++) {
-            if (ii > 0) {
-                fprintf(fp, "%c,", n2[ii - 1]);
-            } else {
-                fprintf(fp, "0,");
-            }
-            for (jj = 0; jj <= l1; jj++) {
-                fprintf(fp, "%5.2f,", DV[ii][jj]);
+        if (fp != nullptr) {
+            fprintf(fp, "0,0,");
+            for (ii = 0; ii <= l1; ii++) {
+                fprintf(fp, "%c,", n1[ii]);
             }
             fprintf(fp, "\n");
+            for (ii = 0; ii <= l2; ii++) {
+                if (ii > 0) {
+                    fprintf(fp, "%c,", n2[ii - 1]);
+                } else {
+                    fprintf(fp, "0,");
+                }
+                for (jj = 0; jj <= l1; jj++) {
+                    fprintf(fp, "%5.2f,", DV[ii][jj]);
+                }
+                fprintf(fp, "\n");
+            }
+            fclose(fp);
         }
-        fclose(fp);
         /*matrix score algorithm*/
         if (maxdv / static_cast<float>((std::min)(l1, l2)) < 0.3F) {
             return 0.0F;

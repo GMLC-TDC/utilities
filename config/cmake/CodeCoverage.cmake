@@ -178,7 +178,8 @@ function(SETUP_TARGET_FOR_COVERAGE)
 
     # Show info where to find the report
     add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
-        COMMAND ;
+        COMMAND ${CMAKE_COMMAND} -E echo
+            "Open ./${Coverage_NAME}/index.html in your browser to view the coverage report."
         COMMENT "Open ./${Coverage_NAME}/index.html in your browser to view the coverage report."
     )
 
@@ -230,7 +231,8 @@ function(SETUP_TARGET_FOR_COVERAGE_COBERTURA)
 
     # Show info where to find the report
     add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
-        COMMAND ;
+        COMMAND ${CMAKE_COMMAND} -E echo
+            "Cobertura code coverage report saved in ${Coverage_NAME}.xml."
         COMMENT "Cobertura code coverage report saved in ${Coverage_NAME}.xml."
     )
 
@@ -241,3 +243,4 @@ function(APPEND_COVERAGE_COMPILER_FLAGS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILER_FLAGS}" PARENT_SCOPE)
     message(STATUS "Appending code coverage compiler flags: ${COVERAGE_COMPILER_FLAGS}")
 endfunction() # APPEND_COVERAGE_COMPILER_FLAGS
+
