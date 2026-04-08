@@ -19,7 +19,12 @@ jobs:
       TSAN_OPTIONS: "second_deadlock_stack=1 suppressions=${{ github.workspace }}/.circleci/tsan_suppression.txt history_size=4"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+
+      - name: Mark workspace as safe for git
+        run: git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 
       - name: Configure
         run: cmake -S . -B build -DCMAKE_CXX_FLAGS="-fsanitize=thread -g -O1 -Wno-reserved-macro-identifier"
