@@ -448,7 +448,7 @@ TEST(stringViewOps, mergeTest)
     EXPECT_TRUE(p4.empty());
 
     std::string lstr(100, 'a');
-    const auto *start=lstr.data();
+    const auto* start = lstr.data();
     std::string_view aba(start, 3);
     std::string_view bab(start + 80, 3);
     EXPECT_THROW(merge(aba, bab), std::out_of_range);
