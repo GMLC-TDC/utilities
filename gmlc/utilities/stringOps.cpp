@@ -326,18 +326,12 @@ namespace stringOps {
                 }
                 break;
             case string_match_type::begin:
-                if (string2.compare(0, string1.length(), string1) == 0) {
+                if (string2.starts_with(string1)) {
                     return true;
                 }
                 break;
             case string_match_type::end:
-                if (string1.length() > string2.length()) {
-                    return false;
-                }
-                if (string2.compare(
-                        string2.length() - string1.length(),
-                        string1.length(),
-                        string1) == 0) {
+                if (string2.ends_with(string1)) {
                     return true;
                 }
                 break;
