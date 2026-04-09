@@ -113,8 +113,8 @@ std::string_view removeBrackets(std::string_view str)
     if (ret.empty()) {
         return ret;
     }
-    if (((ret.front() == '[') || (ret.front() == '(') ||
-         (ret.front() == '{') || (ret.front() == '<')) &&
+    if (((ret.front() == '[') || (ret.front() == '(') || (ret.front() == '{') ||
+         (ret.front() == '<')) &&
         (static_cast<unsigned char>(ret.back()) == pmap[ret.front()])) {
         return ret.substr(1, ret.size() - 2);
     }
