@@ -26,6 +26,7 @@
 
 #include "base64.h"
 #include "charMapper.h"
+#include <string>
 #include <string_view>
 
 #include <array>
@@ -49,11 +50,13 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
     std::string ret;
     ret.reserve((in_len * 4) / 3 + 2);
     int index{0};
+    size_t remaining = in_len;
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
 
-    while (in_len-- != 0) {
+    while (remaining > 0U) {
         char_array_3[index++] = *b2e++;
+        --remaining;
         if (index == 3) {
             char_array_4[0] = (char_array_3[0] & 0xfcU) >> 2U;
             char_array_4[1] = ((char_array_3[0] & 0x03U) << 4U) +
@@ -85,8 +88,9 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
             ret.push_back(base64_chars[char_array_4[jj]]);
         }
 
-        while ((index++ < 3)) {
+        while (index < 3) {
             ret.push_back('=');
+            ++index;
         }
     }
 

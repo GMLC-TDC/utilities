@@ -14,6 +14,7 @@
 
 #include "gtest/gtest.h"
 #include <map>
+#include <string>
 #include <unordered_map>
 
 using namespace gmlc::utilities;

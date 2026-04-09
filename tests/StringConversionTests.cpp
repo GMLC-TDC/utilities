@@ -15,6 +15,7 @@
 #include "gtest/gtest.h"
 #include <iostream>
 #include <type_traits>
+#include <vector>
 
 using namespace gmlc::utilities;
 /** test conversion to lower case*/

@@ -34,7 +34,7 @@ The tests are written to use google test and mock frameworks and is pulled in as
 
 ### [BOOST](https://www.boost.org)
 
-The Boost demangle function is included and modified to not use any other boost libraries. string_view type can use boost string_view if no other string_view is available, and the string_viewConversion function can use boost::spirit to help with the conversion of floating point types. Boost is licensed under the Boost Software License.
+The demangle implementation in this repository was adapted from Boost source code. Boost is licensed under the Boost Software License.
 
 ### cmake scripts
 

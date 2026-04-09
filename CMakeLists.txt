@@ -1,5 +1,5 @@
 # ~~~
-# Copyright (c) 2017-2024, Battelle Memorial Institute; Lawrence Livermore
+# Copyright (c) 2017-2026, Battelle Memorial Institute; Lawrence Livermore
 # National Security, LLC; Alliance for Sustainable Energy, LLC.
 # See the top-level NOTICE for additional details.
 # All rights reserved.
@@ -7,19 +7,19 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-cmake_minimum_required(VERSION 3.11...3.28)
+cmake_minimum_required(VERSION 3.22...4.2)
 
 project(
     GMLC_UTILITIES
     LANGUAGES CXX
-    VERSION 0.6.1
+    VERSION 0.7.0
 )
 
 # -----------------------------------------------------------------------------
 # GMLC UTILITIES library Version number
 # -----------------------------------------------------------------------------
 set(GMLC_UTILITIES_VERSION_BUILD)
-set(GMLC_UTILITIES_DATE "2024-01-22")
+set(GMLC_UTILITIES_DATE "2026-04-08")
 
 set(GMLC_UTILITIES_VERSION_STRING "${GMLC_UTILITIES_VERSION} (${GMLC_UTILITIES_DATE})")
 
@@ -30,7 +30,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 endif()
 
 if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD 20)
 endif()
 # -----------------------------------------------------------------------------
 # set the module path and include some common macros
@@ -64,7 +64,7 @@ endif(GMLC_UTILITIES_WITH_CMAKE_PACKAGE)
 
 cmake_dependent_option(
     GMLC_UTILITIES_CLANG_TIDY "Look for and use Clang-Tidy" OFF
-    "CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME;NOT CMAKE_VERSION VERSION_LESS 3.6" OFF
+    "CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME" OFF
 )
 set(GMLC_UTILITIES_CLANG_TIDY_OPTIONS
     ""
@@ -75,6 +75,7 @@ mark_as_advanced(GMLC_UTILITIES_CLANG_TIDY_OPTIONS)
 mark_as_advanced(GMLC_UTILITIES_CLANG_TIDY)
 
 add_library(utilities_base INTERFACE)
+target_compile_features(utilities_base INTERFACE cxx_std_20)
 
 if(NOT TARGET compile_flags_target)
     add_library(compile_flags_target INTERFACE)
@@ -82,43 +83,11 @@ endif()
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(compiler_flags)
-    message(STATUS "setting version build options to \"${CXX_STANDARD_FLAG}\"")
-    if(CXX_STANDARD_FLAG)
-        if(MSVC)
-            target_compile_options(utilities_base INTERFACE ${CXX_STANDARD_FLAG})
-        else()
-            target_compile_options(
-                utilities_base
-                INTERFACE $<$<COMPILE_LANGUAGE:CXX>:${CXX_STANDARD_FLAG}>
-            )
-        endif(MSVC)
-    endif(CXX_STANDARD_FLAG)
 endif()
 
 target_link_libraries(utilities_base INTERFACE compile_flags_target)
 
 option(GMLC_UTILITIES_INSTALL "Enable GMLC utilities to be installed" ON)
-option(GMLC_UTILITIES_INCLUDE_BOOST "Enable some boost library headers to be used" ON)
-option(GMLC_UTILITIES_USE_BOOST_SPIRIT
-       "Enable the use of the boost::spirit parser for converting strings" ON
-)
-mark_as_advanced(GMLC_UTILITIES_USE_BOOST_SPIRIT)
-
-# Add boost to test boost::optional if available
-if(GMLC_UTILITIES_INCLUDE_BOOST)
-    find_package(Boost 1.69)
-    if(Boost_FOUND)
-        message(STATUS "Boost dir= ${Boost_INCLUDE_DIRS}")
-        target_include_directories(
-            utilities_base SYSTEM INTERFACE $<BUILD_INTERFACE:${Boost_INCLUDE_DIRS}>
-        )
-
-        if(GMLC_UTILITIES_USE_BOOST_SPIRIT)
-            target_compile_definitions(utilities_base INTERFACE -DUSE_BOOST_SPIRIT=1)
-        endif()
-
-    endif()
-endif()
 
 # Prepare Clang-Tidy
 if(GMLC_UTILITIES_CLANG_TIDY)
@@ -153,13 +122,13 @@ cmake_dependent_option(
 add_subdirectory(gmlc)
 
 if(GMLC_UTILITIES_BUILD_TESTS AND BUILD_TESTING)
+
+    if(NOT EXISTS "${PROJECT_SOURCE_DIR}/ThirdParty/googletest/CMakeLists.txt")
+        include(updateGitSubmodules)
+        submod_update(ThirdParty/googletest)
+    endif()
     add_subdirectory(tests)
 endif()
-
-# -------------------------------------------------------------
-# Get some configuration for C++17 as that becomes available
-# -------------------------------------------------------------
-# message(STATUS ${CMAKE_CXX_FLAGS})
 
 cmake_dependent_option(
     GMLC_UTILITIES_GENERATE_DOXYGEN_DOC "Generate Doxygen doc target" OFF

@@ -36,10 +36,3 @@ foreach(T ${UTILITIES_TESTS})
         set_property(TARGET ${T} PROPERTY CXX_CLANG_TIDY "${DO_CLANG_TIDY}")
     endif()
 endforeach()
-
-if(CMAKE_BUILD_TYPE STREQUAL Coverage)
-    include(CodeCoverage)
-    setup_target_for_coverage(
-        NAME UTILITIES_coverage EXECUTABLE ctest DEPENDENCIES ${UTILITIES_TESTS}
-    )
-endif()
