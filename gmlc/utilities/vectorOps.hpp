@@ -79,7 +79,7 @@ the appropriate limit requires that the < operator be defined on the type
 template<class valType>
 constexpr valType valLimit(valType val, valType lowerLim, valType upperLim)
 {
-    return (val < upperLim) ? ((val < lowerLim) ? lowerLim : val) : upperLim;
+    return std::clamp(val, lowerLim, upperLim);
 }
 
 /** force a value to be at or below an upper Limit
@@ -92,7 +92,7 @@ the limit
 template<class valType>
 constexpr valType valUpperLimit(valType val, valType upperLim)
 {
-    return (val < upperLim) ? val : upperLim;
+    return (std::min)(val, upperLim);
 }
 
 /** force a value to be at or above a lower Limit
@@ -105,7 +105,7 @@ returns the limit
 template<class valType>
 constexpr valType valLowerLimit(valType val, valType lowerLim)
 {
-    return (val < lowerLim) ? lowerLim : val;
+    return (std::max)(val, lowerLim);
 }
 
 /** get the sign of a number (-1) for numbers less than 1 for greater than 0
