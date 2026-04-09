@@ -100,7 +100,7 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
 std::vector<unsigned char>
     base64_decode(std::string_view encoded_string, size_t offset)
 {
-    auto in_len = encoded_string.size() - offset - 1;
+    auto remaining = encoded_string.size() - offset - 1;
     int indexOut = 0;
     int indexIn = static_cast<int>(offset);
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
@@ -108,10 +108,11 @@ std::vector<unsigned char>
     std::vector<unsigned char> ret;
     ret.reserve((in_len * 4) / 3 + 2);
 
-    while (((in_len--) != 0U) && (encoded_string[indexIn] != '=') &&
+    while ((remaining > 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
         char_array_4[indexOut++] = encoded_string[indexIn];
         indexIn++;
+        --remaining;
         if (indexOut == 4) {
             char_array_4[0] = b64Map[char_array_4[0]];
             char_array_4[1] = b64Map[char_array_4[1]];
@@ -148,7 +149,8 @@ std::vector<unsigned char>
             ((char_array_4[2] & 0x3cU) >> 2U);
         char_array_3[2] = ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
-        for (int j = 0; (j < indexOut - 1); j++) {
+        const int outputCount = indexOut - 1;
+        for (int j = 0; j < outputCount; ++j) {
             ret.push_back(char_array_3[j]);
         }
     }
@@ -159,7 +161,7 @@ std::vector<unsigned char>
 std::string
     base64_decode_to_string(std::string_view encoded_string, size_t offset)
 {
-    auto in_len = encoded_string.size();
+    auto remaining = encoded_string.size();
     int indexOut{0};
     int indexIn{static_cast<int>(offset)};
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
@@ -167,10 +169,11 @@ std::string
     std::string ret;
     ret.reserve(in_len);
 
-    while (((in_len--) != 0U) && (encoded_string[indexIn] != '=') &&
+    while ((remaining > 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
         char_array_4[indexOut++] = encoded_string[indexIn];
         indexIn++;
+        --remaining;
         if (indexOut == 4) {
             char_array_4[0] = b64Map[char_array_4[0]];
             char_array_4[1] = b64Map[char_array_4[1]];
@@ -207,7 +210,8 @@ std::string
             ((char_array_4[2] & 0x3cU) >> 2U);
         char_array_3[2] = ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
-        for (int j = 0; (j < indexOut - 1); j++) {
+        const int outputCount = indexOut - 1;
+        for (int j = 0; j < outputCount; ++j) {
             ret.push_back(char_array_3[j]);
         }
     }
@@ -219,17 +223,18 @@ std::string
 size_t
     base64_decode(std::string_view encoded_string, void* data, size_t max_size)
 {
-    auto in_len = encoded_string.size();
+    auto remaining = encoded_string.size();
     int indexOut = 0;
     int indexIn = 0;
     std::array<unsigned char, 3> char_array_3{{'\0', '\0', '\0'}};
     std::array<unsigned char, 4> char_array_4{{'\0', '\0', '\0', '\0'}};
     auto* outData = static_cast<unsigned char*>(data);
     size_t dataIndex = 0U;
-    while (((in_len--) != 0U) && (encoded_string[indexIn] != '=') &&
+    while ((remaining > 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
         char_array_4[indexOut++] = encoded_string[indexIn];
         indexIn++;
+        --remaining;
         if (indexOut == 4) {
             char_array_4[0] = b64Map[char_array_4[0]];
             char_array_4[1] = b64Map[char_array_4[1]];
@@ -274,7 +279,8 @@ size_t
             ((char_array_4[2] & 0x3cU) >> 2U);
         char_array_3[2] = ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
-        for (int j = 0; (j < indexOut - 1); j++) {
+        const int outputCount = indexOut - 1;
+        for (int j = 0; j < outputCount; ++j) {
             if (dataIndex < max_size) {
                 outData[dataIndex++] = char_array_3[j];
             }
