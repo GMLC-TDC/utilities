@@ -1015,108 +1015,58 @@ auto countDiffsIfValidCallback(
     }
     return diffs;
 }
-/** functions that action do the vector conversions  if the types are
-actually the same just copy or move them if possible.  If they are not the same
-type do a static cast in a transform to make a new vector the code use SFINAE
-magic with the std::false_type and std::true_type to discriminate which overload
-to use the function below them vectorConvert include a type_trait check for if
-the vector types are the same
-*/
 namespace vectorConvertDetail {
-    /** perform a vector conversion of one type to another
-@details uses SFINAE to do some checking to determine if the types are actually
-the same this function handles the case where they are not and is an lvalue
-reference
-*/
-    template<typename X, typename Y>
-    std::vector<X> vectorConvertActual(
-        const std::vector<Y>& dvec,
-        std::false_type /*unused*/)
-    {
-        std::vector<X> ret(dvec.size());
-        std::transform(dvec.begin(), dvec.end(), ret.begin(), [](Y val) {
-            return static_cast<X>(val);
-        });
-        return ret;
-    }
-    /** perform a vector conversion of one type to another
-@details uses SFINAE to do some checking to determine if the types are actually
-the same this function handles the case where they are the same and is an rvalue
-reference
-*/
-    template<typename X, typename Y>
-    std::vector<X>
-        vectorConvertActual(std::vector<Y>&& dvec, std::true_type /*unused*/)
-    {
-        std::vector<X> ret(std::move(dvec));
-        return ret;
-    }
+    template<typename Y, typename = void>
+    struct base_type {
+        using type = Y;
+    };
 
-    /** perform a vector conversion of one type to another
-@details uses SFINAE to do some checking to determine if the types are actually
-the same this function handles the case where they are the same and is an lvalue
-reference
-*/
+    template<typename Y>
+    struct base_type<Y, std::void_t<typename Y::baseType>> {
+        using type = typename Y::baseType;
+    };
+
     template<typename X, typename Y>
-    std::vector<X> vectorConvertActual(
-        const std::vector<Y>& dvec,
-        std::true_type /*unused*/)
-    {
-        std::vector<X> ret = dvec;
-        return ret;
-    }
+    constexpr bool is_direct_vector_convert_v =
+        std::is_same_v<X, Y> || std::is_same_v<X, typename base_type<Y>::type>;
 }  // namespace vectorConvertDetail
 
 /** convert a vector of one type into a vector of another type
 @tparam X the desired resultant type
 @tparam Y the original type
-@tparam Z the base type of Y  SFINAE check
-@param dvec a rvalue reference to a vector to convert
-*/
-template<typename X, typename Y, typename Z = typename Y::baseType>
-std::vector<X> vectorConvert(std::vector<Y>&& dvec)
-{
-    return vectorConvertDetail::vectorConvertActual<X, Y>(
-        dvec, std::is_same<X, Z>{});
-}
-
-/** convert a vector of one type into a vector of another type
-@tparam X the desired resultant type
-@tparam Y the original type
 @param dvec a rvalue reference to a vector to convert
 */
 template<typename X, typename Y>
 std::vector<X> vectorConvert(std::vector<Y>&& dvec)
 {
-    return vectorConvertDetail::vectorConvertActual<X, Y>(
-        dvec, std::is_same<X, Y>{});
+    if constexpr (vectorConvertDetail::is_direct_vector_convert_v<X, Y>) {
+        return std::vector<X>(std::move(dvec));
+    } else {
+        std::vector<X> ret(dvec.size());
+        std::transform(dvec.begin(), dvec.end(), ret.begin(), [](const Y& val) {
+            return static_cast<X>(val);
+        });
+        return ret;
+    }
 }
 
 /** convert a vector of one type into a vector of another type
 @tparam X the desired resultant type
 @tparam Y the original type
-@tparam Z the base type of Y  SFINAE check
 @param dvec a const lvalue reference to a vector to convert
 */
-template<typename X, typename Y, typename Z = typename Y::baseType>
-std::vector<X> vectorConvert(const std::vector<Y>& dvec)
-{
-    return vectorConvertDetail::vectorConvertActual<X, Y>(
-        dvec, std::is_same<X, Z>{});
-}
-
-/** convert a vector of one type into a vector of another type
-@tparam X the desired resultant type
-@tparam Y the original type
-@param dvec a lvalue reference to a vector to convert
-@return a vector containing the new type with the corresponding values as the
-original
-*/
 template<typename X, typename Y>
 std::vector<X> vectorConvert(const std::vector<Y>& dvec)
 {
-    return vectorConvertDetail::vectorConvertActual<X, Y>(
-        dvec, std::is_same<X, Y>{});
+    if constexpr (vectorConvertDetail::is_direct_vector_convert_v<X, Y>) {
+        return std::vector<X>(dvec);
+    } else {
+        std::vector<X> ret(dvec.size());
+        std::transform(dvec.begin(), dvec.end(), ret.begin(), [](const Y& val) {
+            return static_cast<X>(val);
+        });
+        return ret;
+    }
 }
 
 }  // namespace gmlc::utilities

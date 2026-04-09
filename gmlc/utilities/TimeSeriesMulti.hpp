@@ -321,10 +321,10 @@ automatically detect the file type based on extension
         if (fileName.empty()) {
             throw(fileNotFoundError());
         }
-        if (fileName.size() > 5) {
-            std::string ext =
-                convertToLowerCase(fileName.substr(fileName.length() - 3));
-            if ((ext == "csv") || (ext == "txt")) {
+        if (fileName.size() > 4) {
+            const auto lowerExt = convertToLowerCase(
+                std::string_view{fileName}.substr(fileName.size() - 4));
+            if (lowerExt == ".csv" || lowerExt == ".txt") {
                 loadTextFile(fileName);
                 return;
             }
