@@ -94,13 +94,13 @@ std::string_view getTailString_any(
 std::string_view removeQuotes(std::string_view str)
 {
     std::string_view ret = trim(str);
-    if (!ret.empty()) {
-        if ((ret.front() == '\"') || (ret.front() == '\'') ||
-            (ret.front() == '`')) {
-            if (ret.back() == ret.front()) {
-                return ret.substr(1, ret.size() - 2);
-            }
-        }
+    if (ret.empty()) {
+        return ret;
+    }
+    if (((ret.front() == '\"') || (ret.front() == '\'') ||
+         (ret.front() == '`')) &&
+        (ret.back() == ret.front())) {
+        return ret.substr(1, ret.size() - 2);
     }
     return ret;
 }
@@ -110,13 +110,13 @@ static const auto pmap = pairMapper();
 std::string_view removeBrackets(std::string_view str)
 {
     std::string_view ret = trim(str);
-    if (!ret.empty()) {
-        if ((ret.front() == '[') || (ret.front() == '(') ||
-            (ret.front() == '{') || (ret.front() == '<')) {
-            if (static_cast<unsigned char>(ret.back()) == pmap[ret.front()]) {
-                return ret.substr(1, ret.size() - 2);
-            }
-        }
+    if (ret.empty()) {
+        return ret;
+    }
+    if (((ret.front() == '[') || (ret.front() == '(') || (ret.front() == '{') ||
+         (ret.front() == '<')) &&
+        (static_cast<unsigned char>(ret.back()) == pmap[ret.front()])) {
+        return ret.substr(1, ret.size() - 2);
     }
     return ret;
 }

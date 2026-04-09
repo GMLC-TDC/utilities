@@ -119,8 +119,11 @@ X strViewToFloat(std::string_view input, size_t* charactersUsed = nullptr)
 template<typename X>
 inline X numConv(std::string_view V)
 {
-    return (std::is_integral<X>::value) ? strViewToInteger<X>(V) :
-                                          X(numConv<double>(V));
+    if constexpr (std::is_integral_v<X>) {
+        return strViewToInteger<X>(V);
+    } else {
+        return X(numConv<double>(V));
+    }
 }
 
 // template definition for double conversion
@@ -159,9 +162,11 @@ inline long double numConv(std::string_view V)
 template<class X>
 inline X numConvComp(std::string_view V, size_t& charactersUsed)
 {
-    return (std::is_integral<X>::value) ?
-        strViewToInteger<X>(V, &charactersUsed) :
-        X(numConvComp<double>(V, charactersUsed));
+    if constexpr (std::is_integral_v<X>) {
+        return strViewToInteger<X>(V, &charactersUsed);
+    } else {
+        return X(numConvComp<double>(V, charactersUsed));
+    }
 }
 
 template<>

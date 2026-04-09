@@ -388,26 +388,19 @@ namespace stringOps {
 
     std::string removeChars(std::string_view source, std::string_view remchars)
     {
-        std::string result;
-        result.reserve(source.length());
-        std::remove_copy_if(
-            source.begin(),
-            source.end(),
-            std::back_inserter(result),
-            [remchars](char input) {
-                return (
-                    std::find(remchars.begin(), remchars.end(), input) !=
-                    remchars.end());
-            });
+        std::string result(source);
+        std::erase_if(result, [remchars](char input) {
+            return (
+                std::find(remchars.begin(), remchars.end(), input) !=
+                remchars.end());
+        });
         return result;
     }
 
     std::string removeChar(std::string_view source, char remchar)
     {
-        std::string result;
-        result.reserve(source.length());
-        std::remove_copy(
-            source.begin(), source.end(), std::back_inserter(result), remchar);
+        std::string result(source);
+        std::erase(result, remchar);
         return result;
     }
 
