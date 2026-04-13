@@ -29,6 +29,7 @@ Checks: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
   performance-*
@@ -66,6 +67,7 @@ WarningsAsErrors: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
   -readability-identifier-naming,

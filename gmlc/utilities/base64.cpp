@@ -48,7 +48,7 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
 {
     const auto* b2e = static_cast<const unsigned char*>(bytes_to_encode);
     std::string ret;
-    ret.reserve((in_len * 4) / 3 + 2);
+    ret.reserve(((in_len * 4) / 3) + 2);
     size_t index{0};
     size_t remaining = in_len;
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
@@ -107,7 +107,7 @@ std::vector<unsigned char>
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::vector<unsigned char> ret;
-    ret.reserve((inputLen * 3) / 4 + 2);
+    ret.reserve(((inputLen * 3) / 4) + 2);
 
     while ((remaining > 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
@@ -169,7 +169,7 @@ std::string
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::string ret;
-    ret.reserve((inputLen * 3) / 4 + 2);
+    ret.reserve(((inputLen * 3) / 4) + 2);
 
     while ((remaining > 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
