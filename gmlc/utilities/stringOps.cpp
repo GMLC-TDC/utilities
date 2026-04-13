@@ -22,11 +22,13 @@ June 2022 changed to support string view where applicable
 */
 #include "stringOps.h"
 
+#include "charMapper.h"
 #include "generic_string_ops.hpp"
 
 #include <algorithm>
 #include <cctype>
 #include <charconv>
+#include <cstdint>
 #include <cmath>
 #include <fstream>
 #include <iomanip>
@@ -35,6 +37,14 @@ June 2022 changed to support string view where applicable
 #include <utility>
 
 namespace gmlc::utilities {
+namespace {
+const CharMapper<unsigned char>& getPairMap()
+{
+    static const CharMapper<unsigned char> pmap = pairMapper();
+    return pmap;
+}
+}  // namespace
+
 static auto lower = [](char charToMakerLowerCase) -> char {
     return (charToMakerLowerCase >= 'A' && charToMakerLowerCase <= 'Z') ?
         (charToMakerLowerCase - ('Z' - 'z')) :
@@ -103,17 +113,15 @@ namespace stringOps {
             line, std::string_view{&del, 1}, false);
     }
 
-    static const auto pmap = pairMapper();
-
     stringVector splitlineQuotes(
         std::string_view line,
         std::string_view delimiters,
         std::string_view quoteChars,
         delimiter_compression compression)
     {
-        bool compress = (compression == delimiter_compression::on);
+        const bool compress = (compression == delimiter_compression::on);
         return generalized_section_splitting<std::string_view, std::string>(
-            line, delimiters, quoteChars, pmap, compress);
+            line, delimiters, quoteChars, getPairMap(), compress);
     }
 
     stringVector splitlineBracket(
@@ -122,9 +130,9 @@ namespace stringOps {
         std::string_view bracketChars,
         delimiter_compression compression)
     {
-        bool compress = (compression == delimiter_compression::on);
+        const bool compress = (compression == delimiter_compression::on);
         return generalized_section_splitting<std::string_view, std::string>(
-            line, delimiters, bracketChars, pmap, compress);
+            line, delimiters, bracketChars, getPairMap(), compress);
     }
 
     void trimString(std::string& input, std::string_view whitespace)
@@ -174,7 +182,7 @@ namespace stringOps {
             pos1 = input.length() - 10;
         }
 
-        size_t length = input.length();
+        const size_t length = input.length();
         if (pos1 == length - 2) {
             num = input.back() - '0';
         } else if (length <= 10 || pos1 >= length - 10) {
@@ -212,7 +220,7 @@ namespace stringOps {
             pos1 = input.length() - 10;
         }
 
-        size_t length = input.length();
+        const size_t length = input.length();
         if (pos1 == length - 2) {
             return input.back() - '0';
         }
@@ -250,7 +258,7 @@ namespace stringOps {
             if ((newString.front() == '[') || (newString.front() == '(') ||
                 (newString.front() == '{') || (newString.front() == '<')) {
                 if (static_cast<unsigned char>(newString.back()) ==
-                    pmap[newString.front()]) {
+                    getPairMap()[newString.front()]) {
                     newString.pop_back();
                     newString.erase(0, 1);
                 }
@@ -391,8 +399,7 @@ namespace stringOps {
         std::string result(source);
         std::erase_if(result, [remchars](char input) {
             return (
-                std::find(remchars.begin(), remchars.end(), input) !=
-                remchars.end());
+                std::ranges::find(remchars, input) != remchars.end());
         });
         return result;
     }
