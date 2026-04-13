@@ -67,40 +67,39 @@ namespace stringOps {
     template<typename X>
     void appendInteger(std::string& input, X val)
     {
-        if (val < X(0)) {
-            input.push_back('-');
+        if constexpr (std::is_signed_v<X>) {
+            if (val < X{0}) {
+                input.push_back('-');
+            }
         }
-        X x = (std::is_signed<X>::value) ? ((val < X(0)) ? (X(0) - val) : val) :
-                                           val;
+        const X x = [val]() {
+            if constexpr (std::is_signed_v<X>) {
+                return (val < X{0}) ? (X{0} - val) : val;
+            } else {
+                return val;
+            }
+        }();
         if (x < 10) {
             input.push_back(static_cast<char>(x + '0'));
             return;
         }
-        int digits =
-            (x < 100 ?
-                 2 :
-                 (x < 1000 ?
-                      3 :
-                      (x < 10'000 ?
-                           4 :
-                           (x < 100'000 ?
-                                5 :
-                                (x < 1'000'000 ?
-                                     6 :
-                                     (x < 10'000'000 ?
-                                          7 :
-                                          (x < 100'000'000 ?
-                                               8 :
-                                               (x < 1'000'000'000 ? 9 :
-                                                                    500))))))));
-        if (digits > 9)  // don't deal with really big numbers
+        if (x >= 1'000'000'000)  // don't deal with really big numbers
         {
             input += std::to_string(x);
             return;
         }
-        unsigned int rem = static_cast<int>(x);
+        unsigned int rem = static_cast<unsigned int>(x);
+        const int digits = [rem]() {
+            int count = 1;
+            auto current = rem;
+            while (current >= 10U) {
+                current /= 10U;
+                ++count;
+            }
+            return count;
+        }();
         for (auto dig = digits - 1; dig >= 0; --dig) {
-            unsigned int place = rem / factors[dig];
+            const unsigned int place = rem / factors[dig];
             input.push_back(static_cast<char>(place + '0'));
             rem -= factors[dig] * place;
         }

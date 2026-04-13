@@ -30,10 +30,15 @@ Checks: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
+  -readability-identifier-naming,
   -readability-identifier-length,
+  -readability-function-cognitive-complexity,
+  -readability-avoid-nested-conditional-operator,
   performance-*
+  -performance-enum-size
   "
 
 WarningsAsErrors: "
@@ -68,11 +73,15 @@ WarningsAsErrors: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
   -readability-identifier-naming,
   -readability-identifier-length,
+  -readability-function-cognitive-complexity,
+  -readability-avoid-nested-conditional-operator,
   performance-*
+  -performance-enum-size
   -performance-unnecessary-value-param
   "
 
