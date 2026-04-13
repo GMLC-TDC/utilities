@@ -49,7 +49,7 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
     const auto* b2e = static_cast<const unsigned char*>(bytes_to_encode);
     std::string ret;
     ret.reserve((in_len * 4) / 3 + 2);
-    int index{0};
+    size_t index{0};
     size_t remaining = in_len;
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
@@ -73,7 +73,7 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
     }
 
     if (index != 0) {
-        for (int jj = index; jj < 3; ++jj) {
+        for (size_t jj = index; jj < 3; ++jj) {
             char_array_3[jj] = '\0';
         }
 
@@ -84,7 +84,7 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
             ((char_array_3[2] & 0xc0U) >> 6U);
         char_array_4[3] = char_array_3[2] & 0x3fU;
 
-        for (int jj = 0; (jj < index + 1); ++jj) {
+        for (size_t jj = 0; (jj < index + 1U); ++jj) {
             ret.push_back(base64_chars[char_array_4[jj]]);
         }
 
