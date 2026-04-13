@@ -76,7 +76,6 @@ WarningsAsErrors: "
   -performance-unnecessary-value-param
   "
 
-AnalyzeTemporaryDtors: false
 CheckOptions:
   - key: cert-dcl59-cpp.HeaderFileExtensions
     value: h,hh,hpp,hxx
