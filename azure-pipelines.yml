@@ -88,7 +88,6 @@ jobs:
           containerImage: helics/buildenv:gcc14-builder
         gcc15:
           containerImage: helics/buildenv:gcc15-builder
-          utilities.options: -DCMAKE_CXX_FLAGS="-Wstrict-overflow=5"
           utilities.std: 26
         gcc12:
           containerImage: helics/buildenv:gcc12-builder

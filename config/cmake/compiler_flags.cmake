@@ -123,8 +123,7 @@ if(${PROJECT_NAME}_ENABLE_EXTRA_COMPILER_WARNINGS)
         INTERFACE $<$<COMPILE_LANGUAGE:CXX>:$<$<CXX_COMPILER_ID:GNU>:-Wcast-align -Wlogical-op>>
     )
     # target_compile_options(compile_flags_target INTERFACE
-    # $<$<COMPILE_LANGUAGE:CXX>:-Wredundant-decls>) target_compile_options(compile_flags_target
-    # INTERFACE $<$<COMPILE_LANGUAGE:CXX>:-Wstrict-overflow=5>)
+    # $<$<COMPILE_LANGUAGE:CXX>:-Wredundant-decls>)
 
     # this option produces a number of warnings in third party libraries
     # target_compile_options(compile_flags_target INTERFACE
@@ -140,6 +139,7 @@ if(${PROJECT_NAME}_ENABLE_EXTRA_COMPILER_WARNINGS)
             INTERFACE $<$<COMPILE_LANGUAGE:CXX>:-Wduplicated-cond
                       -Wclass-memaccess
                       -Wnull-dereference
+                      -Wstrict-overflow=5
                       -Wshadow
                       -Wimplicit-fallthrough=2
                       -Wno-psabi
