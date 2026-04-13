@@ -80,7 +80,7 @@ CharMapper<bool> numericEndMapper()
     return mapper;
 }
 
-CharMapper<unsigned char> base64Mapper()
+CharMapper<unsigned char> base64Mapper() noexcept
 {
     CharMapper<unsigned char> b64(0xFF);
     unsigned char val{0};

@@ -20,24 +20,27 @@ class CharMapper {
     std::array<V, 256> key;  //!< the character map
   public:
     /** default constructor*/
-    explicit CharMapper(V defVal = V{0}) { key.fill(defVal); }
+    explicit CharMapper(V defVal = V{0}) noexcept { key.fill(defVal); }
     /** update the value returned from a key query
 @details this is purposely distinct from the [] operator to make it an error
 to try to assign something that way
 */
-    void addKey(unsigned char keyChar, V val) { key[keyChar] = val; }
+    void addKey(unsigned char keyChar, V val) noexcept { key[keyChar] = val; }
     /** get the value assigned to a character
      * @param keyChar the character to test or convert
      * @return the resulting value,  0 if nothing in particular is specified
      * in a given map
      */
-    [[nodiscard]] V at(unsigned char keyChar) const { return key[keyChar]; }
+    [[nodiscard]] V at(unsigned char keyChar) const noexcept
+    {
+        return key[keyChar];
+    }
     /** get the value assigned to a character by bracket notation
      * @param keyChar the character to test or convert
      * @return the resulting value,  0 if nothing in particular is specified
      * in a given map
      */
-    V operator[](unsigned char keyChar) const { return key[keyChar]; }
+    V operator[](unsigned char keyChar) const noexcept { return key[keyChar]; }
 };
 /** map that translates all characters that could be in numbers to true all
  * others to false*/
@@ -50,7 +53,7 @@ CharMapper<bool> numericStartMapper();
 CharMapper<bool> numericEndMapper();
 /** map that translates all base 64 characters to the appropriate numerical
  * value*/
-CharMapper<unsigned char> base64Mapper();
+CharMapper<unsigned char> base64Mapper() noexcept;
 /** map that translates numerical characters to the appropriate numerical
  * value*/
 CharMapper<unsigned char> digitMapper();

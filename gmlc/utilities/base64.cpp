@@ -26,24 +26,31 @@
 
 #include "base64.h"
 #include "charMapper.h"
+#include <cstddef>
 #include <string>
 #include <string_view>
 
 #include <array>
-#include <iostream>
 #include <vector>
 
 namespace gmlc::utilities {
-static constexpr std::string_view base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                 "abcdefghijklmnopqrstuvwxyz"
-                                                 "0123456789+/";
+namespace {
+constexpr std::string_view base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                          "abcdefghijklmnopqrstuvwxyz"
+                                          "0123456789+/";
 
-static const CharMapper<unsigned char> b64Map = base64Mapper();
-
-static inline bool isBase64(unsigned char testChar)
+const CharMapper<unsigned char>& getBase64Map()
 {
-    return (b64Map[testChar] < 0xffU);
+    static const CharMapper<unsigned char> b64Map = base64Mapper();
+    return b64Map;
 }
+
+bool isBase64(unsigned char testChar)
+{
+    return (getBase64Map()[testChar] < 0xffU);
+}
+}  // namespace
+
 std::string base64_encode(void const* bytes_to_encode, size_t in_len)
 {
     const auto* b2e = static_cast<const unsigned char*>(bytes_to_encode);
@@ -115,10 +122,10 @@ std::vector<unsigned char>
         indexIn++;
         --remaining;
         if (indexOut == 4) {
-            char_array_4[0] = b64Map[char_array_4[0]];
-            char_array_4[1] = b64Map[char_array_4[1]];
-            char_array_4[2] = b64Map[char_array_4[2]];
-            char_array_4[3] = b64Map[char_array_4[3]];
+            char_array_4[0] = getBase64Map()[char_array_4[0]];
+            char_array_4[1] = getBase64Map()[char_array_4[1]];
+            char_array_4[2] = getBase64Map()[char_array_4[2]];
+            char_array_4[3] = getBase64Map()[char_array_4[3]];
 
             char_array_3[0] =
                 (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
@@ -139,10 +146,10 @@ std::vector<unsigned char>
         for (int j = indexOut; j < 4; j++) {
             char_array_4[j] = 0;
         }
-        char_array_4[0] = b64Map[char_array_4[0]];
-        char_array_4[1] = b64Map[char_array_4[1]];
-        char_array_4[2] = b64Map[char_array_4[2]];
-        char_array_4[3] = b64Map[char_array_4[3]];
+        char_array_4[0] = getBase64Map()[char_array_4[0]];
+        char_array_4[1] = getBase64Map()[char_array_4[1]];
+        char_array_4[2] = getBase64Map()[char_array_4[2]];
+        char_array_4[3] = getBase64Map()[char_array_4[3]];
 
         char_array_3[0] =
             (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
@@ -177,10 +184,10 @@ std::string
         indexIn++;
         --remaining;
         if (indexOut == 4) {
-            char_array_4[0] = b64Map[char_array_4[0]];
-            char_array_4[1] = b64Map[char_array_4[1]];
-            char_array_4[2] = b64Map[char_array_4[2]];
-            char_array_4[3] = b64Map[char_array_4[3]];
+            char_array_4[0] = getBase64Map()[char_array_4[0]];
+            char_array_4[1] = getBase64Map()[char_array_4[1]];
+            char_array_4[2] = getBase64Map()[char_array_4[2]];
+            char_array_4[3] = getBase64Map()[char_array_4[3]];
 
             char_array_3[0] =
                 (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
@@ -201,10 +208,10 @@ std::string
         for (int j = indexOut; j < 4; j++) {
             char_array_4[j] = 0;
         }
-        char_array_4[0] = b64Map[char_array_4[0]];
-        char_array_4[1] = b64Map[char_array_4[1]];
-        char_array_4[2] = b64Map[char_array_4[2]];
-        char_array_4[3] = b64Map[char_array_4[3]];
+        char_array_4[0] = getBase64Map()[char_array_4[0]];
+        char_array_4[1] = getBase64Map()[char_array_4[1]];
+        char_array_4[2] = getBase64Map()[char_array_4[2]];
+        char_array_4[3] = getBase64Map()[char_array_4[3]];
 
         char_array_3[0] =
             (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
@@ -238,10 +245,10 @@ size_t
         indexIn++;
         --remaining;
         if (indexOut == 4) {
-            char_array_4[0] = b64Map[char_array_4[0]];
-            char_array_4[1] = b64Map[char_array_4[1]];
-            char_array_4[2] = b64Map[char_array_4[2]];
-            char_array_4[3] = b64Map[char_array_4[3]];
+            char_array_4[0] = getBase64Map()[char_array_4[0]];
+            char_array_4[1] = getBase64Map()[char_array_4[1]];
+            char_array_4[2] = getBase64Map()[char_array_4[2]];
+            char_array_4[3] = getBase64Map()[char_array_4[3]];
 
             char_array_3[0] =
                 (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
@@ -270,10 +277,10 @@ size_t
         for (int j = indexOut; j < 4; j++) {
             char_array_4[j] = 0;
         }
-        char_array_4[0] = b64Map[char_array_4[0]];
-        char_array_4[1] = b64Map[char_array_4[1]];
-        char_array_4[2] = b64Map[char_array_4[2]];
-        char_array_4[3] = b64Map[char_array_4[3]];
+        char_array_4[0] = getBase64Map()[char_array_4[0]];
+        char_array_4[1] = getBase64Map()[char_array_4[1]];
+        char_array_4[2] = getBase64Map()[char_array_4[2]];
+        char_array_4[3] = getBase64Map()[char_array_4[3]];
 
         char_array_3[0] =
             (char_array_4[0] << 2U) + ((char_array_4[1] & 0x30U) >> 4U);
