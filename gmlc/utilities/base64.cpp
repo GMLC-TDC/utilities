@@ -35,20 +35,20 @@
 
 namespace gmlc::utilities {
 namespace {
-constexpr std::string_view base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                          "abcdefghijklmnopqrstuvwxyz"
-                                          "0123456789+/";
+    constexpr std::string_view base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                              "abcdefghijklmnopqrstuvwxyz"
+                                              "0123456789+/";
 
-const CharMapper<unsigned char>& getBase64Map()
-{
-    static const CharMapper<unsigned char> b64Map = base64Mapper();
-    return b64Map;
-}
+    const CharMapper<unsigned char>& getBase64Map()
+    {
+        static const CharMapper<unsigned char> b64Map = base64Mapper();
+        return b64Map;
+    }
 
-bool isBase64(unsigned char testChar)
-{
-    return (getBase64Map()[testChar] < 0xffU);
-}
+    bool isBase64(unsigned char testChar)
+    {
+        return (getBase64Map()[testChar] < 0xffU);
+    }
 }  // namespace
 
 std::string base64_encode(void const* bytes_to_encode, size_t in_len)
