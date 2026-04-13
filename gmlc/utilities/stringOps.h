@@ -88,7 +88,7 @@ namespace stringOps {
             input += std::to_string(x);
             return;
         }
-        unsigned int rem = static_cast<unsigned int>(x);
+        auto rem = static_cast<unsigned int>(x);
         const int digits = [rem]() {
             int count = 1;
             auto current = rem;

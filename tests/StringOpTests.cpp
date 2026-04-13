@@ -499,8 +499,8 @@ TEST(stringops, splitLineBracket)
 TEST(stringops, randomString)
 {
     auto str1 = randomString(50000);
-    std::ranges::sort(str1);
-    auto ept = std::ranges::unique(str1).begin();
+    std::sort(str1.begin(), str1.end());
+    auto ept = std::unique(str1.begin(), str1.end());
     EXPECT_EQ(ept - str1.begin(), 62U);
 
     std::vector<std::string> rstring;
@@ -509,8 +509,8 @@ TEST(stringops, randomString)
         rstring.push_back(randomString(10));
     }
 
-    std::ranges::sort(rstring);
-    auto eptS = std::ranges::unique(rstring).begin();
+    std::sort(rstring.begin(), rstring.end());
+    auto eptS = std::unique(rstring.begin(), rstring.end());
     EXPECT_EQ(eptS - rstring.begin(), 20);
 }
 
