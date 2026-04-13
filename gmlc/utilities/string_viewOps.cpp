@@ -26,6 +26,7 @@ June 2022 changed to support std::string_view where applicable
 #include "generic_string_ops.hpp"
 
 #include <algorithm>
+#include <cstddef>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -175,7 +176,7 @@ int toIntSimple(std::string_view input)
     int ret = 0;
     for (auto testChar : input) {
         if (testChar >= '0' && testChar <= '9') {
-            ret = 10 * ret + (testChar - '0');
+            ret = (10 * ret) + (testChar - '0');
         }
     }
     return ret;
@@ -202,7 +203,7 @@ int trailingStringInt(
         }
         pos1 = input.length() - 10;
     }
-    size_t length = input.length();
+    const size_t length = input.length();
     if (pos1 == length - 2) {
         num = input.back() - '0';
     } else if (length <= 10 || pos1 >= length - 10) {
@@ -235,7 +236,7 @@ int trailingStringInt(std::string_view input, int defNum)
         }
         pos1 = input.length() - 10;
     }
-    size_t length = input.length();
+    const size_t length = input.length();
     if (pos1 == length - 2) {
         return input.back() - '0';
     }
