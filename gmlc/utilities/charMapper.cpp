@@ -132,7 +132,7 @@ CharMapper<unsigned char> hexMapper()
     return dMap;
 }
 
-CharMapper<unsigned char> pairMapper()
+CharMapper<unsigned char> pairMapper() noexcept
 {
     CharMapper<unsigned char> dMap(0);
     for (unsigned char ii = 0; ii < 255; ++ii) {

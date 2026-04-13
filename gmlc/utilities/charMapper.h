@@ -62,6 +62,6 @@ CharMapper<unsigned char> digitMapper();
 CharMapper<unsigned char> hexMapper();
 /** map that all containing characters that come in pairs to the appropriate
  * match '{' to '}'*/
-CharMapper<unsigned char> pairMapper();
+CharMapper<unsigned char> pairMapper() noexcept;
 
 }  // namespace gmlc::utilities
