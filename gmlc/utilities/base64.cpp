@@ -100,13 +100,14 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
 std::vector<unsigned char>
     base64_decode(std::string_view encoded_string, size_t offset)
 {
-    auto remaining = encoded_string.size() - offset - 1;
+    const auto inputLen = encoded_string.size() - offset;
+    auto remaining = inputLen;
     int indexOut = 0;
     int indexIn = static_cast<int>(offset);
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::vector<unsigned char> ret;
-    ret.reserve((in_len * 4) / 3 + 2);
+    ret.reserve((inputLen * 3) / 4 + 2);
 
     while ((remaining > 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
@@ -161,13 +162,14 @@ std::vector<unsigned char>
 std::string
     base64_decode_to_string(std::string_view encoded_string, size_t offset)
 {
-    auto remaining = encoded_string.size();
+    const auto inputLen = encoded_string.size() - offset;
+    auto remaining = inputLen;
     int indexOut{0};
     int indexIn{static_cast<int>(offset)};
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::string ret;
-    ret.reserve(in_len);
+    ret.reserve((inputLen * 3) / 4 + 2);
 
     while ((remaining > 0U) && (encoded_string[indexIn] != '=') &&
            isBase64(encoded_string[indexIn])) {
