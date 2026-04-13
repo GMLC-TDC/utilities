@@ -28,12 +28,11 @@ June 2022 changed to support string view where applicable
 #include <algorithm>
 #include <cctype>
 #include <charconv>
-#include <cmath>
+#include <cstddef>
 #include <cstdint>
-#include <fstream>
-#include <iomanip>
 #include <random>
 #include <string>
+#include <string_view>
 #include <utility>
 
 namespace gmlc::utilities {
@@ -43,42 +42,115 @@ namespace {
         static const CharMapper<unsigned char> pmap = pairMapper();
         return pmap;
     }
+
+    auto lower = [](char charToMakerLowerCase) -> char {
+        return (charToMakerLowerCase >= 'A' && charToMakerLowerCase <= 'Z') ?
+            (charToMakerLowerCase - ('Z' - 'z')) :
+            charToMakerLowerCase;
+    };
+
+    auto upper = [](char charToMakeUpperCase) -> char {
+        return (charToMakeUpperCase >= 'a' && charToMakeUpperCase <= 'z') ?
+            (charToMakeUpperCase + ('Z' - 'z')) :
+            charToMakeUpperCase;
+    };
+
+    bool isIsolatingChar(char testChar)
+    {
+        return ((isspace(testChar) != 0) || (ispunct(testChar) != 0));
+    }
+
+    bool hasIsolatedChar(const std::string& testString, char testChar)
+    {
+        auto findLoc = testString.find(testChar);
+        while (findLoc != std::string::npos) {
+            if (findLoc == 0) {
+                if (isIsolatingChar(testString[findLoc + 1])) {
+                    return true;
+                }
+            } else if (findLoc == testString.length() - 1) {
+                if (isIsolatingChar(testString[findLoc - 1])) {
+                    return true;
+                }
+            } else if (
+                isIsolatingChar(testString[findLoc - 1]) &&
+                isIsolatingChar(testString[findLoc + 1])) {
+                return true;
+            }
+
+            findLoc = testString.find(testChar, findLoc + 1);
+        }
+        return false;
+    }
+
+    bool checkForMatch(
+        const std::string& string1,
+        const std::string& string2,
+        stringOps::string_match_type matchType)
+    {
+        switch (matchType) {
+            case stringOps::string_match_type::exact:
+                if (string1 == string2) {
+                    return true;
+                }
+                break;
+            case stringOps::string_match_type::begin:
+                if (string2.starts_with(string1)) {
+                    return true;
+                }
+                break;
+            case stringOps::string_match_type::end:
+                if (string2.ends_with(string1)) {
+                    return true;
+                }
+                break;
+            case stringOps::string_match_type::close:
+                if (string1.length() == 1) {
+                    if (hasIsolatedChar(string2, string1.front())) {
+                        return true;
+                    }
+                } else {
+                    auto findLoc = string2.find(string1);
+                    if (findLoc != std::string::npos) {
+                        return true;
+                    }
+                    auto nstr = stringOps::removeChar(string1, '_');
+                    if (string2 == nstr) {
+                        return true;
+                    }
+                    auto nstr2 = stringOps::removeChar(string2, '_');
+                    if ((string1 == nstr2) || (nstr == nstr2)) {
+                        return true;
+                    }
+                }
+                break;
+        }
+        return false;
+    }
 }  // namespace
-
-static auto lower = [](char charToMakerLowerCase) -> char {
-    return (charToMakerLowerCase >= 'A' && charToMakerLowerCase <= 'Z') ?
-        (charToMakerLowerCase - ('Z' - 'z')) :
-        charToMakerLowerCase;
-};
-
-static auto upper = [](char charToMakeUpperCase) -> char {
-    return (charToMakeUpperCase >= 'a' && charToMakeUpperCase <= 'z') ?
-        (charToMakeUpperCase + ('Z' - 'z')) :
-        charToMakeUpperCase;
-};
 
 std::string convertToLowerCase(std::string_view input)
 {
     std::string out(input);
-    std::transform(out.begin(), out.end(), out.begin(), lower);
+    std::ranges::transform(out, out.begin(), lower);
     return out;
 }
 
 std::string convertToUpperCase(std::string_view input)
 {
     std::string out(input);
-    std::transform(out.begin(), out.end(), out.begin(), upper);
+    std::ranges::transform(out, out.begin(), upper);
     return out;
 }
 
 void makeLowerCase(std::string& input)
 {
-    std::transform(input.begin(), input.end(), input.begin(), lower);
+    std::ranges::transform(input, input.begin(), lower);
 }
 
 void makeUpperCase(std::string& input)
 {
-    std::transform(input.begin(), input.end(), input.begin(), upper);
+    std::ranges::transform(input, input.begin(), upper);
 }
 
 namespace stringOps {
@@ -279,7 +351,7 @@ namespace stringOps {
         getTailString(std::string_view input, std::string_view sep) noexcept
     {
         auto sepLoc = input.rfind(sep);
-        std::string_view ret = (sepLoc == std::string_view::npos) ?
+        const std::string_view ret = (sepLoc == std::string_view::npos) ?
             input :
             input.substr(sepLoc + sep.size());
         return std::string(ret);
@@ -292,81 +364,6 @@ namespace stringOps {
         auto ret = std::string(
             (sepLoc == std::string::npos) ? input : input.substr(sepLoc + 1));
         return ret;
-    }
-
-    static inline bool isIsolatingChar(char testChar)
-    {
-        return ((isspace(testChar) != 0) || (ispunct(testChar) != 0));
-    }
-
-    static bool hasIsolatedChar(const std::string& testString, char testChar)
-    {
-        auto findLoc = testString.find(testChar);
-        while (findLoc != std::string::npos) {
-            if (findLoc == 0) {
-                if (isIsolatingChar(testString[findLoc + 1])) {
-                    return true;
-                }
-            } else if (findLoc == testString.length() - 1) {
-                if (isIsolatingChar(testString[findLoc - 1])) {
-                    return true;
-                }
-            } else if (
-                isIsolatingChar(testString[findLoc - 1]) &&
-                isIsolatingChar(testString[findLoc + 1])) {
-                return true;
-            }
-
-            findLoc = testString.find(testChar, findLoc + 1);
-        }
-        return false;
-    }
-
-    static bool checkForMatch(
-        const std::string& string1,
-        const std::string& string2,
-        string_match_type matchType)
-    {
-        switch (matchType) {
-            case string_match_type::exact:
-                if (string1 == string2) {
-                    return true;
-                }
-                break;
-            case string_match_type::begin:
-                if (string2.starts_with(string1)) {
-                    return true;
-                }
-                break;
-            case string_match_type::end:
-                if (string2.ends_with(string1)) {
-                    return true;
-                }
-                break;
-            case string_match_type::close:
-                if (string1.length() == 1)  // special case
-                {  // we are checking if the single character is
-                   // isolated from other alphanumeric characters
-                    if (hasIsolatedChar(string2, string1.front())) {
-                        return true;
-                    }
-                } else {
-                    auto findLoc = string2.find(string1);
-                    if (findLoc != std::string::npos) {
-                        return true;
-                    }
-                    auto nstr = removeChar(string1, '_');
-                    if (string2 == nstr) {
-                        return true;
-                    }
-                    auto nstr2 = removeChar(string2, '_');
-                    if ((string1 == nstr2) || (nstr == nstr2)) {
-                        return true;
-                    }
-                }
-                break;
-        }
-        return false;
     }
 
     // NOLINTNEXTLINE
@@ -384,10 +381,10 @@ namespace stringOps {
         }
         for (const auto& testStr : testStrings) {
             lct = convertToLowerCase(testStr);
-            for (int kk = 0; kk < static_cast<int>(lciStrings.size()); ++kk) {
+            for (size_t kk = 0; kk < lciStrings.size(); ++kk) {
                 lcis = lciStrings[kk];
                 if (checkForMatch(lct, lcis, matchType)) {
-                    return kk;
+                    return static_cast<int>(kk);
                 }
             }
         }
