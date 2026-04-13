@@ -11,6 +11,7 @@
  */
 
 #include "stringConversion.h"
+#include "charMapper.h"
 
 namespace gmlc::utilities {
 

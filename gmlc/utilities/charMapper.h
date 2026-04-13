@@ -44,13 +44,13 @@ to try to assign something that way
 };
 /** map that translates all characters that could be in numbers to true all
  * others to false*/
-CharMapper<bool> numericMapper();
+CharMapper<bool> numericMapper() noexcept;
 /** map that translates all characters that could start a number to true, all
  * others to false*/
-CharMapper<bool> numericStartMapper();
+CharMapper<bool> numericStartMapper() noexcept;
 /** map that translates all characters that could end a number to true, all
  * others to false*/
-CharMapper<bool> numericEndMapper();
+CharMapper<bool> numericEndMapper() noexcept;
 /** map that translates all base 64 characters to the appropriate numerical
  * value*/
 CharMapper<unsigned char> base64Mapper() noexcept;

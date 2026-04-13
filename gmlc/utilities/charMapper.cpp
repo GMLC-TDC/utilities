@@ -13,7 +13,7 @@
 #include "charMapper.h"
 
 namespace gmlc::utilities {
-CharMapper<bool> numericMapper()
+CharMapper<bool> numericMapper() noexcept
 {
     CharMapper<bool> mapper(false);
     mapper.addKey('0', true);
@@ -35,7 +35,7 @@ CharMapper<bool> numericMapper()
     return mapper;
 }
 
-CharMapper<bool> numericStartMapper()
+CharMapper<bool> numericStartMapper() noexcept
 {
     CharMapper<bool> mapper(false);
     mapper.addKey('0', true);
@@ -59,7 +59,7 @@ CharMapper<bool> numericStartMapper()
     return mapper;
 }
 
-CharMapper<bool> numericEndMapper()
+CharMapper<bool> numericEndMapper() noexcept
 {
     CharMapper<bool> mapper(false);
     mapper.addKey('0', true);
