@@ -16,6 +16,7 @@ SPDX-License-Identifier: BSD-3-Clause
 #include <map>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 
 namespace gmlc::utilities {
 namespace {
