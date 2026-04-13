@@ -34,11 +34,11 @@ June 2022 changed to support std::string_view where applicable
 
 namespace gmlc::utilities::string_viewOps {
 namespace {
-const CharMapper<unsigned char>& getPairMap()
-{
-    static const CharMapper<unsigned char> pmap = pairMapper();
-    return pmap;
-}
+    const CharMapper<unsigned char>& getPairMap()
+    {
+        static const CharMapper<unsigned char> pmap = pairMapper();
+        return pmap;
+    }
 }  // namespace
 
 void trimString(std::string_view& input, std::string_view trimCharacters)
