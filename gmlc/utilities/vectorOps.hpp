@@ -254,7 +254,7 @@ template<class X>
 std::pair<X, int> maxLoc(const std::vector<X>& a)
 {
     auto result = std::max_element(a.begin(), a.end());
-    X a1 = *(result);
+    X a1 = *result;
     return std::make_pair(a1, result - a.begin());
 }
 
@@ -268,7 +268,7 @@ template<class X>
 std::pair<X, int> minLoc(const std::vector<X>& a)
 {
     auto result = std::min_element(a.begin(), a.end());
-    X a1 = *(result);
+    X a1 = *result;
     return std::make_pair(a1, result - a.begin());
 }
 
@@ -336,7 +336,7 @@ X rms(const std::vector<X>& a)
 {
     X sum_of_vector =
         std::accumulate(a.begin(), a.end(), 0.0, [](X a1, X a2) -> X {
-            return (a1 + a2 * a2);
+            return (a1 + (a2 * a2));
         });
     return std::sqrt(sum_of_vector);
 }
@@ -348,7 +348,7 @@ X stdev(const std::vector<X>& a)
     X mv = mean(a);
     X sum_of_vector =
         std::accumulate(a.begin(), a.end(), 0.0, [mv](X a1, X a2) -> X {
-            return (a1 + (a2 - mv) * (a2 - mv));
+            return (a1 + ((a2 - mv) * (a2 - mv)));
         });
     X ret = X(0);
     if (!a.empty()) {
@@ -869,7 +869,7 @@ auto countDiffs(
     const std::vector<X>& b,
     X maxAllowableDiff)
 {
-    using stype_t = typename std::vector<X>::size_type;
+    using stype_t = std::vector<X>::size_type;
     stype_t cnt = (std::min)(a.size(), b.size());
     stype_t diffs = (std::max)(a.size(), b.size()) - cnt;
     for (stype_t ii = 0; ii < cnt; ++ii) {
@@ -892,7 +892,7 @@ auto countDiffsIgnoreCommon(
     const std::vector<X>& b,
     X maxAllowableDiff)
 {
-    using stype_t = typename std::vector<X>::size_type;
+    using stype_t = std::vector<X>::size_type;
     stype_t cnt = (std::min)(a.size(), b.size());
     stype_t diffs = (std::max)(a.size(), b.size()) - cnt;
     if (cnt < 3) {
@@ -926,7 +926,7 @@ auto countDiffs(
     X maxAllowableDiff,
     X maxFracDiff)
 {
-    using stype_t = typename std::vector<X>::size_type;
+    using stype_t = std::vector<X>::size_type;
     stype_t cnt = (std::min)(a.size(), b.size());
     stype_t diffs = (std::max)(a.size(), b.size()) - cnt;
     for (stype_t ii = 0; ii < cnt; ++ii) {
@@ -950,7 +950,7 @@ auto countDiffsIfValid(
     const std::vector<X>& b,
     X maxAllowableDiff)
 {
-    using stype_t = typename std::vector<X>::size_type;
+    using stype_t = std::vector<X>::size_type;
     stype_t cnt = (std::min)(a.size(), b.size());
     stype_t diffs = (std::max)(a.size(), b.size()) - cnt;
     for (stype_t ii = 0; ii < cnt; ++ii) {
@@ -976,7 +976,7 @@ auto countDiffsCallback(
     X maxAllowableDiff,
     std::function<void(typename std::vector<X>::size_type, X, X)>& f)
 {
-    using stype_t = typename std::vector<X>::size_type;
+    using stype_t = std::vector<X>::size_type;
     stype_t cnt = (std::min)(a.size(), b.size());
     stype_t diffs = (std::max)(a.size(), b.size()) - cnt;
     for (stype_t ii = 0; ii < cnt; ++ii) {
@@ -1004,7 +1004,7 @@ auto countDiffsIfValidCallback(
     X maxAllowableDiff,
     std::function<void(typename std::vector<X>::size_type, X, X)>& f)
 {
-    using stype_t = typename std::vector<X>::size_type;
+    using stype_t = std::vector<X>::size_type;
     stype_t cnt = (std::min)(a.size(), b.size());
     stype_t diffs = (std::max)(a.size(), b.size()) - cnt;
     for (stype_t ii = 0; ii < cnt; ++ii) {
@@ -1023,7 +1023,7 @@ namespace vectorConvertDetail {
 
     template<typename Y>
     struct base_type<Y, std::void_t<typename Y::baseType>> {
-        using type = typename Y::baseType;
+        using type = Y::baseType;
     };
 
     template<typename X, typename Y>
