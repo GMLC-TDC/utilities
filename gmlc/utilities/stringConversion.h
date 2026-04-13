@@ -39,7 +39,10 @@ inline X numConv(const std::string& V)
     if constexpr (std::is_integral_v<X>) {
         return X(numConv<int64_t>(V));
     }
-    return X(numConv<double>(V));
+    else {
+        return X(numConv<double>(V));
+    }
+    
 }
 
 // template definition for double conversion
@@ -90,7 +93,11 @@ inline X numConvComp(const std::string& V, size_t& rem)
     if constexpr (std::is_integral_v<X>) {
         return X(numConvComp<int64_t>(V, rem));
     }
-    return X(numConvComp<double>(V, rem));
+    else
+    {
+        return X(numConvComp<double>(V, rem));
+    }
+    
 }
 
 template<>
