@@ -57,7 +57,7 @@ TEST(stringViewOps, trimString_tests)
 
 TEST(stringViewOps, tailString_tests)
 {
-    std::string_view test1 = "AbCd: *Ty; ";
+    const std::string_view test1 = "AbCd: *Ty; ";
     auto testres = getTailString(test1, '*');
     EXPECT_EQ(testres, "Ty; ");
     const std::string_view test2 = "bob::test1:test2:4";
