@@ -28,8 +28,8 @@ June 2022 changed to support string view where applicable
 #include <algorithm>
 #include <cctype>
 #include <charconv>
-#include <cstdint>
 #include <cmath>
+#include <cstdint>
 #include <fstream>
 #include <iomanip>
 #include <random>
@@ -38,11 +38,11 @@ June 2022 changed to support string view where applicable
 
 namespace gmlc::utilities {
 namespace {
-const CharMapper<unsigned char>& getPairMap()
-{
-    static const CharMapper<unsigned char> pmap = pairMapper();
-    return pmap;
-}
+    const CharMapper<unsigned char>& getPairMap()
+    {
+        static const CharMapper<unsigned char> pmap = pairMapper();
+        return pmap;
+    }
 }  // namespace
 
 static auto lower = [](char charToMakerLowerCase) -> char {
@@ -398,8 +398,7 @@ namespace stringOps {
     {
         std::string result(source);
         std::erase_if(result, [remchars](char input) {
-            return (
-                std::ranges::find(remchars, input) != remchars.end());
+            return (std::ranges::find(remchars, input) != remchars.end());
         });
         return result;
     }
