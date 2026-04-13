@@ -22,13 +22,13 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 #include "charMapper.h"
 #include "stringOps.h"
 
+#include <cstddef>
 #include <cstdint>
 #include <string>
 #include <type_traits>
 #include <vector>
 
-namespace gmlc {
-namespace utilities {
+namespace gmlc::utilities {
     extern const CharMapper<bool> numCheck;
     extern const CharMapper<bool> numCheckEnd;
 
@@ -36,8 +36,10 @@ namespace utilities {
     template<typename X>
     inline X numConv(const std::string& V)
     {
-        return (std::is_integral<X>::value) ? X(numConv<int64_t>(V)) :
-                                              X(numConv<double>(V));
+        if constexpr (std::is_integral_v<X>) {
+            return X(numConv<int64_t>(V));
+        }
+        return X(numConv<double>(V));
     }
 
     // template definition for double conversion
@@ -85,8 +87,10 @@ namespace utilities {
     template<class X>
     inline X numConvComp(const std::string& V, size_t& rem)
     {
-        return (std::is_integral<X>::value) ? X(numConvComp<int64_t>(V, rem)) :
-                                              X(numConvComp<double>(V, rem));
+        if constexpr (std::is_integral_v<X>) {
+            return X(numConvComp<int64_t>(V, rem));
+        }
+        return X(numConvComp<double>(V, rem));
     }
 
     template<>
@@ -219,5 +223,4 @@ namespace utilities {
         return av;
     }
 
-}  // namespace utilities
-}  // namespace gmlc
+}  // namespace gmlc::utilities
