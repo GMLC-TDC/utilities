@@ -29,8 +29,10 @@ Checks: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
+  -readability-redundant-typename,
   performance-*
   "
 
@@ -66,16 +68,17 @@ WarningsAsErrors: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
   -readability-identifier-naming,
+  -readability-redundant-typename,
   performance-*
   -performance-unnecessary-value-param
   "
 
 HeaderFilterRegex: "gmlc/utilities/*.hp?p?"
 
-AnalyzeTemporaryDtors: false
 CheckOptions:
   - key: cert-dcl59-cpp.HeaderFileExtensions
     value: h,hh,hpp,hxx

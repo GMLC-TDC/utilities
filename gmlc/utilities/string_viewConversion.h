@@ -202,15 +202,13 @@ inline long double numConvComp(std::string_view V, size_t& charactersUsed)
 /** check if the first character of the string is a valid numerical value*/
 inline bool nonNumericFirstCharacter(std::string_view V)
 {
-    return ((V.empty()) || (numCheck[V[0]] == false));
+    return (V.empty()) || (!numCheck[V[0]]);
 }
 
 /** check if the first character of the string is a valid numerical value*/
 inline bool nonNumericFirstOrLastCharacter(std::string_view V)
 {
-    return (
-        (V.empty()) || (numCheck[V[0]] == false) ||
-        (numCheckEnd[V.back()] == false));
+    return (V.empty()) || (!numCheck[V[0]]) || (!numCheckEnd[V.back()]);
 }
 
 template<typename X>

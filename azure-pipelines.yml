@@ -19,13 +19,13 @@ variables:
 jobs:
   - job: ClangTidy
     variables:
-      CXX_FLAGS: '-Werror -Wcast-align -Wfloat-equal -Wimplicit-atomic-properties -Wmissing-declarations -Woverlength-strings -Wshadow -Wstrict-selector-match -Wundeclared-selector -Wunreachable-code -std=c++17'
+      CXX_FLAGS: '-Werror -Wcast-align -Wfloat-equal -Wimplicit-atomic-properties -Wmissing-declarations -Woverlength-strings -Wshadow -Wstrict-selector-match -Wundeclared-selector -Wunreachable-code -std=c++23'
       utilities.options: -DGMLC_UTILITIES_CLANG_TIDY=ON -DGMLC_UTILITIES_CLANG_TIDY_OPTIONS="-fix"
-      utilities.std: 20
+      utilities.std: 23
       CMAKE_BUILD_PARALLEL_LEVEL: 1
     pool:
       vmImage: 'ubuntu-latest'
-    container: helics/buildenv:clang19-builder
+    container: helics/buildenv:clang22-builder
     steps:
       - template: .ci/azure-build.yml
       - script: git diff --exit-code --color
@@ -88,7 +88,6 @@ jobs:
           containerImage: helics/buildenv:gcc14-builder
         gcc15:
           containerImage: helics/buildenv:gcc15-builder
-          utilities.options: -DCMAKE_CXX_FLAGS="-Wstrict-overflow=5"
           utilities.std: 26
         gcc12:
           containerImage: helics/buildenv:gcc12-builder

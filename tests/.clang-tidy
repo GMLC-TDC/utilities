@@ -5,11 +5,13 @@ Checks: "
   -*,
   google-*,
   -google-runtime-int,
+  -google-runtime-float,
   -google-runtime-references,
   -google-build-using-namespace,
   -google-default-arguments,
   -google-readability-avoid-underscore-in-googletest-name,
   modernize*,
+  -modernize-use-ranges,
   -modernize-use-trailing-return-type,
   -modernize-use-override,
   -modernize-avoid-c-arrays,
@@ -30,22 +32,30 @@ Checks: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
+  -readability-identifier-naming,
   -readability-identifier-length,
+  -readability-function-cognitive-complexity,
+  -readability-avoid-nested-conditional-operator,
+  -readability-redundant-typename,
   performance-*
+  -performance-enum-size
   "
 
 WarningsAsErrors: "
   -*,
   google-*,
   -google-runtime-int,
+  -google-runtime-float,
   -google-runtime-references,
   -google-build-using-namespace,
   -google-default-arguments,
   -google-explicit-constructor,
   -google-readability-avoid-underscore-in-googletest-name,
   modernize*,
+  -modernize-use-ranges,
   -modernize-use-trailing-return-type,
   -modernize-use-override,
   -modernize-use-using,
@@ -68,15 +78,19 @@ WarningsAsErrors: "
   cert-*,
   -cert-err58-cpp,
   portability-*,
+  -portability-avoid-pragma-once,
   readability-*,
   -readability-magic-numbers,
   -readability-identifier-naming,
   -readability-identifier-length,
+  -readability-function-cognitive-complexity,
+  -readability-avoid-nested-conditional-operator,
+  -readability-redundant-typename,
   performance-*
+  -performance-enum-size
   -performance-unnecessary-value-param
   "
 
-AnalyzeTemporaryDtors: false
 CheckOptions:
   - key: cert-dcl59-cpp.HeaderFileExtensions
     value: h,hh,hpp,hxx

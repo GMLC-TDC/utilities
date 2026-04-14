@@ -18,10 +18,10 @@ using Time12 = TimeRepresentation<count_time<12>>;
 
 TEST(time9, simple_times)
 {
-    Time9 time1(10.0);
+    const Time9 time1(10.0);
     EXPECT_EQ(static_cast<double>(time1), 10.0);
 
-    Time9 time2(5, time_units::sec);
+    const Time9 time2(5, time_units::sec);
     Time9 time3(5000, time_units::ms);
     EXPECT_EQ(time2, time3);
 
@@ -50,7 +50,7 @@ TEST(time9, simple_times)
 
 TEST(time9, baseConversion)
 {
-    Time9 time1(49.759632);
+    const Time9 time1(49.759632);
 
     auto cnt = time1.getBaseTimeCode();
     Time9 time2;
@@ -58,7 +58,7 @@ TEST(time9, baseConversion)
 
     EXPECT_EQ(time1, time2);
 
-    Time9 time3(-3562.28963);
+    const Time9 time3(-3562.28963);
 
     cnt = time3.getBaseTimeCode();
     Time9 time4;
@@ -70,7 +70,7 @@ TEST(time9, baseConversion)
 TEST(time9, math)
 {
     Time9 time1(4.3);
-    Time9 time2(2.7);
+    const Time9 time2(2.7);
 
     EXPECT_EQ(time1 + time2, Time9(7.0));
     EXPECT_EQ(time1 + 1.7, Time9(6.0));
@@ -168,13 +168,13 @@ TEST(time9, comparison)
 TEST(time9, chrono)
 {
     using namespace std::chrono;
-    milliseconds tm1(100);
+    const milliseconds tm1(100);
 
-    Time9 b(tm1);
+    const Time9 b(tm1);
     EXPECT_EQ(b, 0.1);
 
-    nanoseconds tmns(10026523523);
-    Time9 b2(tmns);
+    const nanoseconds tmns(10026523523);
+    const Time9 b2(tmns);
     EXPECT_EQ(b2.getBaseTimeCode(), tmns.count());
 
     EXPECT_TRUE(b2.to_ns() == tmns);
@@ -183,10 +183,10 @@ TEST(time9, chrono)
 // Time 6 tests
 TEST(time6, simple_times)
 {
-    Time6 time1(10.0);
+    const Time6 time1(10.0);
     EXPECT_EQ(static_cast<double>(time1), 10.0);
 
-    Time6 time2(5, time_units::sec);
+    const Time6 time2(5, time_units::sec);
     Time6 time3(5000, time_units::ms);
     EXPECT_EQ(time2, time3);
 
@@ -215,7 +215,7 @@ TEST(time6, simple_times)
 
 TEST(time6, baseConversion)
 {
-    Time6 time1(49.759632);
+    const Time6 time1(49.759632);
 
     auto cnt = time1.getBaseTimeCode();
     Time6 time2;
@@ -223,7 +223,7 @@ TEST(time6, baseConversion)
 
     EXPECT_EQ(time1, time2);
 
-    Time6 time3(-3562.28963);
+    const Time6 time3(-3562.28963);
 
     cnt = time3.getBaseTimeCode();
     Time6 time4;
@@ -235,7 +235,7 @@ TEST(time6, baseConversion)
 TEST(time6, math)
 {
     Time6 time1(4.3);
-    Time6 time2(2.7);
+    const Time6 time2(2.7);
 
     EXPECT_EQ(time1 + time2, Time6(7.0));
     EXPECT_EQ(time1 + 1.7, Time6(6.0));
@@ -333,13 +333,13 @@ TEST(time6, comparison)
 TEST(time6, chrono)
 {
     using namespace std::chrono;
-    milliseconds tm1(100);
+    const milliseconds tm1(100);
 
-    Time6 b(tm1);
+    const Time6 b(tm1);
     EXPECT_EQ(b, 0.1);
 
-    microseconds tmns(10026523);
-    Time6 b2(tmns);
+    const microseconds tmns(10026523);
+    const Time6 b2(tmns);
     EXPECT_EQ(b2.getBaseTimeCode(), tmns.count());
 
     EXPECT_TRUE(std::chrono::duration_cast<microseconds>(b2.to_ns()) == tmns);
@@ -348,10 +348,10 @@ TEST(time6, chrono)
 // Time 12 tests
 TEST(time12, simple_times)
 {
-    Time12 time1(10.0);
+    const Time12 time1(10.0);
     EXPECT_EQ(static_cast<double>(time1), 10.0);
 
-    Time12 time2(5, time_units::sec);
+    const Time12 time2(5, time_units::sec);
     Time12 time3(5000, time_units::ms);
     EXPECT_EQ(time2, time3);
 
@@ -380,7 +380,7 @@ TEST(time12, simple_times)
 
 TEST(time12, baseConversion)
 {
-    Time12 time1(49.759632);
+    const Time12 time1(49.759632);
 
     auto cnt = time1.getBaseTimeCode();
     Time12 time2;
@@ -388,7 +388,7 @@ TEST(time12, baseConversion)
 
     EXPECT_EQ(time1, time2);
 
-    Time12 time3(-3562.28963);
+    const Time12 time3(-3562.28963);
 
     cnt = time3.getBaseTimeCode();
     Time12 time4;
@@ -400,7 +400,7 @@ TEST(time12, baseConversion)
 TEST(time12, math)
 {
     Time12 time1(4.3);
-    Time12 time2(2.7);
+    const Time12 time2(2.7);
 
     EXPECT_EQ(time1 + time2, Time12(7.0));
     EXPECT_EQ(time1 + 1.7, Time12(6.0));
@@ -498,13 +498,13 @@ TEST(time12, comparison)
 TEST(time12, chrono)
 {
     using namespace std::chrono;
-    milliseconds tm1(100);
+    const milliseconds tm1(100);
 
-    Time12 b(tm1);
+    const Time12 b(tm1);
     EXPECT_EQ(b, 0.1);
 
-    nanoseconds tmns(10026523523);
-    Time12 b2(tmns);
+    const nanoseconds tmns(10026523523);
+    const Time12 b2(tmns);
     EXPECT_EQ(b2.getBaseTimeCode(), tmns.count() * 1000);
 
     EXPECT_TRUE(b2.to_ns() == tmns);

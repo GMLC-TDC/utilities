@@ -13,7 +13,6 @@
 #include "gmlc/utilities/charMapper.h"
 
 #include "gtest/gtest.h"
-#include <iostream>
 #include <type_traits>
 
 using namespace gmlc::utilities;
@@ -21,7 +20,7 @@ using namespace gmlc::utilities;
 TEST(charMapper, numericMapper)
 {
     auto v = numericMapper();
-    auto dtype = std::is_same<decltype(v[1]), bool>::value;
+    auto dtype = std::is_same_v<decltype(v[1]), bool>;
     EXPECT_TRUE(dtype);
     EXPECT_TRUE(v['1']);
     EXPECT_TRUE(v['0']);
@@ -32,7 +31,7 @@ TEST(charMapper, numericMapper)
 TEST(charMapper, numericStartMapper)
 {
     auto v = numericStartMapper();
-    auto dtype = std::is_same<decltype(v[1]), bool>::value;
+    auto dtype = std::is_same_v<decltype(v[1]), bool>;
     EXPECT_TRUE(dtype);
     EXPECT_TRUE(v['+']);
     EXPECT_FALSE(v['e']);
@@ -44,7 +43,7 @@ TEST(charMapper, numericStartMapper)
 TEST(charMapper, numericEndMapper)
 {
     auto v = numericEndMapper();
-    auto dtype = std::is_same<decltype(v[1]), bool>::value;
+    auto dtype = std::is_same_v<decltype(v[1]), bool>;
     EXPECT_TRUE(dtype);
     EXPECT_FALSE(v['+']);
     EXPECT_FALSE(v['e']);
@@ -56,7 +55,7 @@ TEST(charMapper, numericEndMapper)
 TEST(charMapper, base64Mapper)
 {
     auto v = base64Mapper();
-    auto dtype = std::is_same<decltype(v[1]), unsigned char>::value;
+    auto dtype = std::is_same_v<decltype(v[1]), unsigned char>;
     EXPECT_TRUE(dtype);
     EXPECT_EQ(v.at('A'), 0);
     EXPECT_EQ(v.at('a'), 26);
@@ -68,7 +67,7 @@ TEST(charMapper, base64Mapper)
 TEST(charMapper, digitMapper)
 {
     auto v = digitMapper();
-    auto dtype = std::is_same<decltype(v[1]), unsigned char>::value;
+    auto dtype = std::is_same_v<decltype(v[1]), unsigned char>;
     EXPECT_TRUE(dtype);
     EXPECT_EQ(v['9'], 9);
     EXPECT_EQ(v['8'], 8);
@@ -85,7 +84,7 @@ TEST(charMapper, digitMapper)
 TEST(charMapper, hexMapper)
 {
     auto v = hexMapper();
-    auto dtype = std::is_same<decltype(v[1]), unsigned char>::value;
+    auto dtype = std::is_same_v<decltype(v[1]), unsigned char>;
     EXPECT_TRUE(dtype);
     EXPECT_EQ(v['9'], 9);
     EXPECT_EQ(v['8'], 8);
@@ -117,7 +116,7 @@ TEST(charMapper, hexMapper)
 TEST(charMapper, pairMapper)
 {
     auto v = pairMapper();
-    auto dtype = std::is_same<decltype(v[1]), unsigned char>::value;
+    auto dtype = std::is_same_v<decltype(v[1]), unsigned char>;
     EXPECT_TRUE(dtype);
 
     EXPECT_EQ(v['('], ')');

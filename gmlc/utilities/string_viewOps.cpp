@@ -23,14 +23,23 @@ June 2022 changed to support std::string_view where applicable
 
 #include "string_viewOps.h"
 
+#include "charMapper.h"
 #include "generic_string_ops.hpp"
 
 #include <algorithm>
+#include <cstddef>
 #include <stdexcept>
 #include <string>
 #include <string_view>
 
 namespace gmlc::utilities::string_viewOps {
+namespace {
+    const CharMapper<unsigned char>& getPairMap()
+    {
+        static const CharMapper<unsigned char> pmap = pairMapper();
+        return pmap;
+    }
+}  // namespace
 
 void trimString(std::string_view& input, std::string_view trimCharacters)
 {
@@ -93,7 +102,7 @@ std::string_view getTailString_any(
 
 std::string_view removeQuotes(std::string_view str)
 {
-    std::string_view ret = trim(str);
+    const std::string_view ret = trim(str);
     if (ret.empty()) {
         return ret;
     }
@@ -105,17 +114,15 @@ std::string_view removeQuotes(std::string_view str)
     return ret;
 }
 
-static const auto pmap = pairMapper();
-
 std::string_view removeBrackets(std::string_view str)
 {
-    std::string_view ret = trim(str);
+    const std::string_view ret = trim(str);
     if (ret.empty()) {
         return ret;
     }
     if (((ret.front() == '[') || (ret.front() == '(') || (ret.front() == '{') ||
          (ret.front() == '<')) &&
-        (static_cast<unsigned char>(ret.back()) == pmap[ret.front()])) {
+        (static_cast<unsigned char>(ret.back()) == getPairMap()[ret.front()])) {
         return ret.substr(1, ret.size() - 2);
     }
     return ret;
@@ -123,7 +130,7 @@ std::string_view removeBrackets(std::string_view str)
 
 std::string_view merge(std::string_view string1, std::string_view string2)
 {
-    ptrdiff_t diff = (string2.data() - string1.data()) -
+    const ptrdiff_t diff = (string2.data() - string1.data()) -
         static_cast<ptrdiff_t>(string1.length());
     if ((diff >= 0) &&
         (diff < 24))  // maximum of 23 characters between the strings
@@ -154,9 +161,9 @@ string_viewVector splitlineQuotes(
     std::string_view quoteChars,
     delimiter_compression compression)
 {
-    bool compress = (compression == delimiter_compression::on);
+    const bool compress = (compression == delimiter_compression::on);
     return generalized_section_splitting(
-        line, delimiters, quoteChars, pmap, compress);
+        line, delimiters, quoteChars, getPairMap(), compress);
 }
 
 string_viewVector splitlineBracket(
@@ -165,9 +172,9 @@ string_viewVector splitlineBracket(
     std::string_view bracketChars,
     delimiter_compression compression)
 {
-    bool compress = (compression == delimiter_compression::on);
+    const bool compress = (compression == delimiter_compression::on);
     return generalized_section_splitting(
-        line, delimiters, bracketChars, pmap, compress);
+        line, delimiters, bracketChars, getPairMap(), compress);
 }
 
 int toIntSimple(std::string_view input)
@@ -175,7 +182,7 @@ int toIntSimple(std::string_view input)
     int ret = 0;
     for (auto testChar : input) {
         if (testChar >= '0' && testChar <= '9') {
-            ret = 10 * ret + (testChar - '0');
+            ret = (10 * ret) + (testChar - '0');
         }
     }
     return ret;
@@ -202,7 +209,7 @@ int trailingStringInt(
         }
         pos1 = input.length() - 10;
     }
-    size_t length = input.length();
+    const size_t length = input.length();
     if (pos1 == length - 2) {
         num = input.back() - '0';
     } else if (length <= 10 || pos1 >= length - 10) {
@@ -235,7 +242,7 @@ int trailingStringInt(std::string_view input, int defNum)
         }
         pos1 = input.length() - 10;
     }
-    size_t length = input.length();
+    const size_t length = input.length();
     if (pos1 == length - 2) {
         return input.back() - '0';
     }

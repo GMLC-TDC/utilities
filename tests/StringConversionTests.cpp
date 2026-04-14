@@ -11,9 +11,10 @@
  */
 
 #include "gmlc/utilities/stringConversion.h"
+#include "gmlc/utilities/stringOps.h"
 
 #include "gtest/gtest.h"
-#include <iostream>
+#include <cstdint>
 #include <type_traits>
 #include <vector>
 
@@ -26,8 +27,7 @@ TEST(stringconversion, simple_integer_conversions_test)
     auto b = numeric_conversion<int64_t>("-457", -1);
     EXPECT_EQ(b, -457);
     static_assert(
-        std::is_same<decltype(b), int64_t>::value,
-        "conversion types do not match");
+        std::is_same_v<decltype(b), int64_t>, "conversion types do not match");
     auto c = numeric_conversion<unsigned char>("25", 0xFF);
     EXPECT_EQ(c, 25);
     auto d = numeric_conversion<int16_t>("-7629", 0xFF);
@@ -58,8 +58,7 @@ TEST(stringconversion, simple_floating_point_conversions_test)
     auto b = numeric_conversion<double>("234.123131", -1);
     EXPECT_NEAR(b, 234.123131, closeDef);
     static_assert(
-        std::is_same<decltype(b), double>::value,
-        "conversion types do not match");
+        std::is_same_v<decltype(b), double>, "conversion types do not match");
     auto c = numeric_conversion<double>(".456", 0xFF);
     EXPECT_NEAR(c, .456, closeDef);
     auto d = numeric_conversion<long double>("45.456e27", 0xFF);
@@ -83,8 +82,7 @@ TEST(stringconversion, simple_integer_conversion_complete_test)
     auto b = numeric_conversionComplete<int64_t>("-457", -1);
     EXPECT_EQ(b, -457);
     static_assert(
-        std::is_same<decltype(b), int64_t>::value,
-        "conversion types do not match");
+        std::is_same_v<decltype(b), int64_t>, "conversion types do not match");
     auto c = numeric_conversionComplete<unsigned char>("25", 0xFF);
     EXPECT_EQ(c, 25);
     auto d = numeric_conversionComplete<int16_t>("-7629", 0xFF);
@@ -114,12 +112,12 @@ TEST(stringconversion, str2_vector)
 {
     auto v = str2vector<int>("1,2,3,4", 0);
 
-    std::vector<int> v2{1, 2, 3, 4};
+    const std::vector<int> v2{1, 2, 3, 4};
     EXPECT_EQ(v, v2);
 
     v = str2vector<int>("1,2,N,4", 0);
 
-    std::vector<int> v3{1, 2, 0, 4};
+    const std::vector<int> v3{1, 2, 0, 4};
     EXPECT_EQ(v, v3);
 
     v = str2vector<int>("1:2:-N:4", 0, ":");
@@ -136,13 +134,13 @@ TEST(stringconversion, str2_vectorb)
     stringVector input{"1", "2", "3", "4"};
     auto v = str2vector<int>(input, 0);
 
-    std::vector<int> v2{1, 2, 3, 4};
+    const std::vector<int> v2{1, 2, 3, 4};
     EXPECT_EQ(v, v2);
 
     input[2] = "-N";
     v = str2vector<int>(input, 0);
 
-    std::vector<int> v3{1, 2, 0, 4};
+    const std::vector<int> v3{1, 2, 0, 4};
     EXPECT_EQ(v, v3);
 
     input[0] = "  1   ";
@@ -159,8 +157,7 @@ TEST(stringconversion, simple_floating_point_conversionsComplete_test)
     auto b = numeric_conversionComplete<double>("234.123131", -1);
     EXPECT_NEAR(b, 234.123131, closeDef);
     static_assert(
-        std::is_same<decltype(b), double>::value,
-        "conversion types do not match");
+        std::is_same_v<decltype(b), double>, "conversion types do not match");
     auto c = numeric_conversionComplete<double>(".456", 0xFF);
     EXPECT_NEAR(c, .456, closeDef);
     auto d = numeric_conversionComplete<long double>("45.456e27", 0xFF);
