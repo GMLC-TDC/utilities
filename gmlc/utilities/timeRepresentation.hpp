@@ -117,11 +117,13 @@ class integer_time {
     using baseType = base;
     static constexpr baseType maxVal() noexcept
     {
-        return (std::numeric_limits<baseType>::max)();  // NOLINT(readability-redundant-parentheses)
+        return (std::numeric_limits<
+                baseType>::max)();  // NOLINT(readability-redundant-parentheses)
     }
     static constexpr baseType minVal() noexcept
     {
-        return (std::numeric_limits<baseType>::min)() + 1;  // NOLINT(readability-redundant-parentheses)
+        return (std::numeric_limits<baseType>::min)() +
+            1;  // NOLINT(readability-redundant-parentheses)
     }
     static constexpr baseType zeroVal() noexcept { return 0; }
     static constexpr baseType epsilon() noexcept { return 1; }
@@ -235,11 +237,13 @@ class count_time {
      * min since that cannot be negated properly*/
     static constexpr baseType maxVal() noexcept
     {
-        return (std::numeric_limits<baseType>::max)();  // NOLINT(readability-redundant-parentheses)
+        return (std::numeric_limits<
+                baseType>::max)();  // NOLINT(readability-redundant-parentheses)
     }
     static constexpr baseType minVal() noexcept
     {
-        return (std::numeric_limits<baseType>::min)() + 1;  // NOLINT(readability-redundant-parentheses)
+        return (std::numeric_limits<baseType>::min)() +
+            1;  // NOLINT(readability-redundant-parentheses)
     }
     static constexpr baseType zeroVal() noexcept { return baseType(0); }
     static constexpr baseType epsilon() noexcept { return baseType(1); }
@@ -255,7 +259,8 @@ class count_time {
     static constexpr double toDouble(baseType val) noexcept
     {
         return (
-            static_cast<double>(val / iFactor) +  // NOLINT(bugprone-integer-division)
+            static_cast<double>(
+                val / iFactor) +  // NOLINT(bugprone-integer-division)
             static_cast<double>(val % iFactor) * ddivFactor);  // NOLINT
     }
     static constexpr baseType convert(double t) noexcept
