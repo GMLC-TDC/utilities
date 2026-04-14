@@ -39,6 +39,7 @@ Checks: "
   -readability-identifier-length,
   -readability-function-cognitive-complexity,
   -readability-avoid-nested-conditional-operator,
+  -readability-redundant-typename,
   performance-*
   -performance-enum-size
   "
@@ -84,6 +85,7 @@ WarningsAsErrors: "
   -readability-identifier-length,
   -readability-function-cognitive-complexity,
   -readability-avoid-nested-conditional-operator,
+  -readability-redundant-typename,
   performance-*
   -performance-enum-size
   -performance-unnecessary-value-param

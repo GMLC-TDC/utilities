@@ -51,6 +51,7 @@ class TimeSeriesMulti {
         m_data.resize(1);
         setCols(numCols);
     }
+    // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
     TimeSeriesMulti(fsize_t numCols, fsize_t numRows)
     {
         cols = 1;
@@ -62,8 +63,14 @@ class TimeSeriesMulti {
     {
         loadFile(fileName);
     }
-    const std::vector<std::string>& getFields() const { return fields; }
-    const std::string getField(fsize_t index) const { return fields[index]; }
+    [[nodiscard]] const std::vector<std::string>& getFields() const
+    {
+        return fields;
+    }
+    [[nodiscard]] std::string getField(fsize_t index) const
+    {
+        return fields[index];
+    }
     void setField(fsize_t index, std::string newField)
     {
         ensureSizeAtLeast(fields, index + 1);
@@ -205,10 +212,10 @@ default
         if (column >= cols) {
             setCols(column);
         }
+        count = static_cast<fsize_t>(ntime.size());
         m_time = std::move(ntime);
 
         m_data[column] = std::move(ndata);
-        count = static_cast<fsize_t>(ntime.size());
     }
 
     void updateData(fsize_t column, fsize_t row, dataType newValue)
@@ -219,28 +226,31 @@ default
             throw(std::out_of_range("invalid element specification"));
         }
     }
-    fsize_t size() const noexcept { return count; }
-    fsize_t columns() const noexcept { return cols; }
+    [[nodiscard]] fsize_t size() const noexcept { return count; }
+    [[nodiscard]] fsize_t columns() const noexcept { return cols; }
 
     /** @brief return true if there is no data*/
-    bool empty() const { return (count == 0); }
+    [[nodiscard]] bool empty() const { return (count == 0); }
     /** @brief get a vector for the time*/
-    const std::vector<timeType>& time() const { return m_time; }
+    [[nodiscard]] const std::vector<timeType>& time() const { return m_time; }
     /** @brief get an element of the time*/
-    timeType time(fsize_t index) const { return m_time[index]; }
-    timeType lastTime() const { return m_time[count - 1]; }
+    [[nodiscard]] timeType time(fsize_t index) const { return m_time[index]; }
+    [[nodiscard]] timeType lastTime() const { return m_time[count - 1]; }
     /** @brief get a vector for the m_data*/
-    const std::vector<dataType>& data(fsize_t index) const
+    [[nodiscard]] const std::vector<dataType>& data(fsize_t index) const
     {
         return m_data[index];
     }
     /** @brief get an element of the time*/
-    dataType data(fsize_t col_index, fsize_t row_index) const
+    [[nodiscard]] dataType data(fsize_t col_index, fsize_t row_index) const
     {
         return m_data[col_index][row_index];
     }
-    dataType lastData(fsize_t index) const { return m_data[index][count - 1]; }
-    std::vector<dataType> lastData() const
+    [[nodiscard]] dataType lastData(fsize_t index) const
+    {
+        return m_data[index][count - 1];
+    }
+    [[nodiscard]] std::vector<dataType> lastData() const
     {
         std::vector<dataType> b(cols);
         for (fsize_t ii = 0; ii < cols; ++ii) {
@@ -451,7 +461,7 @@ automatically detect the file type based on extension
         std::ofstream fio(
             fileName.c_str(),
             std::ios::out | std::ios::binary |
-                ((append) ? (std::ios::app) : (std::ios::trunc)));
+                (append ? std::ios::app : std::ios::trunc));
         if (!fio) {
             throw(openFileError());
         }
@@ -510,11 +520,11 @@ automatically detect the file type based on extension
     {
         std::ofstream fio(
             fileName.c_str(),
-            std::ios::out | ((append) ? (std::ios::app) : (std::ios::trunc)));
+            std::ios::out | (append ? std::ios::app : std::ios::trunc));
         if (!fio) {
             throw(openFileError());
         }
-        std::string ndes =
+        const std::string ndes =
             stringOps::characterReplace(description, '\n', "\n#");
 
         if (!append) {
