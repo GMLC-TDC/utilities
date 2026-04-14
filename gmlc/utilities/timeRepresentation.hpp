@@ -117,11 +117,15 @@ class integer_time {
     using baseType = base;
     static constexpr baseType maxVal() noexcept
     {
-        return (std::numeric_limits<baseType>::max)();  // NOLINT(readability-redundant-parentheses)
+        // Required for Windows headers where min/max may be macros.
+        // NOLINTNEXTLINE(readability-redundant-parentheses)
+        return (std::numeric_limits<baseType>::max)();
     }
     static constexpr baseType minVal() noexcept
     {
-        return (std::numeric_limits<baseType>::min)() + 1;  // NOLINT(readability-redundant-parentheses)
+        // Required for Windows headers where min/max may be macros.
+        // NOLINTNEXTLINE(readability-redundant-parentheses)
+        return (std::numeric_limits<baseType>::min)() + 1;
     }
     static constexpr baseType zeroVal() noexcept { return 0; }
     static constexpr baseType epsilon() noexcept { return 1; }
@@ -235,11 +239,15 @@ class count_time {
      * min since that cannot be negated properly*/
     static constexpr baseType maxVal() noexcept
     {
-        return (std::numeric_limits<baseType>::max)();  // NOLINT(readability-redundant-parentheses)
+        // Required for Windows headers where min/max may be macros.
+        // NOLINTNEXTLINE(readability-redundant-parentheses)
+        return (std::numeric_limits<baseType>::max)();
     }
     static constexpr baseType minVal() noexcept
     {
-        return (std::numeric_limits<baseType>::min)() + 1;  // NOLINT(readability-redundant-parentheses)
+        // Required for Windows headers where min/max may be macros.
+        // NOLINTNEXTLINE(readability-redundant-parentheses)
+        return (std::numeric_limits<baseType>::min)() + 1;
     }
     static constexpr baseType zeroVal() noexcept { return baseType(0); }
     static constexpr baseType epsilon() noexcept { return baseType(1); }
@@ -495,10 +503,14 @@ class TimeRepresentation {
   public:
 #ifdef _DEBUG
     /** normal time constructor from a double representation of seconds*/
+    // Intentional implicit conversion from seconds.
+    // NOLINTNEXTLINE(google-explicit-constructor)
     constexpr TimeRepresentation(double t) noexcept :
         internalTimeCode(Tconv::convert(t)), doubleTimeValue(t)
     {
     }
+    // Intentional implicit conversion from unit counts.
+    // NOLINTNEXTLINE(google-explicit-constructor)
     TimeRepresentation(std::int64_t count, time_units units) noexcept :
         internalTimeCode(Tconv::fromCount(count, units)){
             DOUBLETIME} TimeRepresentation(std::chrono::nanoseconds nsTime) noexcept
@@ -510,15 +522,21 @@ class TimeRepresentation {
 #else
     /** normal time constructor from a double representation of seconds intended
      * explicit*/
+    // Intentional implicit conversion from seconds.
+    // NOLINTNEXTLINE(google-explicit-constructor)
     constexpr TimeRepresentation(double t) noexcept :
         internalTimeCode(Tconv::convert(t))
     {
-    }  // NOLINT
+    }
+    // Intentional implicit conversion from chrono durations.
+    // NOLINTNEXTLINE(google-explicit-constructor)
     constexpr TimeRepresentation(
-        std::chrono::nanoseconds nsTime) noexcept  // NOLINT
+        std::chrono::nanoseconds nsTime) noexcept
         : internalTimeCode(Tconv::convert(nsTime))
     {
     }
+    // Intentional implicit conversion from unit counts.
+    // NOLINTNEXTLINE(google-explicit-constructor)
     constexpr TimeRepresentation(std::int64_t count, time_units units) noexcept
         : internalTimeCode(Tconv::fromCount(count, units))
     {
@@ -588,10 +606,12 @@ class TimeRepresentation {
             Tconv::toCount(internalTimeCode, time_units::ms));
     }
     /** direct conversion to double static cast overload*/
+    // Intentional implicit conversion to seconds.
+    // NOLINTNEXTLINE(google-explicit-constructor)
     constexpr operator double() const noexcept
     {
         return Tconv::toDouble(internalTimeCode);
-    }  // NOLINT
+    }
 
     TimeRepresentation& operator+=(const TimeRepresentation& rhs) noexcept
     {
