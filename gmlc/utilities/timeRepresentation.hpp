@@ -263,7 +263,8 @@ class count_time {
     static constexpr double toDouble(baseType val) noexcept
     {
         return (
-            static_cast<double>(val / iFactor) +  // NOLINT(bugprone-integer-division)
+            static_cast<double>(
+                val / iFactor) +  // NOLINT(bugprone-integer-division)
             static_cast<double>(val % iFactor) * ddivFactor);  // NOLINT
     }
     static constexpr baseType convert(double t) noexcept
