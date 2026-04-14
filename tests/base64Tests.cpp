@@ -14,6 +14,8 @@
 
 #include "gtest/gtest.h"
 #include <array>
+#include <cstddef>
+#include <cstring>
 #include <string>
 
 using namespace gmlc::utilities;
@@ -35,7 +37,7 @@ TEST(base64, decode_vector)
 
     EXPECT_EQ(strlen(encodeSeq), decoded.size());
 
-    std::string res(decoded.begin(), decoded.end());
+    const std::string res(decoded.begin(), decoded.end());
     EXPECT_EQ(res, encodeSeq);
 }
 
@@ -46,15 +48,15 @@ TEST(base64, decode_raw)
     auto size = base64_decode(encoded, result.data(), 100);
 
     EXPECT_EQ(strlen(encodeSeq), size);
-    std::string res(result.data(), size);
+    const std::string res(result.data(), size);
     EXPECT_EQ(res, encodeSeq);
 
     for (size_t jj = 11; jj >= 1; jj--) {
         memset(result.data(), 0, 100);
         size = base64_decode(encoded, result.data(), jj);
         EXPECT_EQ(size, jj);
-        std::string sub = res.substr(0, jj);
-        std::string ressub(result.data(), size);
+        const std::string sub = res.substr(0, jj);
+        const std::string ressub(result.data(), size);
         EXPECT_EQ(ressub, sub);
     }
 }

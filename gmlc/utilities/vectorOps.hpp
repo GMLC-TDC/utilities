@@ -254,7 +254,7 @@ template<class X>
 std::pair<X, int> maxLoc(const std::vector<X>& a)
 {
     auto result = std::max_element(a.begin(), a.end());
-    X a1 = *(result);
+    X a1 = *result;
     return std::make_pair(a1, result - a.begin());
 }
 
@@ -268,7 +268,7 @@ template<class X>
 std::pair<X, int> minLoc(const std::vector<X>& a)
 {
     auto result = std::min_element(a.begin(), a.end());
-    X a1 = *(result);
+    X a1 = *result;
     return std::make_pair(a1, result - a.begin());
 }
 
@@ -336,7 +336,7 @@ X rms(const std::vector<X>& a)
 {
     X sum_of_vector =
         std::accumulate(a.begin(), a.end(), 0.0, [](X a1, X a2) -> X {
-            return (a1 + a2 * a2);
+            return (a1 + (a2 * a2));
         });
     return std::sqrt(sum_of_vector);
 }
@@ -348,7 +348,7 @@ X stdev(const std::vector<X>& a)
     X mv = mean(a);
     X sum_of_vector =
         std::accumulate(a.begin(), a.end(), 0.0, [mv](X a1, X a2) -> X {
-            return (a1 + (a2 - mv) * (a2 - mv));
+            return (a1 + ((a2 - mv) * (a2 - mv)));
         });
     X ret = X(0);
     if (!a.empty()) {

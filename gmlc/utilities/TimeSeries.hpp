@@ -27,27 +27,39 @@
 namespace gmlc::utilities {
 class fileNotFoundError : public std::exception {
   public:
-    const char* what() const noexcept override { return "file not found"; }
+    [[nodiscard]] const char* what() const noexcept override
+    {
+        return "file not found";
+    }
 };
 
 class openFileError : public std::exception {
   public:
-    const char* what() const noexcept override { return "unable to open file"; }
+    [[nodiscard]] const char* what() const noexcept override
+    {
+        return "unable to open file";
+    }
 };
 
 class fileLoadFailure : public std::exception {
   public:
-    const char* what() const noexcept override { return "file load failure"; }
+    [[nodiscard]] const char* what() const noexcept override
+    {
+        return "file load failure";
+    }
 };
 
 class fileIncomplete : public std::exception {
   public:
-    const char* what() const noexcept override { return "file incomplete"; }
+    [[nodiscard]] const char* what() const noexcept override
+    {
+        return "file incomplete";
+    }
 };
 
 class invalidDataSize : public std::exception {
   public:
-    const char* what() const noexcept override
+    [[nodiscard]] const char* what() const noexcept override
     {
         return "input data sizes are not valid";
     }
@@ -121,9 +133,9 @@ class TimeSeries {
         m_data.reserve(newCapacity);
     }
     /** @brief get the size()*/
-    fsize_t size() const { return count; }
+    [[nodiscard]] fsize_t size() const { return count; }
     /** @brief return true if there is no data*/
-    bool empty() const { return (count == 0); }
+    [[nodiscard]] bool empty() const { return (count == 0); }
     /** @brief clear the data from the time series*/
     void clear()
     {
@@ -133,15 +145,18 @@ class TimeSeries {
     }
 
     /** @brief get a vector for the time*/
-    const std::vector<timeType>& time() const { return m_time; }
+    [[nodiscard]] const std::vector<timeType>& time() const { return m_time; }
     /** @brief get an element of the time*/
-    timeType time(fsize_t index) const { return m_time[index]; }
-    timeType lastTime() const { return m_time[count - 1]; }
+    [[nodiscard]] timeType time(fsize_t index) const { return m_time[index]; }
+    [[nodiscard]] timeType lastTime() const { return m_time[count - 1]; }
     /** @brief get a vector for the data*/
-    const std::vector<dataType>& data() const { return m_data; }
+    [[nodiscard]] const std::vector<dataType>& data() const { return m_data; }
     /** @brief get an element of the time*/
-    const dataType& data(fsize_t index) const { return m_data[index]; }
-    const dataType& lastData() const { return m_data[count - 1]; }
+    [[nodiscard]] const dataType& data(fsize_t index) const
+    {
+        return m_data[index];
+    }
+    [[nodiscard]] const dataType& lastData() const { return m_data[count - 1]; }
     /** @brief load a file into the time series
 automatically detect the file type based on extension
 @param[in] fileName  the file to load
@@ -197,7 +212,7 @@ series
         fio.read(reinterpret_cast<char*>(&rcount), sizeof(fsize_t));
 
         resize(nc);  // update the size
-        fsize_t cols = rcount - 1;
+        const fsize_t cols = rcount - 1;
 
         // now read the field names
         unsigned char len;
@@ -273,7 +288,8 @@ series
         if (!fio) {
             throw(fileNotFoundError());
         }
-        std::string line, line2;
+        std::string line;
+        std::string line2;
         std::getline(fio, line);
         if (line[0] == '#') {
             std::getline(fio, line2);
@@ -310,7 +326,7 @@ appended rather than overwritten
         std::ofstream fio(
             fileName.c_str(),
             std::ios::out | std::ios::binary |
-                ((append) ? (std::ios::app) : (std::ios::trunc)));
+                (append ? std::ios::app : std::ios::trunc));
         if (!fio) {
             throw(fileNotFoundError());
         }
@@ -371,7 +387,7 @@ appended rather than overwritten
     {
         std::ofstream fio(
             fileName.c_str(),
-            std::ios::out | ((append) ? (std::ios::app) : (std::ios::trunc)));
+            std::ios::out | (append ? std::ios::app : std::ios::trunc));
         if (!fio) {
             throw(fileNotFoundError());
         }
