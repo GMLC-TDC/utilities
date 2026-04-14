@@ -14,9 +14,9 @@
 
 #include "gtest/gtest.h"
 #include <map>
+#include <optional>
 #include <string>
 #include <unordered_map>
-#include <optional>
 
 using namespace gmlc::utilities;
 
@@ -91,7 +91,8 @@ TEST(mapops, umap1)
 /** test with a map*/
 TEST(mapops, umap2)
 {
-    const std::unordered_map<int, std::string> map1{{1, "string1"}, {2, "string2"}};
+    const std::unordered_map<int, std::string> map1{
+        {1, "string1"}, {2, "string2"}};
 
     EXPECT_EQ(mapFind(map1, 1, std::string("string3")), "string1");
     EXPECT_EQ(mapFind(map1, 2, std::string("string3")), "string2");
@@ -117,7 +118,8 @@ TEST(mapops, umapopt1)
 /** test with a map*/
 TEST(mapops, umapopt2)
 {
-    const std::unordered_map<int, std::string> map1{{1, "string1"}, {2, "string2"}};
+    const std::unordered_map<int, std::string> map1{
+        {1, "string1"}, {2, "string2"}};
 
     const auto oneVal = mapFind(map1, 1);
     ASSERT_TRUE(oneVal.has_value());
