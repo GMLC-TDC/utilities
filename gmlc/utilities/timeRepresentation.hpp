@@ -531,9 +531,8 @@ class TimeRepresentation {
     }
     // Intentional implicit conversion from chrono durations.
     // NOLINTNEXTLINE(google-explicit-constructor)
-    constexpr TimeRepresentation(
-        std::chrono::nanoseconds nsTime) noexcept
-        : internalTimeCode(Tconv::convert(nsTime))
+    constexpr TimeRepresentation(std::chrono::nanoseconds nsTime) noexcept :
+        internalTimeCode(Tconv::convert(nsTime))
     {
     }
     // Intentional implicit conversion from unit counts.
