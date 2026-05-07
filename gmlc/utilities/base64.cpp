@@ -107,10 +107,13 @@ std::string base64_encode(void const* bytes_to_encode, size_t in_len)
 std::vector<unsigned char>
     base64_decode(std::string_view encoded_string, size_t offset)
 {
+    if (offset >= encoded_string.size()) {
+        return {};
+    }
     const auto inputLen = encoded_string.size() - offset;
     auto remaining = inputLen;
-    int indexOut = 0;
-    int indexIn = static_cast<int>(offset);
+    size_t indexOut = 0;
+    size_t indexIn = offset;
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::vector<unsigned char> ret;
@@ -143,7 +146,7 @@ std::vector<unsigned char>
     }
 
     if (indexOut > 0) {
-        for (int j = indexOut; j < 4; j++) {
+        for (size_t j = indexOut; j < 4; ++j) {
             char_array_4[j] = 0;
         }
         char_array_4[0] = getBase64Map()[char_array_4[0]];
@@ -157,8 +160,8 @@ std::vector<unsigned char>
             ((char_array_4[2] & 0x3cU) >> 2U);
         char_array_3[2] = ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
-        const int outputCount = indexOut - 1;
-        for (int j = 0; j < outputCount; ++j) {
+        const size_t outputCount = indexOut - 1;
+        for (size_t j = 0; j < outputCount; ++j) {
             ret.push_back(char_array_3[j]);
         }
     }
@@ -169,10 +172,13 @@ std::vector<unsigned char>
 std::string
     base64_decode_to_string(std::string_view encoded_string, size_t offset)
 {
+    if (offset >= encoded_string.size()) {
+        return {};
+    }
     const auto inputLen = encoded_string.size() - offset;
     auto remaining = inputLen;
-    int indexOut{0};
-    int indexIn{static_cast<int>(offset)};
+    size_t indexOut{0};
+    size_t indexIn{offset};
     std::array<unsigned char, 3> char_array_3{{0U, 0U, 0U}};
     std::array<unsigned char, 4> char_array_4{{0U, 0U, 0U, 0U}};
     std::string ret;
@@ -205,7 +211,7 @@ std::string
     }
 
     if (indexOut > 0) {
-        for (int j = indexOut; j < 4; j++) {
+        for (size_t j = indexOut; j < 4; ++j) {
             char_array_4[j] = 0;
         }
         char_array_4[0] = getBase64Map()[char_array_4[0]];
@@ -219,8 +225,8 @@ std::string
             ((char_array_4[2] & 0x3cU) >> 2U);
         char_array_3[2] = ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
-        const int outputCount = indexOut - 1;
-        for (int j = 0; j < outputCount; ++j) {
+        const size_t outputCount = indexOut - 1;
+        for (size_t j = 0; j < outputCount; ++j) {
             ret.push_back(char_array_3[j]);
         }
     }
@@ -233,8 +239,8 @@ size_t
     base64_decode(std::string_view encoded_string, void* data, size_t max_size)
 {
     auto remaining = encoded_string.size();
-    int indexOut = 0;
-    int indexIn = 0;
+    size_t indexOut = 0;
+    size_t indexIn = 0;
     std::array<unsigned char, 3> char_array_3{{'\0', '\0', '\0'}};
     std::array<unsigned char, 4> char_array_4{{'\0', '\0', '\0', '\0'}};
     auto* outData = static_cast<unsigned char*>(data);
@@ -256,15 +262,15 @@ size_t
                 ((char_array_4[2] & 0x3cU) >> 2U);
             char_array_3[2] =
                 ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
-            if (dataIndex + 2 < max_size) {
+            if (max_size - dataIndex >= 3) {
                 outData[dataIndex++] = char_array_3[0];
                 outData[dataIndex++] = char_array_3[1];
                 outData[dataIndex++] = char_array_3[2];
-            } else if (dataIndex + 1 < max_size) {
+            } else if (max_size - dataIndex >= 2) {
                 outData[dataIndex++] = char_array_3[0];
                 outData[dataIndex++] = char_array_3[1];
                 return dataIndex;
-            } else if (dataIndex < max_size) {
+            } else if (max_size != dataIndex) {
                 outData[dataIndex++] = char_array_3[0];
                 return dataIndex;
             }
@@ -274,7 +280,7 @@ size_t
     }
 
     if (indexOut > 0) {
-        for (int j = indexOut; j < 4; j++) {
+        for (size_t j = indexOut; j < 4; ++j) {
             char_array_4[j] = 0;
         }
         char_array_4[0] = getBase64Map()[char_array_4[0]];
@@ -288,9 +294,9 @@ size_t
             ((char_array_4[2] & 0x3cU) >> 2U);
         char_array_3[2] = ((char_array_4[2] & 0x3U) << 6U) + char_array_4[3];
 
-        const int outputCount = indexOut - 1;
-        for (int j = 0; j < outputCount; ++j) {
-            if (dataIndex < max_size) {
+        const size_t outputCount = indexOut - 1;
+        for (size_t j = 0; j < outputCount; ++j) {
+            if (dataIndex != max_size) {
                 outData[dataIndex++] = char_array_3[j];
             }
         }
