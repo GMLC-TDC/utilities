@@ -7,13 +7,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # ~~~
 
-set(utilities_source_files
-    base64.cpp
-    string_viewOps.cpp
-    stringOps.cpp
-    stringConversion.cpp
-    vectorOps.cpp
-    timeStringOps.cpp
+set(utilities_source_files base64.cpp string_viewOps.cpp stringOps.cpp
+                           stringConversion.cpp vectorOps.cpp timeStringOps.cpp
 )
 
 set(string_comparison_sources editdist.cpp smithWat.cpp namecmp.h jwink.cpp dpcomp.cpp)

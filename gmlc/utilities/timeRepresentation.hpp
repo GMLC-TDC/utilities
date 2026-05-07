@@ -438,11 +438,10 @@ class TimeRepresentation {
 #define DOUBLETIMEEXT(t)
 #endif
 
-    static constexpr baseType subtractBase(
-        baseType lhs,
-        baseType rhs) noexcept
+    static constexpr baseType subtractBase(baseType lhs, baseType rhs) noexcept
     {
-        if constexpr (std::is_integral_v<baseType> && std::is_signed_v<baseType>) {
+        if constexpr (
+            std::is_integral_v<baseType> && std::is_signed_v<baseType>) {
             if ((rhs > 0) && (lhs < Tconv::minVal() + rhs)) {
                 return Tconv::minVal();
             }
@@ -452,6 +451,7 @@ class TimeRepresentation {
         }
         return static_cast<baseType>(lhs - rhs);
     }
+
   public:
     /** default constructor*/
     TimeRepresentation() = default;
