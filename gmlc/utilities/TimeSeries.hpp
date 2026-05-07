@@ -200,11 +200,9 @@ series
             // I don't know what to do here yet
         }
         fio.read(reinterpret_cast<char*>(&dcount), sizeof(fsize_t));
-        std::vector<char> dbuff(256);
+        std::vector<char> dbuff;
         if (dcount > 0) {
-            if (dcount > 256) {
-                dbuff.resize(dcount);
-            }
+            dbuff.resize(dcount);
             fio.read(dbuff.data(), dcount);
             description = std::string(dbuff.data(), dcount);
         }
@@ -220,13 +218,12 @@ series
             fio.read(reinterpret_cast<char*>(&len), 1);
             if (cc == column) {
                 if (len > 0) {
-                    if (cc == column) {
-                        fio.read(dbuff.data(), len);
-                        field = std::string(dbuff.data(), len);
-                    }
+                    dbuff.resize(len);
+                    fio.read(dbuff.data(), len);
+                    field = std::string(dbuff.data(), len);
                 }
             } else {
-                fio.seekg(len - 256, std::ifstream::ios_base::cur);
+                fio.seekg(len, std::ifstream::ios_base::cur);
             }
         }
 

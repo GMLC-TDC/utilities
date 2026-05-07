@@ -437,6 +437,21 @@ class TimeRepresentation {
 #define DOUBLETIME
 #define DOUBLETIMEEXT(t)
 #endif
+
+    static constexpr baseType subtractBase(
+        baseType lhs,
+        baseType rhs) noexcept
+    {
+        if constexpr (std::is_integral_v<baseType> && std::is_signed_v<baseType>) {
+            if ((rhs > 0) && (lhs < Tconv::minVal() + rhs)) {
+                return Tconv::minVal();
+            }
+            if ((rhs < 0) && (lhs > Tconv::maxVal() + rhs)) {
+                return Tconv::maxVal();
+            }
+        }
+        return static_cast<baseType>(lhs - rhs);
+    }
   public:
     /** default constructor*/
     TimeRepresentation() = default;
@@ -622,7 +637,7 @@ class TimeRepresentation {
 
     TimeRepresentation& operator-=(const TimeRepresentation& rhs) noexcept
     {
-        internalTimeCode -= rhs.internalTimeCode;
+        internalTimeCode = subtractBase(internalTimeCode, rhs.internalTimeCode);
         DOUBLETIME
         return *this;
     }
@@ -709,7 +724,7 @@ class TimeRepresentation {
     {
         return TimeRepresentation(
             std::integral_constant<int, 4>(),
-            internalTimeCode - other.internalTimeCode,
+            subtractBase(internalTimeCode, other.internalTimeCode),
             doubleTimeValue - other.doubleTimeValue);
     }
     constexpr TimeRepresentation operator*(int multiplier) const noexcept
@@ -745,7 +760,7 @@ class TimeRepresentation {
     {
         return TimeRepresentation(
             std::integral_constant<int, 4>(),
-            internalTimeCode - other.internalTimeCode);
+            subtractBase(internalTimeCode, other.internalTimeCode));
     }
     constexpr TimeRepresentation operator*(int multiplier) const noexcept
     {
@@ -770,37 +785,37 @@ class TimeRepresentation {
         return TimeRepresentation(Tconv::toDouble(internalTimeCode) / divisor);
     }
 
-    bool operator==(const TimeRepresentation& rhs) const noexcept
+    constexpr bool operator==(const TimeRepresentation& rhs) const noexcept
     {
         return (internalTimeCode == rhs.internalTimeCode);
     }
 
-    bool operator==(double rhs) const noexcept
+    constexpr bool operator==(double rhs) const noexcept
     {
         return (*this == TimeRepresentation<Tconv>(rhs));
     }
 
-    bool operator!=(const TimeRepresentation& rhs) const noexcept
+    constexpr bool operator!=(const TimeRepresentation& rhs) const noexcept
     {
         return (internalTimeCode != rhs.internalTimeCode);
     }
 
-    bool operator>(const TimeRepresentation& rhs) const noexcept
+    constexpr bool operator>(const TimeRepresentation& rhs) const noexcept
     {
         return (internalTimeCode > rhs.internalTimeCode);
     }
 
-    bool operator<(const TimeRepresentation& rhs) const noexcept
+    constexpr bool operator<(const TimeRepresentation& rhs) const noexcept
     {
         return (internalTimeCode < rhs.internalTimeCode);
     }
 
-    bool operator>=(const TimeRepresentation& rhs) const noexcept
+    constexpr bool operator>=(const TimeRepresentation& rhs) const noexcept
     {
         return (internalTimeCode >= rhs.internalTimeCode);
     }
 
-    bool operator<=(const TimeRepresentation& rhs) const noexcept
+    constexpr bool operator<=(const TimeRepresentation& rhs) const noexcept
     {
         return (internalTimeCode <= rhs.internalTimeCode);
     }
@@ -822,12 +837,12 @@ class TimeRepresentation {
         os << Tconv::toDouble(t1.internalTimeCode) << 's';
         return os;
     }
-    friend bool operator==(double lhs, TimeRepresentation t1)
+    friend constexpr bool operator==(double lhs, TimeRepresentation t1)
     {
         return (TimeRepresentation(lhs) == t1);
     }
 
-    friend bool operator!=(double lhs, TimeRepresentation t1)
+    friend constexpr bool operator!=(double lhs, TimeRepresentation t1)
     {
         return (TimeRepresentation(lhs) != t1);
     }
@@ -838,7 +853,7 @@ covered by the class definition
 */
 /** division operator with double as the numerator*/
 template<class Tconv>
-inline double operator/(double x, TimeRepresentation<Tconv> t)
+constexpr double operator/(double x, TimeRepresentation<Tconv> t)
 {
     return x / static_cast<double>(t);
 }
@@ -848,13 +863,14 @@ the second
 multiplication should produce a time time as the second should be treated as a
 number and produce another number*/
 template<class Tconv>
-inline double operator*(double x, TimeRepresentation<Tconv> t)
+constexpr double operator*(double x, TimeRepresentation<Tconv> t)
 {
     return x * static_cast<double>(t);
 }
 /** convenience operator to allow the int multiplier to be the first argument*/
 template<class Tconv>
-inline TimeRepresentation<Tconv> operator*(int x, TimeRepresentation<Tconv> t)
+constexpr TimeRepresentation<Tconv>
+    operator*(int x, TimeRepresentation<Tconv> t)
 {
     return t.operator*(x);
 }
@@ -862,7 +878,7 @@ inline TimeRepresentation<Tconv> operator*(int x, TimeRepresentation<Tconv> t)
 /** dividing two times is a ratio and should produce a numerical output not a
  * time output*/
 template<class Tconv>
-inline double
+constexpr double
     operator/(TimeRepresentation<Tconv> t1, TimeRepresentation<Tconv> t2)
 {
     return static_cast<double>(t1) / static_cast<double>(t2);
@@ -870,83 +886,83 @@ inline double
 
 /** subtraction if one is a time treat both as a time*/
 template<class Tconv>
-inline TimeRepresentation<Tconv>
+constexpr TimeRepresentation<Tconv>
     operator-(TimeRepresentation<Tconv> t, double x)
 {
     return t - TimeRepresentation<Tconv>(x);
 }
 
 template<class Tconv>
-inline TimeRepresentation<Tconv>
+constexpr TimeRepresentation<Tconv>
     operator-(double x, TimeRepresentation<Tconv> t)
 {
     return TimeRepresentation<Tconv>(x) - t;
 }
 
 template<class Tconv>
-inline TimeRepresentation<Tconv>
+constexpr TimeRepresentation<Tconv>
     operator+(TimeRepresentation<Tconv> t, double x)
 {
     return t + TimeRepresentation<Tconv>(x);
 }
 
 template<class Tconv>
-inline TimeRepresentation<Tconv>
+constexpr TimeRepresentation<Tconv>
     operator+(double x, TimeRepresentation<Tconv> t)
 {
     return TimeRepresentation<Tconv>(x) + t;
 }
 
 template<class Tconv>
-inline bool operator!=(TimeRepresentation<Tconv> t1, double rhs)
+constexpr bool operator!=(TimeRepresentation<Tconv> t1, double rhs)
 {
     return (t1 != TimeRepresentation<Tconv>(rhs));
 }
 
 template<class Tconv>
-inline bool operator>(TimeRepresentation<Tconv> t1, double rhs)
+constexpr bool operator>(TimeRepresentation<Tconv> t1, double rhs)
 {
     return (t1 > TimeRepresentation<Tconv>(rhs));
 }
 
 template<class Tconv>
-inline bool operator<(TimeRepresentation<Tconv> t1, double rhs)
+constexpr bool operator<(TimeRepresentation<Tconv> t1, double rhs)
 {
     return (t1 < TimeRepresentation<Tconv>(rhs));
 }
 
 template<class Tconv>
-inline bool operator>=(TimeRepresentation<Tconv> t1, double rhs)
+constexpr bool operator>=(TimeRepresentation<Tconv> t1, double rhs)
 {
     return (t1 >= TimeRepresentation<Tconv>(rhs));
 }
 
 template<class Tconv>
-inline bool operator<=(TimeRepresentation<Tconv> t1, double rhs)
+constexpr bool operator<=(TimeRepresentation<Tconv> t1, double rhs)
 {
     return (t1 <= TimeRepresentation<Tconv>(rhs));
 }
 
 template<class Tconv>
-inline bool operator>(double lhs, TimeRepresentation<Tconv> t1)
+constexpr bool operator>(double lhs, TimeRepresentation<Tconv> t1)
 {
     return (TimeRepresentation<Tconv>(lhs) > t1);
 }
 
 template<class Tconv>
-inline bool operator<(double lhs, TimeRepresentation<Tconv> t1)
+constexpr bool operator<(double lhs, TimeRepresentation<Tconv> t1)
 {
     return (TimeRepresentation<Tconv>(lhs) < t1);
 }
 
 template<class Tconv>
-inline bool operator>=(double lhs, TimeRepresentation<Tconv> t1)
+constexpr bool operator>=(double lhs, TimeRepresentation<Tconv> t1)
 {
     return (TimeRepresentation<Tconv>(lhs) >= t1);
 }
 
 template<class Tconv>
-inline bool operator<=(double lhs, TimeRepresentation<Tconv> t1)
+constexpr bool operator<=(double lhs, TimeRepresentation<Tconv> t1)
 {
     return (TimeRepresentation<Tconv>(lhs) <= t1);
 }

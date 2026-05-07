@@ -20,9 +20,6 @@
 #include <vector>
 
 namespace gmlc::utilities {
-extern const CharMapper<bool> numCheck;
-extern const CharMapper<bool> numCheckEnd;
-
 template<typename X>
 X strViewToInteger(std::string_view input, size_t* charactersUsed = nullptr)
 {

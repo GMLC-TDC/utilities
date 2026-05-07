@@ -9,7 +9,6 @@
 
 set(utilities_source_files
     base64.cpp
-    charMapper.cpp
     string_viewOps.cpp
     stringOps.cpp
     stringConversion.cpp

@@ -29,9 +29,6 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 #include <vector>
 
 namespace gmlc::utilities {
-extern const CharMapper<bool> numCheck;
-extern const CharMapper<bool> numCheckEnd;
-
 // templates for single numerical conversion
 template<typename X>
 inline X numConv(const std::string& V)
