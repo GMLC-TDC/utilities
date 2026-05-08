@@ -33,14 +33,6 @@ June 2022 changed to support std::string_view where applicable
 #include <string_view>
 
 namespace gmlc::utilities::string_viewOps {
-namespace {
-    const CharMapper<unsigned char>& getPairMap()
-    {
-        static const CharMapper<unsigned char> pmap = pairMapper();
-        return pmap;
-    }
-}  // namespace
-
 void trimString(std::string_view& input, std::string_view trimCharacters)
 {
     input.remove_suffix(
@@ -122,7 +114,7 @@ std::string_view removeBrackets(std::string_view str)
     }
     if (((ret.front() == '[') || (ret.front() == '(') || (ret.front() == '{') ||
          (ret.front() == '<')) &&
-        (static_cast<unsigned char>(ret.back()) == getPairMap()[ret.front()])) {
+        (static_cast<unsigned char>(ret.back()) == pairMap[ret.front()])) {
         return ret.substr(1, ret.size() - 2);
     }
     return ret;
@@ -163,7 +155,7 @@ string_viewVector splitlineQuotes(
 {
     const bool compress = (compression == delimiter_compression::on);
     return generalized_section_splitting(
-        line, delimiters, quoteChars, getPairMap(), compress);
+        line, delimiters, quoteChars, pairMap, compress);
 }
 
 string_viewVector splitlineBracket(
@@ -174,7 +166,7 @@ string_viewVector splitlineBracket(
 {
     const bool compress = (compression == delimiter_compression::on);
     return generalized_section_splitting(
-        line, delimiters, bracketChars, getPairMap(), compress);
+        line, delimiters, bracketChars, pairMap, compress);
 }
 
 int toIntSimple(std::string_view input)

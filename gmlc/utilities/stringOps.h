@@ -20,6 +20,8 @@ All rights reserved. SPDX-License-Identifier: BSD-3-Clause
 #pragma once
 
 #include <array>
+#include <charconv>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -67,41 +69,24 @@ namespace stringOps {
     template<typename X>
     void appendInteger(std::string& input, X val)
     {
-        if constexpr (std::is_signed_v<X>) {
-            if (val < X{0}) {
-                input.push_back('-');
-            }
-        }
-        const X x = [val]() {
-            if constexpr (std::is_signed_v<X>) {
-                return (val < X{0}) ? (X{0} - val) : val;
-            } else {
-                return val;
-            }
-        }();
-        if (x < 10) {
-            input.push_back(static_cast<char>(x + '0'));
+        if constexpr (!std::is_integral_v<X>) {
+            auto numString = std::to_string(val);
+            const auto decimalPoint = numString.find('.');
+            input += numString.substr(0, decimalPoint);
             return;
-        }
-        if (x >= 1'000'000'000)  // don't deal with really big numbers
-        {
-            input += std::to_string(x);
-            return;
-        }
-        auto rem = static_cast<unsigned int>(x);
-        const int digits = [rem]() {
-            int count = 1;
-            auto current = rem;
-            while (current >= 10U) {
-                current /= 10U;
-                ++count;
+        } else {
+            if constexpr (std::is_same_v<std::remove_cv_t<X>, bool>) {
+                input.push_back(val ? '1' : '0');
+                return;
             }
-            return count;
-        }();
-        for (auto dig = digits - 1; dig >= 0; --dig) {
-            const unsigned int place = rem / factors[dig];
-            input.push_back(static_cast<char>(place + '0'));
-            rem -= factors[dig] * place;
+            std::array<char, std::numeric_limits<X>::digits10 + 3> buffer{};
+            const auto [ptr, ec] = std::to_chars(
+                buffer.data(), buffer.data() + buffer.size(), val);
+            if (ec == std::errc{}) {
+                input.append(buffer.data(), ptr);
+                return;
+            }
+            input += std::to_string(val);
         }
     }
     constexpr std::array<char, 8>

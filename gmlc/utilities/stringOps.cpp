@@ -37,12 +37,6 @@ June 2022 changed to support string view where applicable
 
 namespace gmlc::utilities {
 namespace {
-    const CharMapper<unsigned char>& getPairMap()
-    {
-        static const CharMapper<unsigned char> pmap = pairMapper();
-        return pmap;
-    }
-
     auto lower = [](char charToMakerLowerCase) -> char {
         return (charToMakerLowerCase >= 'A' && charToMakerLowerCase <= 'Z') ?
             (charToMakerLowerCase - ('Z' - 'z')) :
@@ -193,7 +187,7 @@ namespace stringOps {
     {
         const bool compress = (compression == delimiter_compression::on);
         return generalized_section_splitting<std::string_view, std::string>(
-            line, delimiters, quoteChars, getPairMap(), compress);
+            line, delimiters, quoteChars, pairMap, compress);
     }
 
     stringVector splitlineBracket(
@@ -204,7 +198,7 @@ namespace stringOps {
     {
         const bool compress = (compression == delimiter_compression::on);
         return generalized_section_splitting<std::string_view, std::string>(
-            line, delimiters, bracketChars, getPairMap(), compress);
+            line, delimiters, bracketChars, pairMap, compress);
     }
 
     void trimString(std::string& input, std::string_view whitespace)
@@ -330,7 +324,7 @@ namespace stringOps {
             if ((newString.front() == '[') || (newString.front() == '(') ||
                 (newString.front() == '{') || (newString.front() == '<')) {
                 if (static_cast<unsigned char>(newString.back()) ==
-                    getPairMap()[newString.front()]) {
+                    pairMap[newString.front()]) {
                     newString.pop_back();
                     newString.erase(0, 1);
                 }
