@@ -13,8 +13,8 @@
 #include "gmlc/utilities/stringOps.h"
 
 #include "gtest/gtest.h"
-#include <algorithm>
 #include <array>
+#include <cstddef>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -503,7 +503,7 @@ TEST(stringops, randomString)
     auto str1 = randomString(50000);
     std::array<bool, 256> seen{};
     size_t uniqueCount = 0;
-    for (unsigned char ch : str1) {
+    for (const unsigned char ch : str1) {
         if (!seen[ch]) {
             seen[ch] = true;
             ++uniqueCount;
@@ -517,7 +517,7 @@ TEST(stringops, randomString)
         rstring.push_back(randomString(10));
     }
 
-    std::unordered_set<std::string> uniqueStrings(
+    const std::unordered_set<std::string> uniqueStrings(
         rstring.begin(), rstring.end());
     EXPECT_EQ(uniqueStrings.size(), 20U);
 }
