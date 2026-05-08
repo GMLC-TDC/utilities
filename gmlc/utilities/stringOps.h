@@ -80,8 +80,8 @@ namespace stringOps {
                 return;
             }
             std::array<char, std::numeric_limits<X>::digits10 + 3> buffer{};
-            const auto [ptr, ec] =
-                std::to_chars(buffer.data(), buffer.data() + buffer.size(), val);
+            const auto [ptr, ec] = std::to_chars(
+                buffer.data(), buffer.data() + buffer.size(), val);
             if (ec == std::errc{}) {
                 input.append(buffer.data(), ptr);
                 return;
