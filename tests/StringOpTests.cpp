@@ -14,7 +14,9 @@
 
 #include "gtest/gtest.h"
 #include <algorithm>
+#include <array>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 using namespace gmlc::utilities;
@@ -499,9 +501,15 @@ TEST(stringops, splitLineBracket)
 TEST(stringops, randomString)
 {
     auto str1 = randomString(50000);
-    std::sort(str1.begin(), str1.end());
-    auto ept = std::unique(str1.begin(), str1.end());
-    EXPECT_EQ(ept - str1.begin(), 62U);
+    std::array<bool, 256> seen{};
+    size_t uniqueCount = 0;
+    for (unsigned char ch : str1) {
+        if (!seen[ch]) {
+            seen[ch] = true;
+            ++uniqueCount;
+        }
+    }
+    EXPECT_EQ(uniqueCount, 62U);
 
     std::vector<std::string> rstring;
     rstring.reserve(20);
@@ -509,9 +517,9 @@ TEST(stringops, randomString)
         rstring.push_back(randomString(10));
     }
 
-    std::sort(rstring.begin(), rstring.end());
-    auto eptS = std::unique(rstring.begin(), rstring.end());
-    EXPECT_EQ(eptS - rstring.begin(), 20);
+    std::unordered_set<std::string> uniqueStrings(
+        rstring.begin(), rstring.end());
+    EXPECT_EQ(uniqueStrings.size(), 20U);
 }
 
 TEST(stringops, trailingInt)
