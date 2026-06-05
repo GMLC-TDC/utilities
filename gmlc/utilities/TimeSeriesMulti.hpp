@@ -101,7 +101,7 @@ class TimeSeriesMulti {
         if (column >= cols) {
             throw(std::out_of_range("specified column > dataset size"));
         }
-        if ((count == 0) || (t - m_time[count - 1] > timeType(0.0))) {
+        if ((count == 0) || (t > m_time[count - 1])) {
             m_time.push_back(t);
             ++count;
         }
@@ -124,7 +124,7 @@ default
             throw(invalidDataSize());
         }
         if (count > 0) {
-            if (t - m_time[count - 1] > timeType(0.0)) {
+            if (t > m_time[count - 1]) {
                 m_time.push_back(t);
                 ++count;
             }
